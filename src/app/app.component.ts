@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { IAppState } from './reducers';
+import { Logout } from './auth/auth.actions';
 
 @Component({
   selector: 'app-root',
@@ -6,4 +9,12 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+
+  constructor(private store: Store<IAppState>) {
+  }
+
+  logout() {
+    this.store.dispatch(new Logout());
+  }
+
 }

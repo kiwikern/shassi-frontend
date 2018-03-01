@@ -1,0 +1,60 @@
+<form #form="ngForm" (ngSubmit)="submit()">
+  <mat-card>
+    <mat-card-title>Register</mat-card-title>
+
+    <mat-card-content class="column">
+      <mat-form-field>
+        <input placeholder="Username"
+               matInput
+               name="username"
+               [(ngModel)]="username"
+               type="text"
+               autocomplete="username"
+               required>
+        <mat-error>Username is required.</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input placeholder="Email"
+               matInput
+               #mail
+               name="email"
+               [(ngModel)]="email"
+               type="text"
+               autocomplete="mail"
+               pattern=".+@.+\..+"
+               required>
+        <mat-error *ngIf="mail.validity && email">Email is invalid.</mat-error>
+        <mat-error *ngIf="mail.validity && !email">Email is required.</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input placeholder="Password"
+               matInput
+               #pw
+               name="password"
+               type="password"
+               [(ngModel)]="password"
+               autocomplete="password"
+               minlength="6"
+               required>
+        <mat-error *ngIf="pw.validity && password">Password is too short.</mat-error>
+        <mat-error *ngIf="pw.validity && !password">Password is required.</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input placeholder="Password"
+               matInput
+               name="passwordRepeat"
+               type="password"
+               [(ngModel)]="passwordRepeat"
+               [appMatchingPasswords]="password"
+               autocomplete="password"
+               required>
+        <mat-error>Passwords do not match.</mat-error>
+      </mat-form-field>
+    </mat-card-content>
+
+    <mat-card-actions align="end">
+      <a mat-raised-button routerLink="../login">Login</a>
+      <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">Register</button>
+    </mat-card-actions>
+  </mat-card>
+</form>
