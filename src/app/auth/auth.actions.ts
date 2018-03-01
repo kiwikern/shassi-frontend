@@ -7,7 +7,8 @@ export enum AuthActionTypes {
   REGISTER_REQUEST = '[Auth] REGISTER REQUEST',
   REGISTER_SUCESS = '[Auth] REGISTER SUCESS',
   REGISTER_FAIL = '[Auth] REGISTER FAIL',
-  LOGOUT = '[Auth] LOGOUT'
+  LOGOUT = '[Auth] LOGOUT',
+  LOGOUT_SUCCESS = '[Auth] LOGOUT SUCCESS'
 }
 
 export class LoginRequest implements Action {

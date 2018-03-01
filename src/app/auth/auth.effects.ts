@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { AuthActions, AuthActionTypes, LoginRequest, RegisterRequest } from './auth.actions';
+import { AuthActionTypes, LoginRequest, RegisterRequest } from './auth.actions';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
@@ -40,7 +40,7 @@ export class AuthEffects {
   @Effect() logout$: Observable<Action> = this.actions$.pipe(
     ofType(AuthActionTypes.LOGOUT),
     tap(() => this.router.navigate(['/auth/login'])),
-    map(() => ({type: AuthActionTypes.LOGIN_SUCESS}))
+    map(() => ({type: AuthActionTypes.LOGOUT_SUCCESS}))
   );
 
   private handleError(error) {
