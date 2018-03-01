@@ -1,3 +1,4 @@
-<p>
-  products-list works!
-</p>
+<span *ngFor="let p of products$ | async">
+  {{p | json}}
+  <a href="p.url">{{p.name}}</a> {{p.store}}
+</span>

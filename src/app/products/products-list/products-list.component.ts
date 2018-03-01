@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { IAppState } from '../../reducers';
+import { selectAllProducts } from '../product.reducer';
+import { Product } from '../product.model';
 
 @Component({
   selector: 'app-products-list',
@@ -7,9 +11,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProductsListComponent implements OnInit {
 
-  constructor() { }
+  products$: Store<Product[]>;
+
+  constructor(private store: Store<IAppState>) {
+  }
 
   ngOnInit() {
+    this.products$ = this.store.select(selectAllProducts);
   }
 
 }
