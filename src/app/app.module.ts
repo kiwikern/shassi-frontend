@@ -5,16 +5,21 @@ import { environment } from '../environments/environment';
 
 import { AppComponent } from './app.component';
 import { StoreModule } from '@ngrx/store';
-import { reducers, metaReducers } from './reducers';
+import { metaReducers, reducers } from './reducers';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthModule, authRoutes } from './auth/auth.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { EffectsModule } from '@ngrx/effects';
 import { MatButtonModule, MatIconModule, MatToolbarModule } from '@angular/material';
+import { AuthInterceptor } from './auth/auth-interceptor';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { LoginGuard } from './auth/login.guard';
 
 const routes: Routes = [
-  {path: 'auth', children: authRoutes}
+  {path: '', pathMatch: 'full', redirectTo: 'products'},
+  {path: 'auth', children: authRoutes},
+  {path: 'products', loadChildren: './products/products.module#ProductsModule', canActivateChild: [LoginGuard]}
 ];
 
 @NgModule({
@@ -34,7 +39,9 @@ const routes: Routes = [
     MatButtonModule,
     MatIconModule
   ],
-  providers: [],
+  providers: [
+    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

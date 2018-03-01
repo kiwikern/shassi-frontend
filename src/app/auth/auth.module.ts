@@ -10,6 +10,7 @@ import { LoginComponent } from './login/login.component';
 import { MatButtonModule, MatCardModule, MatFormFieldModule, MatInputModule } from '@angular/material';
 import { FormsModule } from '@angular/forms';
 import { MatchingPasswordDirective, RegisterComponent } from './register/register.component';
+import { LoginGuard } from './login.guard';
 
 export const authRoutes: Routes = [
   {path: '', pathMatch: 'full', redirectTo: 'login'},
@@ -30,7 +31,9 @@ export const authRoutes: Routes = [
     MatCardModule,
     FormsModule
   ],
-  providers: [],
+  providers: [
+    LoginGuard
+  ],
   declarations: [
     LoginComponent,
     RegisterComponent,
