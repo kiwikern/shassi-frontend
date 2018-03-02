@@ -60,6 +60,13 @@ export class Logout implements Action {
   }
 }
 
+export class LogoutSuccess implements Action {
+  readonly type = AuthActionTypes.LOGOUT_SUCCESS;
+
+  constructor() {
+  }
+}
+
 export type AuthActions =
   LoginFail | LoginRequest | LoginSuccess |
   RegisterRequest | RegisterFail | RegisterSuccess |

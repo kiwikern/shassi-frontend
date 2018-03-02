@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { AuthActionTypes, LoginRequest, LoginSuccess, RegisterRequest } from './auth.actions';
+import { AuthActionTypes, LoginRequest, LoginSuccess, LogoutSuccess, RegisterRequest, RegisterSuccess } from './auth.actions';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { Action } from '@ngrx/store';
-import { catchError, map, mergeMap, tap } from 'rxjs/operators';
+import { catchError, mergeMap, tap } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
 import { InfoSnackBarService } from '../info-snack-bar.service';
-import { LoadProductsRequest } from '../products/product.actions';
+import { ClearProducts, LoadProductsRequest } from '../products/product.actions';
 
 @Injectable()
 export class AuthEffects {
@@ -33,8 +33,8 @@ export class AuthEffects {
     mergeMap((action: RegisterRequest) =>
       this.http.post<{ jwt: string }>('/api/user', action.payload).pipe(
         mergeMap(data => [
-          {type: AuthActionTypes.REGISTER_SUCESS},
-          {type: AuthActionTypes.LOGIN_REQUEST, payload: action.payload}
+          new RegisterSuccess(),
+          new LoginRequest(action.payload)
         ]),
         catchError(err => this.handleError(err))
       ))
@@ -43,7 +43,10 @@ export class AuthEffects {
   @Effect() logout$: Observable<Action> = this.actions$.pipe(
     ofType(AuthActionTypes.LOGOUT),
     tap(() => this.router.navigate(['/auth/login'])),
-    map(() => ({type: AuthActionTypes.LOGOUT_SUCCESS}))
+    mergeMap(() => [
+      new ClearProducts(),
+      new LogoutSuccess()
+    ])
   );
 
   private handleError(error) {

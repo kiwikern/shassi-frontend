@@ -65,6 +65,10 @@ export function reducer(state = initialState,
       return adapter.addAll(action.payload.products, state);
     }
 
+    case ProductActionTypes.ClearProducts: {
+      return adapter.removeAll(state);
+    }
+
     default: {
       return state;
     }
