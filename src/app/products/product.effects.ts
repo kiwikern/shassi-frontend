@@ -91,7 +91,7 @@ export class ProductEffects {
         // actions.push(new RequestLoadProducts());
         break;
       case 409:
-        this.snackBar.open('SnackBar.Message.Error.FileAlreadyExists');
+        this.snackBar.open('SnackBar.Message.Error.ProductAlreadyExists');
         if (error.error && error.error._id) {
           this.router.navigate(['products', error.error._id]);
         }

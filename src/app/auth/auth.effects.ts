@@ -7,13 +7,15 @@ import { Observable } from 'rxjs/Observable';
 import { Action } from '@ngrx/store';
 import { catchError, map, mergeMap, tap } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
+import { InfoSnackBarService } from '../info-snack-bar.service';
 
 @Injectable()
 export class AuthEffects {
 
   constructor(private actions$: Actions,
               private http: HttpClient,
-              private router: Router) {
+              private router: Router,
+              private snackBar: InfoSnackBarService) {
   }
 
   @Effect() login$: Observable<Action> = this.actions$.pipe(
@@ -44,18 +46,25 @@ export class AuthEffects {
   );
 
   private handleError(error) {
-    console.log(error);
-    if (error.status === 401) {
-      console.log('SnackBar.Message.Error.WrongPassword');
-    } else if (error.status === 0) {
-      console.log('SnackBar.Message.Error.NoInternetConnection');
-    } else if (error.status === 500) {
-      console.log('SnackBar.Message.Error.ServerError');
-    } else if (error.status === 504) {
-      console.log('SnackBar.Message.Error.ServerNotReachable');
-    } else {
-      console.log('SnackBar.Message.Error.ClientError');
-      console.log(error);
+    switch (error.status) {
+      case 401:
+        this.snackBar.open('SnackBar.Message.Error.WrongPassword');
+        break;
+      case 404:
+        this.snackBar.open('SnackBar.Message.Error.UnknownUser');
+        break;
+      case 0:
+        this.snackBar.open('SnackBar.Message.Error.NoInternetConnection');
+        break;
+      case 500:
+        this.snackBar.open('SnackBar.Message.Error.ServerError');
+        break;
+      case 504:
+        this.snackBar.open('SnackBar.Message.Error.ServerNotReachable');
+        break;
+      default:
+        this.snackBar.open('SnackBar.Message.Error.ClientError');
+        console.error(error);
     }
     return of({type: AuthActionTypes.LOGIN_FAIL});
   }

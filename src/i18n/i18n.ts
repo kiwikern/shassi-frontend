@@ -3,7 +3,7 @@ export const translations = {
   'SnackBar.Message.Info.ReloadingProducts': 'Reloading products.',
   'SnackBar.Message.Error.NoInternetConnection': 'Could not connect. Check your internet connection.',
   'SnackBar.Message.Error.LoginNeeded': 'You need to be logged in.',
-  'SnackBar.Message.Error.FileAlreadyExists': 'Product does already exist.',
+  'SnackBar.Message.Error.ProductAlreadyExists': 'Product does already exist.',
   'SnackBar.Message.Error.ServerNotReachable': 'Server not reachable.',
   'SnackBar.Message.Error.ServerError': 'Something went wrong.',
   'SnackBar.Message.Error.ClientError': 'Something went wrong. Check the browser console.',
@@ -15,6 +15,7 @@ export const translations = {
   'SnackBar.Message.Error.NonStoreURL': 'Given URL does not belong to selected store.',
   'SnackBar.Message.Info.URLCopied': 'The URL was copied to your clipboard. Thanks for sharing.',
   'SnackBar.Message.Error.WrongPassword': 'Wrong password.',
+  'SnackBar.Message.Error.UnknownUser': 'Unknown user.',
   'SnackBar.Message.Confirmation.DeleteProduct': 'Are you sure you want to delete this product?',
   'SnackBar.Action.DeleteProduct': 'Delete product',
 };

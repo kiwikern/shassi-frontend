@@ -3,7 +3,7 @@ export const translationsDE = {
   'SnackBar.Message.Info.ReloadingProducts': 'Lade Produkte erneut.',
   'SnackBar.Message.Error.NoInternetConnection': 'Konnte keine Verbindung aufbauen. Überprüfe deine Internetverbindung',
   'SnackBar.Message.Error.LoginNeeded': 'Hierfür musst du angemeldet sein.',
-  'SnackBar.Message.Error.FileAlreadyExists': 'Produkt existiert bereits.',
+  'SnackBar.Message.Error.ProductAlreadyExists': 'Produkt existiert bereits.',
   'SnackBar.Message.Error.ServerNotReachable': 'Server nicht erreichbar.',
   'SnackBar.Message.Error.ServerError': 'Etwas ist schief gegangen.',
   'SnackBar.Message.Error.ClientError': 'Etwas ist schief gegangen. Überprüfe die Browser-Konsole.',
@@ -15,6 +15,7 @@ export const translationsDE = {
   'SnackBar.Message.Error.NonStoreURL': 'Gegebene URL passt nicht zu gewähltem Store.',
   'SnackBar.Message.Info.URLCopied': 'Die URL wurde deiner Zwischenablage hinzugefügt. Vielen Dank fürs Teilen.',
   'SnackBar.Message.Error.WrongPassword': 'Falsches Passwort.',
+  'SnackBar.Message.Error.UnknownUser': 'Unbekannter Benutzer.',
   'SnackBar.Message.Confirmation.DeleteProduct': 'Bist du sicher, dass du dieses Produkt löschen möchtest?',
   'SnackBar.Action.DeleteProduct': 'Produkt löschen',
 
