@@ -1,11 +1,11 @@
 <mat-card>
   <mat-card-title>
-    {{(product$ | async).name}} ({{(product$ | async).latestUpdate?.price | currency:'EUR'}})
+    {{(product$ | async)?.name}} ({{(product$ | async)?.latestUpdate?.price | currency:'EUR'}})
   </mat-card-title>
   <mat-card-subtitle>
-    <span *ngIf="(product$ | async).size">Size: {{(product$ | async).size?.name}} |</span>
-    {{(product$ | async).store | store}} |
-    {{(product$ | async).createdAt | date}}
+    <span *ngIf="(product$ | async)?.size">Size: {{(product$ | async)?.size?.name}} |</span>
+    {{(product$ | async)?.store | store}} |
+    {{(product$ | async)?.createdAt | date}}
   </mat-card-subtitle>
 
   <mat-card-content>
@@ -14,13 +14,15 @@
   </mat-card-content>
 
   <mat-card-actions align="end">
-    <a mat-button [attr.href]="(product$ | async).url" target="_blank">
+    <a mat-button [attr.href]="(product$ | async)?.url" target="_blank">
       <mat-icon>open_in_browser</mat-icon>
       Open
     </a>
-    <button mat-button>
+    <ng-container *ngIf="(product$ | async)?._id; let id">
+    <button mat-button (click)="deleteProduct(id)">
       <mat-icon>delete</mat-icon>
       Delete
     </button>
+    </ng-container>
   </mat-card-actions>
 </mat-card>

@@ -10,10 +10,11 @@ export const translations = {
   'SnackBar.Message.Error.ProductAdded': 'Product was successfully added.',
   'SnackBar.Message.Error.ProductDeleted': 'Product was successfully deleted.',
   'SnackBar.Message.Error.ProductEdited': 'Product was successfully edited.',
+  'SnackBar.Message.Error.ProductNotFound': 'Product not found.',
   'SnackBar.Message.Error.InvalidURL': 'The given URL was invalid.',
   'SnackBar.Message.Error.NonStoreURL': 'Given URL does not belong to selected store.',
   'SnackBar.Message.Info.URLCopied': 'The URL was copied to your clipboard. Thanks for sharing.',
   'SnackBar.Message.Error.WrongPassword': 'Wrong password.',
   'SnackBar.Message.Confirmation.DeleteProduct': 'Are you sure you want to delete this product?',
-  'SnackBar.Action.DeleteFile': 'Delete product',
+  'SnackBar.Action.DeleteProduct': 'Delete product',
 };

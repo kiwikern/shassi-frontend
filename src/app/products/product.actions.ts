@@ -14,6 +14,8 @@ export enum ProductActionTypes {
   UpdateProductFail = '[Product] Update Product Fail',
   UpdateProducts = '[Product] Update Products',
   DeleteProduct = '[Product] Delete Product',
+  DeleteProductRequest = '[Product] Delete Product Request',
+  DeleteProductFail = '[Product] Delete Product Fail',
   DeleteProducts = '[Product] Delete Products',
 }
 
@@ -94,6 +96,20 @@ export class DeleteProduct implements Action {
   }
 }
 
+export class DeleteProductRequest implements Action {
+  readonly type = ProductActionTypes.DeleteProductRequest;
+
+  constructor(public payload: { id: string }) {
+  }
+}
+
+export class DeleteProductFail implements Action {
+  readonly type = ProductActionTypes.DeleteProductFail;
+
+  constructor() {
+  }
+}
+
 export class DeleteProducts implements Action {
   readonly type = ProductActionTypes.DeleteProducts;
 
@@ -106,5 +122,5 @@ export type ProductActions =
   | AddProduct | AddProductRequest | AddProductFail
   | UpdateProduct | UpdateProductRequest | UpdateProductFail
   | UpdateProducts
-  | DeleteProduct
+  | DeleteProduct | DeleteProductRequest | DeleteProductFail
   | DeleteProducts;

@@ -10,11 +10,12 @@ export const translationsDE = {
   'SnackBar.Message.Error.ProductAdded': 'Produkt wurde erfolgreich hinzugefügt.',
   'SnackBar.Message.Error.ProductDeleted': 'Produkt wurde erfolgreich gelöscht.',
   'SnackBar.Message.Error.ProductEdited': 'Produkt wurde erfolgreich bearbeitet.',
+  'SnackBar.Message.Error.ProductNotFound': 'Produkt wurde nicht gefunden.',
   'SnackBar.Message.Error.InvalidURL': 'Gegebene URL ist ungültig.',
   'SnackBar.Message.Error.NonStoreURL': 'Gegebene URL passt nicht zu gewähltem Store.',
   'SnackBar.Message.Info.URLCopied': 'Die URL wurde deiner Zwischenablage hinzugefügt. Vielen Dank fürs Teilen.',
   'SnackBar.Message.Error.WrongPassword': 'Falsches Passwort.',
   'SnackBar.Message.Confirmation.DeleteProduct': 'Bist du sicher, dass du dieses Produkt löschen möchtest?',
-  'SnackBar.Action.DeleteFile': 'Produkt löschen',
+  'SnackBar.Action.DeleteProduct': 'Produkt löschen',
 
 };

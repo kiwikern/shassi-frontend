@@ -5,6 +5,9 @@ import {
   AddProduct,
   AddProductFail,
   AddProductRequest,
+  DeleteProduct,
+  DeleteProductFail,
+  DeleteProductRequest,
   LoadProducts,
   LoadProductsFailed,
   ProductActionTypes,
@@ -14,7 +17,7 @@ import {
   UpdateProductRequest
 } from './product.actions';
 import { Action } from '@ngrx/store';
-import { catchError, map, mergeMap, switchMap } from 'rxjs/operators';
+import { catchError, map, mergeMap, switchMap, tap } from 'rxjs/operators';
 import { Logout } from '../auth/auth.actions';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
@@ -57,6 +60,18 @@ export class ProductEffects {
       return this.http.post<Product>(`/api/products/${id}`, action.payload).pipe(
         map(product => new UpdateProduct({product: {id, changes: product}})),
         catchError(err => this.handleError(err, new UpdateProductFail()))
+      );
+    })
+  );
+
+  @Effect() delete$: Observable<Action> = this.actions$.pipe(
+    ofType(ProductActionTypes.DeleteProductRequest),
+    mergeMap((action: DeleteProductRequest) => {
+      const id: string = action.payload.id;
+      return this.http.delete<string>(`/api/products/${id}`, {responseType: 'text' as 'json'}).pipe(
+        map(() => new DeleteProduct({id})),
+        tap(() => this.snackBar.open('SnackBar.Message.Error.ProductDeleted')),
+        catchError(err => this.handleError(err, new DeleteProductFail()))
       );
     })
   );
