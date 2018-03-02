@@ -2,6 +2,7 @@
   <mat-card>
     <mat-horizontal-stepper linear="true" #stepper="matHorizontalStepper">
       <mat-step editable="false">
+        <ng-template matStepLabel>URL</ng-template>
         <mat-card-content>
           <mat-form-field>
             <input matInput
@@ -17,6 +18,7 @@
         </mat-card-content>
       </mat-step>
       <mat-step>
+        <ng-template matStepLabel>Details</ng-template>
         <mat-card-content>
           <mat-spinner *ngIf="isSaving$ | async"></mat-spinner>
           <mat-form-field *ngIf="!(isSaving$ | async)">
@@ -35,7 +37,10 @@
       </mat-step>
     </mat-horizontal-stepper>
     <mat-card-actions align="end">
-      <button mat-raised-button type="button" *ngIf="stepper.selectedIndex === 0" (click)="fetchProduct(stepper)">Next
+      <button mat-raised-button type="button"
+              *ngIf="stepper.selectedIndex === 0"
+              [disabled]="!this.product.url"
+              (click)="fetchProduct(stepper)">Next
       </button>
       <button mat-raised-button type="submit"
               *ngIf="stepper.selectedIndex === 1"
