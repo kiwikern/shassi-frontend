@@ -7,7 +7,7 @@ import { reducer } from './product.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { ProductEffects } from './product.effects';
 import { IAppState } from '../reducers';
-import { RequestLoadProducts } from './product.actions';
+import { LoadProductsRequest } from './product.actions';
 import { ProductFormComponent } from './product-form/product-form.component';
 import {
   MatButtonModule,
@@ -71,7 +71,7 @@ const productsRoutes: Routes = [
 export class ProductsModule {
 
   constructor(private store: Store<IAppState>) {
-    this.store.dispatch(new RequestLoadProducts());
+    this.store.dispatch(new LoadProductsRequest());
   }
 
 

@@ -4,7 +4,7 @@ import { Product, Size } from './product.model';
 
 export enum ProductActionTypes {
   LoadProducts = '[Product] Load Products',
-  LoadProductsRequest = '[Product] Request Load Products',
+  LoadProductsRequest = '[Product] Load Products Request',
   LoadProductsFailed = '[Product] Load Products Failed',
   AddProductRequest = '[Product] Add Product Request',
   AddProductFail = '[Product] Add Product Failed',
@@ -19,7 +19,7 @@ export enum ProductActionTypes {
   DeleteProducts = '[Product] Delete Products',
 }
 
-export class RequestLoadProducts implements Action {
+export class LoadProductsRequest implements Action {
   readonly type = ProductActionTypes.LoadProductsRequest;
 
   constructor() {

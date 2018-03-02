@@ -10,8 +10,8 @@ import {
   DeleteProductRequest,
   LoadProducts,
   LoadProductsFailed,
+  LoadProductsRequest,
   ProductActionTypes,
-  RequestLoadProducts,
   UpdateProduct,
   UpdateProductFail,
   UpdateProductRequest
@@ -37,7 +37,7 @@ export class ProductEffects {
 
   @Effect() load$: Observable<Action> = this.actions$.pipe(
     ofType(ProductActionTypes.LoadProductsRequest),
-    mergeMap((action: RequestLoadProducts) =>
+    mergeMap((action: LoadProductsRequest) =>
       this.http.get<Product[]>('/api/products').pipe(
         map(products => new LoadProducts({products})),
         catchError(err => this.handleError(err, new LoadProductsFailed()))
@@ -88,7 +88,7 @@ export class ProductEffects {
         break;
       case 404:
         this.snackBar.open('SnackBar.Message.Error.NoFileFoundForEdit');
-        // actions.push(new RequestLoadProducts());
+        // actions.push(new LoadProductsRequest());
         break;
       case 409:
         this.snackBar.open('SnackBar.Message.Error.ProductAlreadyExists');

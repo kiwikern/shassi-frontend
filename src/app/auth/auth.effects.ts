@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { AuthActionTypes, LoginRequest, RegisterRequest } from './auth.actions';
+import { AuthActionTypes, LoginRequest, LoginSuccess, RegisterRequest } from './auth.actions';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
@@ -8,6 +8,7 @@ import { Action } from '@ngrx/store';
 import { catchError, map, mergeMap, tap } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
 import { InfoSnackBarService } from '../info-snack-bar.service';
+import { LoadProductsRequest } from '../products/product.actions';
 
 @Injectable()
 export class AuthEffects {
@@ -72,7 +73,8 @@ export class AuthEffects {
   private login(data: { jwt: string }) {
     this.router.navigate(['/products']);
     return [
-      {type: AuthActionTypes.LOGIN_SUCESS, payload: data}
+      new LoginSuccess(data),
+      new LoadProductsRequest()
     ];
   }
 
