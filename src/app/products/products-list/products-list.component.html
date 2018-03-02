@@ -1,16 +1,18 @@
-<ng-container *ngFor="let p of products$ | async; let last = last;">
-  <app-product-list-item
-    [name]="p.name"
-    [url]="p.url"
-    [latestUpdate]="p.latestUpdate"
-    [createdAt]="p.createdAt"
-    [store]="p.store"
-    [id]="p._id"
-    [size]="p.size"
-  >
-  </app-product-list-item>
-  <mat-divider *ngIf="!last"></mat-divider>
-</ng-container>
+<mat-card>
+  <ng-container *ngFor="let p of products$ | async; let last = last;">
+    <app-product-list-item
+      [name]="p.name"
+      [url]="p.url"
+      [latestUpdate]="p.latestUpdate"
+      [createdAt]="p.createdAt"
+      [store]="p.store"
+      [id]="p._id"
+      [size]="p.size"
+    >
+    </app-product-list-item>
+    <mat-divider *ngIf="!last"></mat-divider>
+  </ng-container>
+</mat-card>
 
 <app-fab-button
   icon="add_to_cart"

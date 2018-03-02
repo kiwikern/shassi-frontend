@@ -1,0 +1,13 @@
+:host {
+  display: flex;
+  justify-content: center;
+}
+
+mat-card {
+  flex: 1;
+  max-width: 600px;
+}
+
+.mat-card .mat-divider {
+  position: unset;
+}

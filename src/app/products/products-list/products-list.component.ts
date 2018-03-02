@@ -3,6 +3,8 @@ import { Store } from '@ngrx/store';
 import { IAppState } from '../../reducers';
 import { selectAllProducts } from '../product.reducer';
 import { Product } from '../product.model';
+import { filter } from 'rxjs/operators';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'app-products-list',
@@ -11,13 +13,14 @@ import { Product } from '../product.model';
 })
 export class ProductsListComponent implements OnInit {
 
-  products$: Store<Product[]>;
+  products$: Observable<Product[]>;
 
   constructor(private store: Store<IAppState>) {
   }
 
   ngOnInit() {
-    this.products$ = this.store.select(selectAllProducts);
+    this.products$ = this.store.select(selectAllProducts)
+      .pipe(filter(p => !!p));
   }
 
 }
