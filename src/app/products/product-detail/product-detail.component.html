@@ -1,3 +1,18 @@
-<p>
-  product-detail works!
-</p>
+<mat-card>
+  <mat-card-title>
+    {{(product$ | async)?.name}} ({{(product$ | async)?.latestUpdate?.price | currency:'EUR'}})
+  </mat-card-title>
+  <mat-card-subtitle>
+    Size: {{(product$ | async)?.size?.name}} |
+    {{(product$ | async)?.store | store}} |
+    {{(product$ | async)?.createdAt | date}}
+  </mat-card-subtitle>
+
+  <mat-card-content>
+
+  </mat-card-content>
+
+  <mat-card-actions align="end">
+    <button mat-raised-button><mat-icon>delete</mat-icon> Delete</button>
+  </mat-card-actions>
+</mat-card>

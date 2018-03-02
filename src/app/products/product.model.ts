@@ -2,6 +2,7 @@ export interface Size {
   name: string;
   id: string;
   isAvailable?: boolean;
+  createdAt?: Date;
 }
 
 export interface Update {
@@ -20,4 +21,5 @@ export interface Product {
   updates?: Update[];
   latestUpdate?: Update;
   isActive?: boolean;
+  createdAt?: Date;
 }

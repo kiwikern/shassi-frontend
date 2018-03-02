@@ -1,6 +1,6 @@
 <div class="latest-state">
   <mat-icon class="icon">{{latestUpdate?.isAvailable ? 'shopping_cart' : 'remove_shopping_cart'}}</mat-icon>
-  <span class="price">{{latestUpdate?.price | currency}}</span>
+  <span class="price">{{latestUpdate?.price | currency:'EUR'}}</span>
 </div>
 <span class="name">{{name}}</span>
 <div class="additional">
