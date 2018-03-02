@@ -1,5 +1,5 @@
-<mat-card>
-  <ng-container *ngFor="let p of products$ | async; let last = last">
+<mat-card [@list]="isLoading$ | async">
+  <div class="list-item" *ngFor="let p of products$ | async; let last = last">
     <app-product-list-item
       [name]="p.name"
       [url]="p.url"
@@ -11,7 +11,7 @@
     >
     </app-product-list-item>
     <mat-divider *ngIf="!last"></mat-divider>
-  </ng-container>
+  </div>
 
   <div *ngIf="(products$ | async)?.length === 0">
     <p>You don't have any products, yet.</p>

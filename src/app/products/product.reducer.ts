@@ -7,7 +7,8 @@ import { Dictionary } from '@ngrx/entity/src/models';
 export interface ProductState extends EntityState<Product> {
   // additional entities state properties
   isSaving: boolean;
-  hasSavingError;
+  hasSavingError: boolean;
+  isLoading: boolean;
 }
 
 export const adapter: EntityAdapter<Product> = createEntityAdapter<Product>({
@@ -17,7 +18,8 @@ export const adapter: EntityAdapter<Product> = createEntityAdapter<Product>({
 export const initialState: ProductState = adapter.getInitialState({
   // additional entity state properties
   isSaving: false,
-  hasSavingError: false
+  hasSavingError: false,
+  isLoading: false
 });
 
 export function reducer(state = initialState,
@@ -61,7 +63,16 @@ export function reducer(state = initialState,
       return adapter.removeMany(action.payload.ids, state);
     }
 
+    case ProductActionTypes.LoadProductsRequest: {
+      return Object.assign({}, state, {isLoading: true});
+    }
+
+    case ProductActionTypes.LoadProductsFail: {
+      return Object.assign({}, state, {isLoading: false});
+    }
+
     case ProductActionTypes.LoadProducts: {
+      state = Object.assign({}, state, {isLoading: false});
       return adapter.addAll(action.payload.products, state);
     }
 
@@ -89,4 +100,5 @@ export const selectProductById = id => createSelector(selectProductEntities, (st
 export const selectProductByUrl = url => createSelector(selectAllProducts, (store: Product[]) => store.find(p => p.url === url));
 
 export const selectIsSaving = createSelector(selectProducts, state => state.isSaving);
+export const selectIsLoading = createSelector(selectProducts, state => state.isLoading);
 export const selectHasSavingError = createSelector(selectProducts, state => state.hasSavingError);

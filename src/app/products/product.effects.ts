@@ -9,7 +9,7 @@ import {
   DeleteProductFail,
   DeleteProductRequest,
   LoadProducts,
-  LoadProductsFailed,
+  LoadProductsFail,
   LoadProductsRequest,
   ProductActionTypes,
   UpdateProduct,
@@ -40,7 +40,7 @@ export class ProductEffects {
     mergeMap((action: LoadProductsRequest) =>
       this.http.get<Product[]>('/api/products').pipe(
         map(products => new LoadProducts({products})),
-        catchError(err => this.handleError(err, new LoadProductsFailed()))
+        catchError(err => this.handleError(err, new LoadProductsFail()))
       ))
   );
 

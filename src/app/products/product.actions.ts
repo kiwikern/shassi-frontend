@@ -5,7 +5,7 @@ import { Product, Size } from './product.model';
 export enum ProductActionTypes {
   LoadProducts = '[Product] Load Products',
   LoadProductsRequest = '[Product] Load Products Request',
-  LoadProductsFailed = '[Product] Load Products Failed',
+  LoadProductsFail = '[Product] Load Products Fail',
   AddProductRequest = '[Product] Add Product Request',
   AddProductFail = '[Product] Add Product Failed',
   AddProduct = '[Product] Add Product',
@@ -34,8 +34,8 @@ export class LoadProducts implements Action {
   }
 }
 
-export class LoadProductsFailed implements Action {
-  readonly type = ProductActionTypes.LoadProductsFailed;
+export class LoadProductsFail implements Action {
+  readonly type = ProductActionTypes.LoadProductsFail;
 
   constructor() {
   }
@@ -126,7 +126,7 @@ export class ClearProducts implements Action {
 }
 
 export type ProductActions =
-  LoadProducts
+  LoadProducts | LoadProductsRequest | LoadProductsFail
   | AddProduct | AddProductRequest | AddProductFail
   | UpdateProduct | UpdateProductRequest | UpdateProductFail
   | UpdateProducts
