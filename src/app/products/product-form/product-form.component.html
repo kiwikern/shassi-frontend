@@ -4,13 +4,14 @@
       <mat-step editable="false">
         <ng-template matStepLabel>URL</ng-template>
         <mat-card-content>
-          <mat-form-field>
+          <mat-spinner *ngIf="isSaving$ | async"></mat-spinner>
+          <mat-form-field *ngIf="!(isSaving$ | async)">
             <input matInput
                    name="url" type="url" autocomplete="url" [(ngModel)]="product.url"
                    required
                    placeholder="Product URL">
           </mat-form-field>
-          <mat-form-field>
+          <mat-form-field *ngIf="!(isSaving$ | async)">
             <mat-select name="store" [(ngModel)]="product.store" placeholder="Store" required>
               <mat-option value="hm">H&M</mat-option>
             </mat-select>

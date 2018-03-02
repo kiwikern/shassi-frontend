@@ -4,8 +4,8 @@ import { MatStepper } from '@angular/material';
 import { IAppState } from '../../reducers';
 import { Store } from '@ngrx/store';
 import { AddProductRequest, UpdateProductRequest } from '../product.actions';
-import { selectIsSaving, selectProductByUrl } from '../product.reducer';
-import { filter } from 'rxjs/operators';
+import { selectHasSavingError, selectIsSaving, selectProductByUrl } from '../product.reducer';
+import { filter, map, switchMap, take } from 'rxjs/operators';
 import { Observable } from 'rxjs/Observable';
 import { Router } from '@angular/router';
 
@@ -21,6 +21,7 @@ export class ProductFormComponent implements OnInit {
     store: 'hm'
   };
   isSaving$: Observable<boolean>;
+  hasSavingError$: Observable<boolean>;
 
   constructor(private store: Store<IAppState>,
               private router: Router) {
@@ -28,6 +29,7 @@ export class ProductFormComponent implements OnInit {
 
   ngOnInit() {
     this.isSaving$ = this.store.select(selectIsSaving);
+    this.hasSavingError$ = this.store.select(selectHasSavingError);
   }
 
   updateProduct() {
@@ -37,7 +39,8 @@ export class ProductFormComponent implements OnInit {
       size: this.product.size
     });
     this.store.dispatch(update);
-    this.router.navigate(['products']);
+    this.hasSavedSuccessfully()
+      .subscribe(success => success ? this.router.navigate(['products']) : '');
   }
 
   fetchProduct(stepper: MatStepper) {
@@ -48,7 +51,17 @@ export class ProductFormComponent implements OnInit {
         this.product = product;
         this.product.size = null;
       });
-    stepper.next();
+    this.hasSavedSuccessfully()
+      .subscribe(success => success ? stepper.next() : '');
   }
 
+  hasSavedSuccessfully() {
+    return this.isSaving$.pipe(
+      filter(isSaving => !isSaving),
+      take(1),
+      switchMap(() => this.hasSavingError$),
+      map(hasError => !hasError),
+      take(1)
+    );
+  }
 }

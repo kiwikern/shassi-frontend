@@ -7,6 +7,7 @@ import { Dictionary } from '@ngrx/entity/src/models';
 export interface ProductState extends EntityState<Product> {
   // additional entities state properties
   isSaving: boolean;
+  hasSavingError;
 }
 
 export const adapter: EntityAdapter<Product> = createEntityAdapter<Product>({
@@ -15,39 +16,40 @@ export const adapter: EntityAdapter<Product> = createEntityAdapter<Product>({
 
 export const initialState: ProductState = adapter.getInitialState({
   // additional entity state properties
-  isSaving: false
+  isSaving: false,
+  hasSavingError: false
 });
 
 export function reducer(state = initialState,
                         action: ProductActions): ProductState {
   switch (action.type) {
     case ProductActionTypes.AddProduct: {
-      state = Object.assign({}, state, {isSaving: false});
+      state = Object.assign({}, state, {hasSavingError: false, isSaving: false});
       return adapter.addOne(action.payload.product, state);
     }
 
     case ProductActionTypes.AddProductRequest: {
-      state = Object.assign({}, state, {isSaving: true});
+      state = Object.assign({}, state, {hasSavingError: false, isSaving: true});
       return state;
     }
 
     case ProductActionTypes.AddProductFail: {
-      state = Object.assign({}, state, {isSaving: false});
+      state = Object.assign({}, state, {hasSavingError: true, isSaving: false});
       return state;
     }
 
     case ProductActionTypes.UpdateProduct: {
-      state = Object.assign({}, state, {isSaving: false});
+      state = Object.assign({}, state, {hasSavingError: false, isSaving: false});
       return adapter.updateOne(action.payload.product, state);
     }
 
     case ProductActionTypes.UpdateProductRequest: {
-      state = Object.assign({}, state, {isSaving: true});
+      state = Object.assign({}, state, {hasSavingError: false, isSaving: true});
       return state;
     }
 
     case ProductActionTypes.UpdateProductFail: {
-      state = Object.assign({}, state, {isSaving: false});
+      state = Object.assign({}, state, {hasSavingError: true, isSaving: false});
       return state;
     }
 
@@ -83,3 +85,4 @@ export const selectProductById = id => createSelector(selectProductEntities, (st
 export const selectProductByUrl = url => createSelector(selectAllProducts, (store: Product[]) => store.find(p => p.url === url));
 
 export const selectIsSaving = createSelector(selectProducts, state => state.isSaving);
+export const selectHasSavingError = createSelector(selectProducts, state => state.hasSavingError);
