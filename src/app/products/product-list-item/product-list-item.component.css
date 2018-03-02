@@ -33,26 +33,12 @@
 
 .action {
   grid-column: 3;
-  grid-row: 1/3;
+  grid-row: 1/4;
   align-self: center;
   justify-self: center;
   font-size: large;
 }
 
-.store {
-  grid-column: 2;
-  grid-row: 1;
-}
-
-.date {
-  grid-column: 1;
-  grid-row: 1;
-}
-
 .additional {
-  grid-column: 2;
-  grid-row: 2;
-  display: grid;
-  align-self: center;
   color: gray;
 }

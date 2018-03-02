@@ -1,4 +1,10 @@
 <mat-toolbar color="primary">
+  <button *ngIf="showBackNavigation" mat-icon-button type="button" routerLink="/products">
+    <mat-icon>arrow_back</mat-icon>
+  </button>
+  <button *ngIf="!showBackNavigation" mat-icon-button type="button" disabled="true">
+    <mat-icon style="color: white">store</mat-icon>
+  </button>
   <span>Shassi</span>
   <span style="flex: 1"></span>
   <button mat-icon-button (click)="logout()"><mat-icon>exit_to_app</mat-icon></button>

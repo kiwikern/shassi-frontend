@@ -5,6 +5,7 @@
 <span class="name">{{name}}</span>
 <div class="additional">
   <span class="store">{{store | store}}</span>
+  |
   <span class="date">{{createdAt | date}}</span>
 </div>
 <span class="action">
@@ -12,3 +13,4 @@
     <mat-icon>open_in_browser</mat-icon>
   </a>
 </span>
+<span *ngIf="size">Size: {{size?.name}}</span>

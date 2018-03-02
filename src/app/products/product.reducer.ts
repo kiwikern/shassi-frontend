@@ -10,7 +10,7 @@ export interface ProductState extends EntityState<Product> {
 }
 
 export const adapter: EntityAdapter<Product> = createEntityAdapter<Product>({
-  selectId: (product: Product) => product.url
+  selectId: (product: Product) => product._id
 });
 
 export const initialState: ProductState = adapter.getInitialState({
@@ -80,5 +80,6 @@ export const selectProducts = createFeatureSelector<ProductState>('products');
 export const selectAllProducts = createSelector(selectProducts, selectAll);
 export const selectProductEntities = createSelector(selectProducts, selectEntities);
 export const selectProductById = id => createSelector(selectProductEntities, (store: Dictionary<Product>) => store[id]);
+export const selectProductByUrl = url => createSelector(selectAllProducts, (store: Product[]) => store.find(p => p.url === url));
 
 export const selectIsSaving = createSelector(selectProducts, state => state.isSaving);

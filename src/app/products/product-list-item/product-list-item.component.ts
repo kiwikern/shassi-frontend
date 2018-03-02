@@ -1,5 +1,5 @@
 import { Component, HostListener, Input, OnInit } from '@angular/core';
-import { Update } from '../product.model';
+import { Size, Update } from '../product.model';
 import { Router } from '@angular/router';
 
 @Component({
@@ -15,6 +15,7 @@ export class ProductListItemComponent implements OnInit {
   @Input() createdAt: Date;
   @Input() url: string;
   @Input() latestUpdate: Update;
+  @Input() size: Size;
 
   @HostListener('click') onClick() {
     this.router.navigate(['products', this.id]);

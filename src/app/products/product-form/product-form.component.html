@@ -24,18 +24,24 @@
           </mat-form-field>
           <mat-form-field *ngIf="!(isSaving$ | async)">
             <mat-select name="size" [(ngModel)]="product.size" placeholder="Size" required>
-              <mat-option *ngFor="let s of product.sizes" [value]="s">{{s.name}}</mat-option>
+              <mat-select-trigger>{{product.size?.name}}</mat-select-trigger>
+              <mat-option *ngFor="let s of product.sizes" [value]="s">
+                <mat-icon>{{s.isAvailable ? 'shopping_cart' : 'remove_shopping_cart'}}</mat-icon>
+                {{s.name}}
+              </mat-option>
             </mat-select>
           </mat-form-field>
         </mat-card-content>
       </mat-step>
     </mat-horizontal-stepper>
     <mat-card-actions align="end">
-      <button mat-raised-button type="button" *ngIf="stepper.selectedIndex === 0" (click)="fetchProduct(stepper)">Next</button>
+      <button mat-raised-button type="button" *ngIf="stepper.selectedIndex === 0" (click)="fetchProduct(stepper)">Next
+      </button>
       <button mat-raised-button type="submit"
               *ngIf="stepper.selectedIndex === 1"
-              [disabled]="!form.valid"
-              routerLink="..">Done</button>
+              [disabled]="!form.valid">
+        Done
+      </button>
     </mat-card-actions>
   </mat-card>
 </form>

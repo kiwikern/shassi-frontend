@@ -1,4 +1,3 @@
-
 <ng-container *ngFor="let p of products$ | async; let last = last;">
   <app-product-list-item
     [name]="p.name"
@@ -7,7 +6,13 @@
     [createdAt]="p.createdAt"
     [store]="p.store"
     [id]="p._id"
+    [size]="p.size"
   >
   </app-product-list-item>
   <mat-divider *ngIf="!last"></mat-divider>
 </ng-container>
+
+<app-fab-button
+  icon="add_to_cart"
+  routerLink="new"
+></app-fab-button>

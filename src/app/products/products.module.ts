@@ -25,6 +25,7 @@ import { FormsModule } from '@angular/forms';
 import { StorePipe } from './store.pipe';
 import { ProductListItemComponent } from './product-list-item/product-list-item.component';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
+import { FabButtonComponent } from './fab-button/fab-button.component';
 
 const productsRoutes: Routes = [
   {path: '', component: ProductsListComponent},
@@ -55,7 +56,8 @@ const productsRoutes: Routes = [
     ProductFormComponent,
     StorePipe,
     ProductListItemComponent,
-    ProductDetailComponent
+    ProductDetailComponent,
+    FabButtonComponent
   ]
 })
 export class ProductsModule {

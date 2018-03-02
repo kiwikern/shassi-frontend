@@ -1,6 +1,7 @@
 export interface Size {
   name: string;
   id: string;
+  isAvailable?: boolean;
 }
 
 export interface Update {
