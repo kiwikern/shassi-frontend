@@ -1,0 +1,14 @@
+<div class="latest-state">
+  <mat-icon class="icon">{{latestUpdate?.isAvailable ? 'shopping_cart' : 'remove_shopping_cart'}}</mat-icon>
+  <span class="price">{{latestUpdate?.price | currency}}</span>
+</div>
+<span class="name">{{name}}</span>
+<div class="additional">
+  <span class="store">{{store | store}}</span>
+  <span class="date">{{createdAt | date}}</span>
+</div>
+<span class="action">
+  <a mat-icon-button (click)="$event.stopPropagation();" [attr.href]="url" target="_blank">
+    <mat-icon>open_in_browser</mat-icon>
+  </a>
+</span>

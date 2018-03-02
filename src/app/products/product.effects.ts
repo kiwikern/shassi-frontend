@@ -1,7 +1,18 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Observable } from 'rxjs/Observable';
-import { LoadProducts, LoadProductsFailed, ProductActionTypes, RequestLoadProducts } from './product.actions';
+import {
+  AddProduct,
+  AddProductFail,
+  AddProductRequest,
+  LoadProducts,
+  LoadProductsFailed,
+  ProductActionTypes,
+  RequestLoadProducts,
+  UpdateProduct,
+  UpdateProductFail,
+  UpdateProductRequest
+} from './product.actions';
 import { Action } from '@ngrx/store';
 import { catchError, map, mergeMap, switchMap } from 'rxjs/operators';
 import { Logout } from '../auth/auth.actions';
@@ -26,6 +37,26 @@ export class ProductEffects {
         map(products => new LoadProducts({products})),
         catchError(err => this.handleError(err, new LoadProductsFailed()))
       ))
+  );
+
+  @Effect() add$: Observable<Action> = this.actions$.pipe(
+    ofType(ProductActionTypes.AddProductRequest),
+    mergeMap((action: AddProductRequest) =>
+      this.http.post<Product>('/api/products', action.payload.product).pipe(
+        map(product => new AddProduct({product})),
+        catchError(err => this.handleError(err, new AddProductFail()))
+      ))
+  );
+
+  @Effect() update$: Observable<Action> = this.actions$.pipe(
+    ofType(ProductActionTypes.UpdateProductRequest),
+    mergeMap((action: UpdateProductRequest) => {
+      const id: string = action.payload._id;
+      return this.http.post<Product>(`/api/products/${id}`, action.payload).pipe(
+        map(product => new UpdateProduct({product: {id, changes: product}})),
+        catchError(err => this.handleError(err, new UpdateProductFail()))
+      );
+    })
   );
 
   private handleError(error: HttpErrorResponse, action): Observable<any> {

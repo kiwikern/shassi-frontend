@@ -1,4 +1,13 @@
-<span *ngFor="let p of products$ | async">
-  {{p | json}}
-  <a href="p.url">{{p.name}}</a> {{p.store}}
-</span>
+
+<ng-container *ngFor="let p of products$ | async; let last = last;">
+  <app-product-list-item
+    [name]="p.name"
+    [url]="p.url"
+    [latestUpdate]="p.latestUpdate"
+    [createdAt]="p.createdAt"
+    [store]="p.store"
+    [id]="p._id"
+  >
+  </app-product-list-item>
+  <mat-divider *ngIf="!last"></mat-divider>
+</ng-container>

@@ -1,0 +1,41 @@
+<form #form="ngForm" (ngSubmit)="updateProduct()">
+  <mat-card>
+    <mat-horizontal-stepper linear="true" #stepper="matHorizontalStepper">
+      <mat-step editable="false">
+        <mat-card-content>
+          <mat-form-field>
+            <input matInput
+                   name="url" type="url" autocomplete="url" [(ngModel)]="product.url"
+                   required
+                   placeholder="Product URL">
+          </mat-form-field>
+          <mat-form-field>
+            <mat-select name="store" [(ngModel)]="product.store" placeholder="Store" required>
+              <mat-option value="hm">H&M</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </mat-card-content>
+      </mat-step>
+      <mat-step>
+        <mat-card-content>
+          <mat-spinner *ngIf="isSaving$ | async"></mat-spinner>
+          <mat-form-field *ngIf="!(isSaving$ | async)">
+            <input matInput name="name" [(ngModel)]="product.name" placeholder="Name" required>
+          </mat-form-field>
+          <mat-form-field *ngIf="!(isSaving$ | async)">
+            <mat-select name="size" [(ngModel)]="product.size" placeholder="Size" required>
+              <mat-option *ngFor="let s of product.sizes" [value]="s">{{s.name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </mat-card-content>
+      </mat-step>
+    </mat-horizontal-stepper>
+    <mat-card-actions align="end">
+      <button mat-raised-button type="button" *ngIf="stepper.selectedIndex === 0" (click)="fetchProduct(stepper)">Next</button>
+      <button mat-raised-button type="submit"
+              *ngIf="stepper.selectedIndex === 1"
+              [disabled]="!form.valid"
+              routerLink="..">Done</button>
+    </mat-card-actions>
+  </mat-card>
+</form>

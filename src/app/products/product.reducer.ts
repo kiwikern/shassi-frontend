@@ -2,9 +2,11 @@ import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity';
 import { Product } from './product.model';
 import { ProductActions, ProductActionTypes } from './product.actions';
 import { createFeatureSelector, createSelector } from '@ngrx/store';
+import { Dictionary } from '@ngrx/entity/src/models';
 
 export interface ProductState extends EntityState<Product> {
   // additional entities state properties
+  isSaving: boolean;
 }
 
 export const adapter: EntityAdapter<Product> = createEntityAdapter<Product>({
@@ -13,19 +15,40 @@ export const adapter: EntityAdapter<Product> = createEntityAdapter<Product>({
 
 export const initialState: ProductState = adapter.getInitialState({
   // additional entity state properties
+  isSaving: false
 });
 
-export function reducer(
-  state = initialState,
-  action: ProductActions
-): ProductState {
+export function reducer(state = initialState,
+                        action: ProductActions): ProductState {
   switch (action.type) {
     case ProductActionTypes.AddProduct: {
+      state = Object.assign({}, state, {isSaving: false});
       return adapter.addOne(action.payload.product, state);
     }
 
+    case ProductActionTypes.AddProductRequest: {
+      state = Object.assign({}, state, {isSaving: true});
+      return state;
+    }
+
+    case ProductActionTypes.AddProductFail: {
+      state = Object.assign({}, state, {isSaving: false});
+      return state;
+    }
+
     case ProductActionTypes.UpdateProduct: {
+      state = Object.assign({}, state, {isSaving: false});
       return adapter.updateOne(action.payload.product, state);
+    }
+
+    case ProductActionTypes.UpdateProductRequest: {
+      state = Object.assign({}, state, {isSaving: true});
+      return state;
+    }
+
+    case ProductActionTypes.UpdateProductFail: {
+      state = Object.assign({}, state, {isSaving: false});
+      return state;
     }
 
     case ProductActionTypes.DeleteProduct: {
@@ -55,3 +78,7 @@ export const {
 
 export const selectProducts = createFeatureSelector<ProductState>('products');
 export const selectAllProducts = createSelector(selectProducts, selectAll);
+export const selectProductEntities = createSelector(selectProducts, selectEntities);
+export const selectProductById = id => createSelector(selectProductEntities, (store: Dictionary<Product>) => store[id]);
+
+export const selectIsSaving = createSelector(selectProducts, state => state.isSaving);

@@ -8,9 +8,28 @@ import { EffectsModule } from '@ngrx/effects';
 import { ProductEffects } from './product.effects';
 import { IAppState } from '../reducers';
 import { RequestLoadProducts } from './product.actions';
+import { ProductFormComponent } from './product-form/product-form.component';
+import {
+  MatButtonModule,
+  MatCardModule,
+  MatDividerModule,
+  MatFormFieldModule,
+  MatIconModule,
+  MatInputModule,
+  MatListModule,
+  MatProgressSpinnerModule,
+  MatSelectModule,
+  MatStepperModule
+} from '@angular/material';
+import { FormsModule } from '@angular/forms';
+import { StorePipe } from './store.pipe';
+import { ProductListItemComponent } from './product-list-item/product-list-item.component';
+import { ProductDetailComponent } from './product-detail/product-detail.component';
 
 const productsRoutes: Routes = [
-  {path: '', component: ProductsListComponent}
+  {path: '', component: ProductsListComponent},
+  {path: 'new', component: ProductFormComponent},
+  {path: ':id', component: ProductDetailComponent}
 ];
 
 @NgModule({
@@ -18,9 +37,26 @@ const productsRoutes: Routes = [
     CommonModule,
     StoreModule.forFeature('products', reducer),
     EffectsModule.forFeature([ProductEffects]),
-    RouterModule.forChild(productsRoutes)
+    RouterModule.forChild(productsRoutes),
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatCardModule,
+    MatSelectModule,
+    MatStepperModule,
+    MatProgressSpinnerModule,
+    MatIconModule,
+    MatListModule,
+    MatDividerModule,
+    FormsModule
   ],
-  declarations: [ProductsListComponent]
+  declarations: [
+    ProductsListComponent,
+    ProductFormComponent,
+    StorePipe,
+    ProductListItemComponent,
+    ProductDetailComponent
+  ]
 })
 export class ProductsModule {
 

@@ -1,14 +1,22 @@
+export interface Size {
+  name: string;
+  id: string;
+}
+
+export interface Update {
+  price: number;
+  isAvailable: boolean;
+}
+
 export interface Product {
-  _id?: string;
   url: string;
   store: string;
-  size?: {
-    name: string;
-    id: string;
-  };
-  updates?: [{
-    price: number,
-    isAvailable: boolean
-  }];
+  _id?: string;
+  name?: string;
+  price?: number;
+  size?: Size;
+  sizes?: Size[];
+  updates?: Update[];
+  latestUpdate?: Update;
   isActive?: boolean;
 }
