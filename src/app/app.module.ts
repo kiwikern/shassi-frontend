@@ -11,10 +11,12 @@ import { RouterModule, Routes } from '@angular/router';
 import { AuthModule, authRoutes } from './auth/auth.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { EffectsModule } from '@ngrx/effects';
-import { MatButtonModule, MatIconModule, MatToolbarModule } from '@angular/material';
+import { MatButtonModule, MatIconModule, MatSnackBarModule, MatToolbarModule } from '@angular/material';
 import { AuthInterceptor } from './auth/auth-interceptor';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LoginGuard } from './auth/login.guard';
+import { I18nService } from './i18n.service';
+import { InfoSnackBarService } from './info-snack-bar.service';
 
 const routes: Routes = [
   {path: '', pathMatch: 'full', redirectTo: 'products'},
@@ -37,10 +39,13 @@ const routes: Routes = [
     AuthModule,
     MatToolbarModule,
     MatButtonModule,
+    MatSnackBarModule,
     MatIconModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
+    I18nService,
+    InfoSnackBarService
   ],
   bootstrap: [AppComponent]
 })

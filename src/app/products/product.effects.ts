@@ -20,6 +20,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Product } from './product.model';
 import { of } from 'rxjs/observable/of';
+import { InfoSnackBarService } from '../info-snack-bar.service';
 
 
 @Injectable()
@@ -27,7 +28,8 @@ export class ProductEffects {
 
   constructor(private actions$: Actions,
               private http: HttpClient,
-              private router: Router) {
+              private router: Router,
+              private snackBar: InfoSnackBarService) {
   }
 
   @Effect() load$: Observable<Action> = this.actions$.pipe(
@@ -63,31 +65,34 @@ export class ProductEffects {
     const actions = [action];
     switch (error.status) {
       case 0:
-        console.log('SnackBar.Message.Error.NoInternetConnection');
+        this.snackBar.open('SnackBar.Message.Error.NoInternetConnection');
         break;
       case 401:
-        console.log('SnackBar.Message.Error.LoginNeeded');
+        this.snackBar.open('SnackBar.Message.Error.LoginNeeded');
         actions.push(new Logout());
         break;
       case 404:
-        console.log('SnackBar.Message.Error.NoFileFoundForEdit');
+        this.snackBar.open('SnackBar.Message.Error.NoFileFoundForEdit');
         // actions.push(new RequestLoadProducts());
         break;
       case 409:
-        console.log('SnackBar.Message.Error.FileAlreadyExists');
+        this.snackBar.open('SnackBar.Message.Error.FileAlreadyExists');
+        if (error.error && error.error._id) {
+          this.router.navigate(['products', error.error._id]);
+        }
         break;
       case 400:
-        console.log(error.error);
+        this.snackBar.open(error.error);
         break;
       case 504:
-        console.log('SnackBar.Message.Error.ServerNotReachable');
+        this.snackBar.open('SnackBar.Message.Error.ServerNotReachable');
         break;
       case 500:
-        console.log('SnackBar.Message.Error.ServerError');
+        this.snackBar.open('SnackBar.Message.Error.ServerError');
         break;
       default:
-        console.log(error);
-        console.log('SnackBar.Message.Error.ClientError');
+        console.error(error);
+        this.snackBar.open('SnackBar.Message.Error.ClientError');
     }
     return of(actions).pipe(switchMap(a => a));
   }
