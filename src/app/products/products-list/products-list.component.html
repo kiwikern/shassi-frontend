@@ -1,5 +1,5 @@
 <mat-card>
-  <ng-container *ngFor="let p of products$ | async; let last = last;">
+  <ng-container *ngFor="let p of products$ | async; let last = last">
     <app-product-list-item
       [name]="p.name"
       [url]="p.url"
@@ -12,9 +12,15 @@
     </app-product-list-item>
     <mat-divider *ngIf="!last"></mat-divider>
   </ng-container>
+
+  <div *ngIf="(products$ | async)?.length === 0">
+    <p>You don't have any products, yet.</p>
+    <p>Add one to your list, receive notifications, when its price or availability changes and make a great bargain.</p>
+  </div>
 </mat-card>
 
 <app-fab-button
   icon="add_to_cart"
   routerLink="new"
+  [shouldShake]="(products$ | async)?.length === 0"
 ></app-fab-button>

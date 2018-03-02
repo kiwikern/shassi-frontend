@@ -1,5 +1,6 @@
 <button mat-fab
         class="fab-button"
+        [ngClass]="{shake: shouldShake}"
         *ngIf="showButton"
         [type]="type"
         [@flyInOut]

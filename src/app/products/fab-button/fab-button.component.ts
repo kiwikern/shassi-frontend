@@ -25,6 +25,7 @@ export class FabButtonComponent implements OnInit {
   @Input() icon: string;
   @Input() showButton = true;
   @Input() type = 'button';
+  @Input() shouldShake = false;
 
   constructor() {
   }
