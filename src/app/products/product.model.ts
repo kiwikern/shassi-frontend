@@ -8,6 +8,7 @@ export interface Size {
 export interface Update {
   price: number;
   isAvailable: boolean;
+  createdAt?: Date;
 }
 
 export interface Product {
