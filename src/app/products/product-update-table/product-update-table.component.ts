@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Update } from '../product.model';
 import { MatSort, MatTableDataSource } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
@@ -8,7 +8,8 @@ import { Subject } from 'rxjs/Subject';
 @Component({
   selector: 'app-product-update-table',
   templateUrl: './product-update-table.component.html',
-  styleUrls: ['./product-update-table.component.css']
+  styleUrls: ['./product-update-table.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProductUpdateTableComponent implements OnInit, OnDestroy, AfterViewInit {
 

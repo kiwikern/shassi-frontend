@@ -1,4 +1,4 @@
-import { Component, Directive, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Directive, Input, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { IAppState } from '../../reducers';
 import { RegisterRequest } from '../auth.actions';
@@ -7,7 +7,8 @@ import { AbstractControl, NG_VALIDATORS, Validator } from '@angular/forms';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css']
+  styleUrls: ['./register.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RegisterComponent implements OnInit {
 
