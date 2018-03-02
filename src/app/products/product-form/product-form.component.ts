@@ -50,7 +50,6 @@ export class ProductFormComponent implements OnInit {
       .pipe(filter(p => !!p))
       .subscribe(product => {
         this.product = product;
-        this.product.size = null;
       });
     this.hasSavedSuccessfully()
       .subscribe(success => success ? stepper.next() : '');

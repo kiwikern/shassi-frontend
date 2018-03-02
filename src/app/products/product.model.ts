@@ -17,10 +17,11 @@ export interface Product {
   _id?: string;
   name?: string;
   price?: number;
+  isAvailable?: boolean;
   size?: Size;
+  sizeName?: string;
   sizes?: Size[];
   updates?: Update[];
-  latestUpdate?: Update;
   isActive?: boolean;
   createdAt?: Date;
 }

@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, HostListener, Input, OnInit } from '@angular/core';
-import { Size, Update } from '../product.model';
+import { Product } from '../product.model';
 import { Router } from '@angular/router';
 
 @Component({
@@ -10,16 +10,10 @@ import { Router } from '@angular/router';
 })
 export class ProductListItemComponent implements OnInit {
 
-  @Input() name: string;
-  @Input() id: string;
-  @Input() store: string;
-  @Input() createdAt: Date;
-  @Input() url: string;
-  @Input() latestUpdate: Update;
-  @Input() size: Size;
+  @Input() product: Product;
 
   @HostListener('click') onClick() {
-    this.router.navigate(['products', this.id]);
+    this.router.navigate(['products', this.product._id]);
   }
 
   constructor(private router: Router) { }

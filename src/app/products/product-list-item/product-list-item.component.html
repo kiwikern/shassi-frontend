@@ -1,16 +1,16 @@
 <div class="latest-state">
-  <mat-icon class="icon">{{latestUpdate?.isAvailable ? 'shopping_cart' : 'remove_shopping_cart'}}</mat-icon>
-  <span class="price">{{latestUpdate?.price | currency:'EUR'}}</span>
+  <mat-icon class="icon">{{product?.isAvailable ? 'shopping_cart' : 'remove_shopping_cart'}}</mat-icon>
+  <span class="price">{{product?.price | currency:'EUR'}}</span>
 </div>
-<span class="name">{{name}}</span>
+<span class="name">{{product?.name}}</span>
 <div class="additional">
-  <span class="store">{{store | store}}</span>
+  <span class="store">{{product?.store | store}}</span>
   |
-  <span class="date">{{createdAt | date}}</span>
+  <span class="date">{{product?.createdAt | date}}</span>
 </div>
 <span class="action">
-  <a mat-icon-button (click)="$event.stopPropagation();" [attr.href]="url" target="_blank">
+  <a mat-icon-button (click)="$event.stopPropagation();" [attr.href]="product?.url" target="_blank">
     <mat-icon>open_in_browser</mat-icon>
   </a>
 </span>
-<span *ngIf="size">Size: {{size?.name}}</span>
+<span *ngIf="product?.sizeName">Size: {{product?.sizeName}}</span>
