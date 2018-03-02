@@ -19,13 +19,17 @@ import {
   MatListModule,
   MatProgressSpinnerModule,
   MatSelectModule,
-  MatStepperModule
+  MatSortModule,
+  MatStepperModule,
+  MatTableModule
 } from '@angular/material';
 import { FormsModule } from '@angular/forms';
 import { StorePipe } from './store.pipe';
 import { ProductListItemComponent } from './product-list-item/product-list-item.component';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
 import { FabButtonComponent } from './fab-button/fab-button.component';
+import { ProductUpdateTableComponent } from './product-update-table/product-update-table.component';
+import { CdkTableModule } from '@angular/cdk/table';
 
 const productsRoutes: Routes = [
   {path: '', component: ProductsListComponent},
@@ -49,6 +53,9 @@ const productsRoutes: Routes = [
     MatIconModule,
     MatListModule,
     MatDividerModule,
+    MatTableModule,
+    CdkTableModule,
+    MatSortModule,
     FormsModule
   ],
   declarations: [
@@ -57,7 +64,8 @@ const productsRoutes: Routes = [
     StorePipe,
     ProductListItemComponent,
     ProductDetailComponent,
-    FabButtonComponent
+    FabButtonComponent,
+    ProductUpdateTableComponent
   ]
 })
 export class ProductsModule {
