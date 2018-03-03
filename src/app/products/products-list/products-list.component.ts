@@ -15,7 +15,7 @@ import { animate, query, stagger, style, transition, trigger } from '@angular/an
   animations: [
     trigger('list', [
       transition('true => false', [
-        query('div.list-item', [
+        query('div.list-item:enter', [
           style({transform: 'scale(0.5)', opacity: 0}),
           stagger(300, [
             animate('1s cubic-bezier(.8, -0.6, 0.2, 1.5)',
