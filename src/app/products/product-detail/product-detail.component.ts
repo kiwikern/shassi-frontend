@@ -3,7 +3,7 @@ import { IAppState } from '../../reducers';
 import { Store } from '@ngrx/store';
 import { ActivatedRoute, Router } from '@angular/router';
 import { filter, map, switchMap, tap } from 'rxjs/operators';
-import { selectProductById } from '../product.reducer';
+import { selectIsLoading, selectProductById } from '../product.reducer';
 import { Observable } from 'rxjs/Observable';
 import { Product, Update } from '../product.model';
 import { DeleteProductRequest } from '../product.actions';
@@ -27,12 +27,19 @@ export class ProductDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.product$ = this.route.params.pipe(
+    const loadingFinished$ = this.store.select(selectIsLoading)
+      .pipe(filter(isLoading => !isLoading));
+
+    const product$ = this.route.params.pipe(
       map(params => params.id),
       switchMap(id => this.store.select(selectProductById(id))),
       tap(p => this.checkProduct(p)),
       filter(p => !!p)
     );
+
+    this.product$ = loadingFinished$
+      .pipe(switchMap(() => product$));
+
     this.updates$ = this.product$.pipe(
       map(p => p.updates),
       filter(u => !!u)
