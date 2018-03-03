@@ -4,6 +4,7 @@ import { IAppState } from './reducers';
 import { Logout } from './auth/auth.actions';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
+import { LoadProductsRequest } from './products/product.actions';
 
 @Component({
   selector: 'app-root',
@@ -27,6 +28,10 @@ export class AppComponent implements OnInit{
 
   logout() {
     this.store.dispatch(new Logout());
+  }
+
+  reload() {
+    this.store.dispatch(new LoadProductsRequest());
   }
 
 }
