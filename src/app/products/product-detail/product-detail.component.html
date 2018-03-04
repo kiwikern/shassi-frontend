@@ -1,5 +1,5 @@
 <mat-card>
-  <mat-card-title>
+  <mat-card-title [ngClass]="{'not-active': !(product$ | async)?.isActive}">
     {{(product$ | async)?.name}} ({{(product$ | async)?.price | currency:'EUR'}})
   </mat-card-title>
   <mat-card-subtitle>

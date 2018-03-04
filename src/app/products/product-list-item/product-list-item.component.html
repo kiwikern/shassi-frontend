@@ -2,7 +2,7 @@
   <mat-icon class="icon">{{product?.isAvailable ? 'shopping_cart' : 'remove_shopping_cart'}}</mat-icon>
   <span class="price">{{product?.price | currency:'EUR'}}</span>
 </div>
-<span class="name">{{product?.name}}</span>
+<span class="name" [ngClass]="{crossed: !product.isActive}">{{product?.name}}</span>
 <div class="additional">
   <span class="store">{{product?.store}}</span>
   |

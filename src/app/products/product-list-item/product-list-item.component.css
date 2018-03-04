@@ -42,3 +42,7 @@
 .additional {
   color: gray;
 }
+
+.crossed {
+  text-decoration: line-through;
+}
