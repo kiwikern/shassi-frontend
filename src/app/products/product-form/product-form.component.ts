@@ -64,6 +64,9 @@ export class ProductFormComponent implements OnInit {
       .subscribe((product: any) => {
         this._id = product._id;
         this.sizes = product.sizes;
+        if (this.sizes && this.sizes.length === 1) {
+          this.detailsFormGroup.patchValue({size: this.sizes[0]});
+        }
         this.detailsFormGroup.patchValue({
           name: product.name
         });

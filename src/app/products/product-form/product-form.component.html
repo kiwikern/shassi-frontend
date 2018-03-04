@@ -24,7 +24,7 @@
           </mat-form-field>
           <mat-form-field *ngIf="!(isSaving$ | async)">
             <mat-select #sizeSelect formControlName="size" placeholder="Size" required>
-              <mat-select-trigger>{{sizeSelect.value?.name}}</mat-select-trigger>
+              <mat-select-trigger>{{detailsFormGroup.get('size').value?.name}}</mat-select-trigger>
               <mat-option *ngFor="let s of sizes" [value]="s">
                 <mat-icon>{{s.isAvailable ? 'shopping_cart' : 'remove_shopping_cart'}}</mat-icon>
                 {{s.name}}
