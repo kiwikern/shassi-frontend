@@ -14,14 +14,12 @@ export interface Update {
 export interface Product {
   url: string;
   store: string;
-  _id?: string;
-  name?: string;
-  price?: number;
-  isAvailable?: boolean;
-  size?: Size;
-  sizeName?: string;
-  sizes?: Size[];
-  updates?: Update[];
-  isActive?: boolean;
-  createdAt?: Date;
+  _id: string;
+  name: string;
+  price: number;
+  isAvailable: boolean;
+  sizeName: string;
+  updates: Update[];
+  isActive: boolean;
+  createdAt: Date;
 }

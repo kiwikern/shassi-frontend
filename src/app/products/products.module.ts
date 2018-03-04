@@ -23,8 +23,7 @@ import {
   MatStepperModule,
   MatTableModule
 } from '@angular/material';
-import { FormsModule } from '@angular/forms';
-import { StorePipe } from './store.pipe';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProductListItemComponent } from './product-list-item/product-list-item.component';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
 import { FabButtonComponent } from './fab-button/fab-button.component';
@@ -56,12 +55,12 @@ const productsRoutes: Routes = [
     MatTableModule,
     CdkTableModule,
     MatSortModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   declarations: [
     ProductsListComponent,
     ProductFormComponent,
-    StorePipe,
     ProductListItemComponent,
     ProductDetailComponent,
     FabButtonComponent,

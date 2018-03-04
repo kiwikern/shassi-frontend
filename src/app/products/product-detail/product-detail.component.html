@@ -3,8 +3,8 @@
     {{(product$ | async)?.name}} ({{(product$ | async)?.price | currency:'EUR'}})
   </mat-card-title>
   <mat-card-subtitle>
-    <span *ngIf="(product$ | async)?.size">Size: {{(product$ | async)?.sizeName}} |</span>
-    {{(product$ | async)?.store | store}} |
+    <span *ngIf="(product$ | async)?.sizeName">Size: {{(product$ | async)?.sizeName}} |</span>
+    {{(product$ | async)?.store}} |
     {{(product$ | async)?.createdAt | date}}
   </mat-card-subtitle>
 

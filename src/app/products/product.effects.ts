@@ -47,7 +47,7 @@ export class ProductEffects {
   @Effect() add$: Observable<Action> = this.actions$.pipe(
     ofType(ProductActionTypes.AddProductRequest),
     mergeMap((action: AddProductRequest) =>
-      this.http.post<Product>('/api/products', action.payload.product).pipe(
+      this.http.post<Product>('/api/products', action.payload).pipe(
         map(product => new AddProduct({product})),
         catchError(err => this.handleError(err, new AddProductFail()))
       ))

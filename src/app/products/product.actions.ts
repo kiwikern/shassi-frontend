@@ -44,7 +44,7 @@ export class LoadProductsFail implements Action {
 export class AddProductRequest implements Action {
   readonly type = ProductActionTypes.AddProductRequest;
 
-  constructor(public payload: { product: Product }) {
+  constructor(public payload: { url: string }) {
   }
 }
 
