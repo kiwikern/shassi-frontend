@@ -7,9 +7,9 @@
   </button>
   <span>Shassi</span>
   <span style="flex: 1"></span>
-  <button mat-icon-button (click)="getTelegramAuth()"><mat-icon>chat</mat-icon></button>
-  <button mat-icon-button (click)="reload()"><mat-icon>refresh</mat-icon></button>
-  <button mat-icon-button (click)="logout()"><mat-icon>exit_to_app</mat-icon></button>
+  <button mat-icon-button (click)="getTelegramAuth()" *ngIf="jwt$ | async"><mat-icon>chat</mat-icon></button>
+  <button mat-icon-button (click)="reload()" *ngIf="jwt$ | async"><mat-icon>refresh</mat-icon></button>
+  <button mat-icon-button (click)="logout()" *ngIf="jwt$ | async"><mat-icon>exit_to_app</mat-icon></button>
 </mat-toolbar>
 
 <div class="margin">
