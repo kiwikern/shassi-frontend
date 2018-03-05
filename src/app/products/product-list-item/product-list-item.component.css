@@ -29,6 +29,9 @@
   grid-row: 1;
   align-self: center;
   font-size: larger;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .action {
