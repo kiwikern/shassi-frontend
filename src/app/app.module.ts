@@ -18,6 +18,7 @@ import { LoginGuard } from './auth/login.guard';
 import { I18nService } from './i18n.service';
 import { InfoSnackBarService } from './info-snack-bar.service';
 import { TelegramService } from './telegram.service';
+import { SwUpdatesService } from './sw-updates.service';
 
 const routes: Routes = [
   {path: '', pathMatch: 'full', redirectTo: 'products'},
@@ -48,7 +49,8 @@ const routes: Routes = [
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
     I18nService,
     InfoSnackBarService,
-    TelegramService
+    TelegramService,
+    SwUpdatesService
   ],
   bootstrap: [AppComponent]
 })

@@ -8,6 +8,7 @@ import { LoadProductsRequest } from './products/product.actions';
 import { TelegramService } from './telegram.service';
 import { selectJwt } from './auth/auth.reducer';
 import { Observable } from 'rxjs/Observable';
+import { SwUpdatesService } from './sw-updates.service';
 
 @Component({
   selector: 'app-root',
@@ -23,7 +24,8 @@ export class AppComponent implements OnInit {
   constructor(private store: Store<IAppState>,
               private router: Router,
               private route: ActivatedRoute,
-              private telegramService: TelegramService) {
+              private telegramService: TelegramService,
+              private swUpdatesService: SwUpdatesService) {
   }
 
   ngOnInit() {
