@@ -5,6 +5,7 @@ import { Logout } from './auth/auth.actions';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { LoadProductsRequest } from './products/product.actions';
+import { TelegramService } from './telegram.service';
 
 @Component({
   selector: 'app-root',
@@ -12,12 +13,13 @@ import { LoadProductsRequest } from './products/product.actions';
   styleUrls: ['./app.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit {
 
   showBackNavigation = false;
 
   constructor(private store: Store<IAppState>,
-              private router: Router) {
+              private router: Router,
+              private telegramService: TelegramService) {
   }
 
   ngOnInit() {
@@ -32,6 +34,10 @@ export class AppComponent implements OnInit{
 
   reload() {
     this.store.dispatch(new LoadProductsRequest());
+  }
+
+  getTelegramAuth() {
+    this.telegramService.openTelegramAuthUrl();
   }
 
 }

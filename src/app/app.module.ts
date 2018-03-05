@@ -13,10 +13,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { EffectsModule } from '@ngrx/effects';
 import { MatButtonModule, MatIconModule, MatSnackBarModule, MatToolbarModule } from '@angular/material';
 import { AuthInterceptor } from './auth/auth-interceptor';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { LoginGuard } from './auth/login.guard';
 import { I18nService } from './i18n.service';
 import { InfoSnackBarService } from './info-snack-bar.service';
+import { TelegramService } from './telegram.service';
 
 const routes: Routes = [
   {path: '', pathMatch: 'full', redirectTo: 'products'},
@@ -36,6 +37,7 @@ const routes: Routes = [
     ServiceWorkerModule.register('/ngsw-worker.js', {enabled: environment.production}),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     RouterModule.forRoot(routes),
+    HttpClientModule,
     AuthModule,
     MatToolbarModule,
     MatButtonModule,
@@ -45,7 +47,8 @@ const routes: Routes = [
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
     I18nService,
-    InfoSnackBarService
+    InfoSnackBarService,
+    TelegramService
   ],
   bootstrap: [AppComponent]
 })
