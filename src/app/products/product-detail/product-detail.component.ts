@@ -6,7 +6,7 @@ import { filter, map, switchMap, tap } from 'rxjs/operators';
 import { selectIsLoading, selectProductById } from '../product.reducer';
 import { Observable } from 'rxjs/Observable';
 import { Product, Update } from '../product.model';
-import { DeleteProductRequest } from '../product.actions';
+import { DeleteProductRequest, MarkProductReadRequest } from '../product.actions';
 import { InfoSnackBarService } from '../../info-snack-bar.service';
 
 @Component({
@@ -58,6 +58,8 @@ export class ProductDetailComponent implements OnInit {
     if (!product) {
       this.router.navigate(['/products']);
       this.snackBar.open('SnackBar.Message.Error.ProductNotFound');
+    } else if (product.hasUnreadUpdate) {
+      this.store.dispatch(new MarkProductReadRequest({id: product._id}));
     }
   }
 }

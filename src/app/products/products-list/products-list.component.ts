@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 import { IAppState } from '../../reducers';
 import { selectAllProducts, selectIsLoading } from '../product.reducer';
 import { Product } from '../product.model';
-import { filter } from 'rxjs/operators';
+import { filter, map } from 'rxjs/operators';
 import { Observable } from 'rxjs/Observable';
 import { animate, query, stagger, style, transition, trigger } from '@angular/animations';
 
@@ -21,7 +21,7 @@ import { animate, query, stagger, style, transition, trigger } from '@angular/an
             animate('1s cubic-bezier(.8, -0.6, 0.2, 1.5)',
               style({transform: 'scale(1)', opacity: 1})
             )]
-          )], {optional: true})
+          )], {optional: true, limit: 10})
       ])
     ])
   ]
@@ -36,7 +36,10 @@ export class ProductsListComponent implements OnInit {
 
   ngOnInit() {
     this.products$ = this.store.select(selectAllProducts)
-      .pipe(filter(p => !!p));
+      .pipe(
+        filter(p => !!p),
+        map(products => products.sort((p1, p2) => p1.updatedAt > p2.updatedAt ? -1 : 1))
+      );
 
     this.isLoading$ = this.store.select(selectIsLoading);
   }

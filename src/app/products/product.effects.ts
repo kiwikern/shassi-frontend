@@ -11,6 +11,9 @@ import {
   LoadProducts,
   LoadProductsFail,
   LoadProductsRequest,
+  MarkProductRead,
+  MarkProductReadFail,
+  MarkProductReadRequest,
   ProductActionTypes,
   UpdateProduct,
   UpdateProductFail,
@@ -72,6 +75,20 @@ export class ProductEffects {
         map(() => new DeleteProduct({id})),
         tap(() => this.snackBar.open('SnackBar.Message.Error.ProductDeleted')),
         catchError(err => this.handleError(err, new DeleteProductFail()))
+      );
+    })
+  );
+
+  @Effect() markRead$: Observable<Action> = this.actions$.pipe(
+    ofType(ProductActionTypes.MarkProductReadRequest),
+    mergeMap((action: MarkProductReadRequest) => {
+      const id: string = action.payload.id;
+      return this.http.post<string>(`/api/products/${id}/markread`, {}).pipe(
+        mergeMap(() => [
+          new MarkProductRead({id}),
+          new UpdateProduct({product: {id, changes: {hasUnreadUpdate: false}}})
+        ]),
+        catchError(err => this.handleError(err, new MarkProductReadFail()))
       );
     })
   );

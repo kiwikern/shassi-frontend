@@ -1,12 +1,14 @@
 <div class="latest-state">
-  <mat-icon class="icon">{{product?.isAvailable ? 'shopping_cart' : 'remove_shopping_cart'}}</mat-icon>
+  <mat-icon class="icon" [color]="product.hasUnreadUpdate ? 'accent' : ''">
+    {{product?.isAvailable ? 'shopping_cart' : 'remove_shopping_cart'}}
+  </mat-icon>
   <span class="price">{{product?.price | currency:'EUR'}}</span>
 </div>
 <span class="name" [ngClass]="{crossed: !product.isActive}">{{product?.name}}</span>
 <div class="additional">
   <span class="store">{{product?.store}}</span>
   |
-  <span class="date">{{product?.createdAt | date}}</span>
+  <span class="date">{{product?.updatedAt | date}}</span>
 </div>
 <span class="action">
   <a mat-icon-button (click)="$event.stopPropagation();" [attr.href]="product?.url" target="_blank">

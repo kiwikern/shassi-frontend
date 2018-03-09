@@ -22,4 +22,6 @@ export interface Product {
   updates: Update[];
   isActive: boolean;
   createdAt: Date;
+  updatedAt: Date;
+  hasUnreadUpdate: boolean;
 }
