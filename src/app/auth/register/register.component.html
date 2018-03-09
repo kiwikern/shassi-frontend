@@ -21,8 +21,7 @@
                [(ngModel)]="email"
                type="email"
                autocomplete="mail"
-               pattern=".+@.+\..+"
-               required>
+               pattern=".+@.+\..+">
         <mat-error *ngIf="mail.validity && email">Email is invalid.</mat-error>
         <mat-error *ngIf="mail.validity && !email">Email is required.</mat-error>
       </mat-form-field>
