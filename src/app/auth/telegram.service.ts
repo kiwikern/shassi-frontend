@@ -1,26 +1,32 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { filter, map, take } from 'rxjs/operators';
-import { InfoSnackBarService } from './info-snack-bar.service';
-import { environment } from '../environments/environment';
+import { filter, map } from 'rxjs/operators';
+import { InfoSnackBarService } from '../info-snack-bar.service';
+import { environment } from '../../environments/environment';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Injectable()
 export class TelegramService {
 
   constructor(private http: HttpClient,
-              private snackBar: InfoSnackBarService) {
+              private snackBar: InfoSnackBarService,
+              private route: ActivatedRoute,
+              private router: Router) {
+    this.reactOnQueryParam();
   }
-
   openTelegramAuthUrl() {
     return this.http.get<string>('/api/user/telegram', {responseType: 'text' as 'json'})
       .pipe(
-        take(1),
         filter(token => !!token),
-        map(token => `https://telegram.me/${environment.telegramBotName}?start=${token}`)
+        map(token => `${this.getTelegramBotUrl()}?start=${token}`)
       ).subscribe(
         url => window.open(url, '_blank'),
         err => this.handleError(err)
-        );
+      );
+  }
+
+  getTelegramBotUrl(): string {
+    return `https://telegram.me/${environment.telegramBotName}`;
   }
 
   private handleError(err: HttpErrorResponse) {
@@ -41,6 +47,17 @@ export class TelegramService {
         this.snackBar.open('SnackBar.Message.Error.ClientError');
         console.error(err);
     }
+  }
+
+
+  private reactOnQueryParam() {
+    this.route.queryParams.pipe(
+      map(p => p.action === 'createTelegramToken'),
+      filter(p => !!p)
+    ).subscribe(() => {
+      this.router.navigate([], {queryParams: {action: null}, queryParamsHandling: 'merge'});
+      return this.openTelegramAuthUrl();
+    });
   }
 
 }

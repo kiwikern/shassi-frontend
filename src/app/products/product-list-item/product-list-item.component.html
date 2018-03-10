@@ -1,5 +1,5 @@
 <div class="latest-state">
-  <mat-icon class="icon" [color]="product.hasUnreadUpdate ? 'accent' : ''">
+  <mat-icon class="icon" [ngClass]="{isUnread: product.hasUnreadUpdate}">
     {{product?.isAvailable ? 'shopping_cart' : 'remove_shopping_cart'}}
   </mat-icon>
   <span class="price">{{product?.price | currency:'EUR'}}</span>

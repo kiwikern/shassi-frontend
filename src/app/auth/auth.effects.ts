@@ -1,14 +1,30 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { AuthActionTypes, LoginRequest, LoginSuccess, LogoutSuccess, RegisterRequest, RegisterSuccess } from './auth.actions';
+import {
+  AuthActionTypes,
+  GetUserFail,
+  GetUserRequest,
+  GetUserSuccess,
+  LoginFail,
+  LoginRequest,
+  LoginSuccess,
+  LogoutSuccess,
+  RegisterFail,
+  RegisterRequest,
+  RegisterSuccess,
+  UpdateUserFail,
+  UpdateUserRequest,
+  UpdateUserSuccess
+} from './auth.actions';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { Action } from '@ngrx/store';
-import { catchError, mergeMap, tap } from 'rxjs/operators';
+import { catchError, map, mergeMap, switchMap, tap } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
 import { InfoSnackBarService } from '../info-snack-bar.service';
 import { ClearProducts, LoadProductsRequest } from '../products/product.actions';
+import { User } from './user.model';
 
 @Injectable()
 export class AuthEffects {
@@ -22,9 +38,9 @@ export class AuthEffects {
   @Effect() login$: Observable<Action> = this.actions$.pipe(
     ofType(AuthActionTypes.LOGIN_REQUEST),
     mergeMap((action: LoginRequest) =>
-      this.http.post<{ jwt: string }>('/api/user/login', action.payload).pipe(
+      this.http.post<{ jwt: string, user: User }>('/api/user/login', action.payload).pipe(
         mergeMap(data => this.login(data)),
-        catchError(err => this.handleError(err))
+        catchError(err => this.handleError(err, new LoginFail()))
       ))
   );
 
@@ -36,7 +52,7 @@ export class AuthEffects {
           new RegisterSuccess(),
           new LoginRequest(action.payload)
         ]),
-        catchError(err => this.handleError(err))
+        catchError(err => this.handleError(err, new RegisterFail()))
       ))
   );
 
@@ -49,7 +65,26 @@ export class AuthEffects {
     ])
   );
 
-  private handleError(error) {
+  @Effect() getUser$: Observable<Action> = this.actions$.pipe(
+    ofType(AuthActionTypes.GET_USER_REQUEST),
+    mergeMap((action: GetUserRequest) =>
+      this.http.get<User>('/api/user').pipe(
+        map(user => new GetUserSuccess({user})),
+        catchError(err => this.handleError(err, new GetUserFail()))
+      ))
+  );
+
+  @Effect() updateUser$: Observable<Action> = this.actions$.pipe(
+    ofType(AuthActionTypes.UPDATE_USER_REQUEST),
+    mergeMap((action: UpdateUserRequest) =>
+      this.http.put<User>('/api/user', action.payload.user).pipe(
+        map(user => new UpdateUserSuccess({user})),
+        catchError(err => this.handleError(err, new UpdateUserFail()))
+      ))
+  );
+
+  private handleError(error, action) {
+    const actions = [action];
     switch (error.status) {
       case 401:
         this.snackBar.open('SnackBar.Message.Error.WrongPassword');
@@ -70,10 +105,10 @@ export class AuthEffects {
         this.snackBar.open('SnackBar.Message.Error.ClientError');
         console.error(error);
     }
-    return of({type: AuthActionTypes.LOGIN_FAIL});
+    return of(actions).pipe(switchMap(a => a));
   }
 
-  private login(data: { jwt: string }) {
+  private login(data: { jwt: string, user: User }) {
     this.router.navigate(['/products']);
     return [
       new LoginSuccess(data),

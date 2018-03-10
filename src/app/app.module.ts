@@ -17,13 +17,12 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { LoginGuard } from './auth/login.guard';
 import { I18nService } from './i18n.service';
 import { InfoSnackBarService } from './info-snack-bar.service';
-import { TelegramService } from './telegram.service';
 import { SwUpdatesService } from './sw-updates.service';
 
 const routes: Routes = [
   {path: '', pathMatch: 'full', redirectTo: 'products'},
   {path: 'auth', children: authRoutes},
-  {path: 'products', loadChildren: './products/products.module#ProductsModule', canActivateChild: [LoginGuard]}
+  {path: 'products', loadChildren: './products/products.module#ProductsModule', canLoad: [LoginGuard]}
 ];
 
 @NgModule({
@@ -32,7 +31,7 @@ const routes: Routes = [
   ],
   imports: [
     BrowserModule,
-    StoreModule.forRoot(reducers, { metaReducers }),
+    StoreModule.forRoot(reducers, {metaReducers}),
     EffectsModule.forRoot([]),
     BrowserAnimationsModule,
     ServiceWorkerModule.register('/ngsw-worker.js', {enabled: environment.production}),
@@ -49,9 +48,9 @@ const routes: Routes = [
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
     I18nService,
     InfoSnackBarService,
-    TelegramService,
     SwUpdatesService
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

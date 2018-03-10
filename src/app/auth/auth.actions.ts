@@ -1,14 +1,21 @@
 import { Action } from '@ngrx/store';
+import { User } from './user.model';
 
 export enum AuthActionTypes {
   LOGIN_REQUEST = '[Auth] LOGIN REQUEST',
-  LOGIN_SUCESS = '[Auth] LOGIN SUCESS',
+  LOGIN_SUCCESS = '[Auth] LOGIN SUCCESS',
   LOGIN_FAIL = '[Auth] LOGIN FAIL',
   REGISTER_REQUEST = '[Auth] REGISTER REQUEST',
-  REGISTER_SUCESS = '[Auth] REGISTER SUCESS',
+  REGISTER_SUCCESS = '[Auth] REGISTER SUCESS',
   REGISTER_FAIL = '[Auth] REGISTER FAIL',
   LOGOUT = '[Auth] LOGOUT',
-  LOGOUT_SUCCESS = '[Auth] LOGOUT SUCCESS'
+  LOGOUT_SUCCESS = '[Auth] LOGOUT SUCCESS',
+  GET_USER_REQUEST = '[Auth] GET USER REQUEST',
+  GET_USER_SUCCESS = '[Auth] GET USER SUCCESS',
+  GET_USER_FAIL = '[Auth] GET USER FAIL',
+  UPDATE_USER_REQUEST = '[Auth] UPDATE USER REQUEST',
+  UPDATE_USER_SUCCESS = '[Auth] UPDATE USER SUCCESS',
+  UPDATE_USER_FAIL = '[Auth] UPDATE USER FAIL',
 }
 
 export class LoginRequest implements Action {
@@ -19,9 +26,9 @@ export class LoginRequest implements Action {
 }
 
 export class LoginSuccess implements Action {
-  readonly type = AuthActionTypes.LOGIN_SUCESS;
+  readonly type = AuthActionTypes.LOGIN_SUCCESS;
 
-  constructor(public payload: { jwt: string }) {
+  constructor(public payload: { jwt: string, user: User }) {
   }
 }
 
@@ -40,7 +47,7 @@ export class RegisterRequest implements Action {
 }
 
 export class RegisterSuccess implements Action {
-  readonly type = AuthActionTypes.REGISTER_SUCESS;
+  readonly type = AuthActionTypes.REGISTER_SUCCESS;
 
   constructor() {
   }
@@ -67,7 +74,51 @@ export class LogoutSuccess implements Action {
   }
 }
 
+export class GetUserRequest implements Action {
+  readonly type = AuthActionTypes.GET_USER_REQUEST;
+
+  constructor() {
+  }
+}
+
+export class GetUserSuccess implements Action {
+  readonly type = AuthActionTypes.GET_USER_SUCCESS;
+
+  constructor(public payload: {user: User}) {
+  }
+}
+
+export class GetUserFail implements Action {
+  readonly type = AuthActionTypes.GET_USER_FAIL;
+
+  constructor() {
+  }
+}
+
+export class UpdateUserRequest implements Action {
+  readonly type = AuthActionTypes.UPDATE_USER_REQUEST;
+
+  constructor(public payload: {user: Partial<User>}) {
+  }
+}
+
+export class UpdateUserSuccess implements Action {
+  readonly type = AuthActionTypes.UPDATE_USER_SUCCESS;
+
+  constructor(public payload: {user: User}) {
+  }
+}
+
+export class UpdateUserFail implements Action {
+  readonly type = AuthActionTypes.UPDATE_USER_FAIL;
+
+  constructor() {
+  }
+}
+
 export type AuthActions =
   LoginFail | LoginRequest | LoginSuccess |
   RegisterRequest | RegisterFail | RegisterSuccess |
+  UpdateUserRequest | UpdateUserFail | UpdateUserSuccess |
+  GetUserRequest | GetUserFail | GetUserSuccess |
   Logout;

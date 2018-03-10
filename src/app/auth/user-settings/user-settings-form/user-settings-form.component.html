@@ -1,0 +1,50 @@
+<form #form="ngForm" (ngSubmit)="submit()">
+  <mat-card>
+    <mat-card-title>Settings</mat-card-title>
+
+    <mat-card-content class="column">
+      <mat-form-field>
+        <input placeholder="Email"
+               matInput
+               #mail="ngModel"
+               name="email"
+               [(ngModel)]="email"
+               type="email"
+               autocomplete="mail"
+               pattern=".+@.+\..+">
+        <mat-error *ngIf="!mail.valid">Email is invalid.</mat-error>
+      </mat-form-field>
+
+      <div *ngIf="isLinkedToTelegram">
+        <span>Your account is linked to Telegram.</span>
+        <a mat-button type="button" [attr.href]="botUrl" target="_blank">Open Shassi Bot</a>
+      </div>
+      <div *ngIf="!isLinkedToTelegram">
+        <span>Your account is not linked to Telegram.
+          Connect now to get Telegram notification on product updates and to
+          add products by sending product URLs to the Shassi Bot.</span>
+        <button mat-button type="button" (click)="linkTelegram.emit()">Connect</button>
+      </div>
+
+      <div class="notifications">
+        <h3> Notifications</h3>
+        <mat-checkbox name="emailNotification"
+                      [(ngModel)]="sendEmailNotifications"
+                      [indeterminate]="!mail.valid || !email"
+                      [disabled]="!mail.valid || !email">
+          E-Mail
+        </mat-checkbox>
+        <mat-checkbox name="telegramNotification"
+                      [(ngModel)]="sendTelegramNotifications"
+                      [indeterminate]="!isLinkedToTelegram"
+                      [disabled]="!isLinkedToTelegram">
+          Telegram
+        </mat-checkbox>
+      </div>
+    </mat-card-content>
+
+    <mat-card-actions align="end">
+      <button mat-raised-button color="primary" type="submit" [disabled]="form.pristine || !form.valid">Save</button>
+    </mat-card-actions>
+  </mat-card>
+</form>

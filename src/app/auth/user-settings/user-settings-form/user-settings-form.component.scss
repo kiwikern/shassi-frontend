@@ -1,0 +1,41 @@
+@import '~@angular/material/theming';
+
+:host {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin user-settings-theme($theme) {
+
+  $primary: map-get($theme, primary);
+  $accent: map-get($theme, accent);
+
+  .column {
+    display: flex;
+    flex-direction: column;
+  }
+
+  mat-form-field {
+    width: 100%;
+  }
+
+  form {
+    flex: 1;
+    min-width: 0;
+    max-width: 600px;
+  }
+
+  .notifications {
+    display: flex;
+    flex-direction: column;
+    border-left: solid 4px mat-color($primary);
+    padding-left: 10px;
+
+    h3 {
+      margin-top: 0;
+      margin-bottom: 3px;
+    }
+  }
+
+}
