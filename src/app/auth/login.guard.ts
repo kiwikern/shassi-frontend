@@ -30,7 +30,12 @@ export class LoginGuard implements CanLoad, CanActivate, CanActivateChild {
     if (this.jwt) {
       allowsRouteChange = true;
     } else {
-      this.router.navigate(['/auth']);
+      const hasAccount = localStorage.getItem('shassi.hasAccount');
+      if (hasAccount) {
+        this.router.navigate(['/auth']);
+      } else {
+        this.router.navigate(['/auth/register']);
+      }
       allowsRouteChange = false;
     }
     return allowsRouteChange;

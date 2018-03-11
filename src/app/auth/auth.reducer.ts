@@ -18,6 +18,7 @@ export function reducer(state = initialState, action: AuthActions): IAuthState {
       const jwt = action.payload.jwt;
       const user = action.payload.user;
       localStorage.setItem('shassi.jwt', jwt);
+      localStorage.setItem('shassi.hasAccount', 'true');
       return {jwt, user};
     case AuthActionTypes.GET_USER_SUCCESS:
       state = Object.assign({}, state, action.payload);
