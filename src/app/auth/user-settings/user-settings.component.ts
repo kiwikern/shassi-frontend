@@ -7,6 +7,7 @@ import { IAppState } from '../../reducers';
 import { Store } from '@ngrx/store';
 import { selectUser } from '../auth.reducer';
 import { GetUserRequest, UpdateUserRequest } from '../auth.actions';
+import { share } from 'rxjs/operators';
 
 @Component({
   selector: 'app-user-edit',
@@ -25,7 +26,7 @@ export class UserEditComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.user$ = this.store.select(selectUser);
+    this.user$ = this.store.select(selectUser).pipe(share());
     this.botUrl = this.telegramService.getTelegramBotUrl();
     this.store.dispatch(new GetUserRequest());
   }

@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { IAppState } from '../../reducers';
 import { Store } from '@ngrx/store';
 import { ActivatedRoute, Router } from '@angular/router';
-import { filter, map, switchMap, tap } from 'rxjs/operators';
+import { filter, map, shareReplay, switchMap, tap } from 'rxjs/operators';
 import { selectIsLoading, selectProductById } from '../product.reducer';
 import { Observable } from 'rxjs/Observable';
 import { Product, Update } from '../product.model';
@@ -38,7 +38,10 @@ export class ProductDetailComponent implements OnInit {
     );
 
     this.product$ = loadingFinished$
-      .pipe(switchMap(() => product$));
+      .pipe(
+        switchMap(() => product$),
+        shareReplay()
+      );
 
     this.updates$ = this.product$.pipe(
       map(p => p.updates),
