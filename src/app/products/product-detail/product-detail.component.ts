@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { ActivatedRoute, Router } from '@angular/router';
 import { filter, map, shareReplay, switchMap, tap } from 'rxjs/operators';
 import { selectIsLoading, selectProductById } from '../product.reducer';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { Product, Update } from '../product.model';
 import { DeleteProductRequest, MarkProductReadRequest } from '../product.actions';
 import { InfoSnackBarService } from '../../info-snack-bar.service';

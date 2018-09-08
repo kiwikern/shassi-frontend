@@ -1,9 +1,8 @@
 import { AfterViewInit, ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Update } from '../product.model';
 import { MatSort, MatTableDataSource } from '@angular/material';
-import { Observable } from 'rxjs/Observable';
+import { Observable, Subject } from 'rxjs';
 import { takeUntil, tap } from 'rxjs/operators';
-import { Subject } from 'rxjs/Subject';
 
 @Component({
   selector: 'app-product-update-table',

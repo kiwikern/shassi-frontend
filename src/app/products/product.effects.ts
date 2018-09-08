@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { Observable } from 'rxjs/Observable';
+import { Observable, of } from 'rxjs';
 import {
   AddProduct,
   AddProductFail,
@@ -25,7 +25,6 @@ import { Logout } from '../auth/auth.actions';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Product } from './product.model';
-import { of } from 'rxjs/observable/of';
 import { InfoSnackBarService } from '../info-snack-bar.service';
 
 

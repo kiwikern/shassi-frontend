@@ -1,6 +1,6 @@
 import { Injectable, NgZone } from '@angular/core';
 import { SwUpdate } from '@angular/service-worker';
-import { interval } from 'rxjs/observable/interval';
+import { interval } from 'rxjs';
 import { InfoSnackBarService } from './info-snack-bar.service';
 
 

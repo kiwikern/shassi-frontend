@@ -4,7 +4,7 @@ import { IAppState } from '../../reducers';
 import { selectAllProducts, selectIsLoading } from '../product.reducer';
 import { Product } from '../product.model';
 import { filter, map } from 'rxjs/operators';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { animate, query, stagger, style, transition, trigger } from '@angular/animations';
 
 @Component({

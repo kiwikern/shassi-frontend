@@ -6,7 +6,7 @@ import { Store } from '@ngrx/store';
 import { AddProductRequest, UpdateProductRequest } from '../product.actions';
 import { selectHasSavingError, selectIsSaving, selectProductByUrl } from '../product.reducer';
 import { filter, map, switchMap, take } from 'rxjs/operators';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 

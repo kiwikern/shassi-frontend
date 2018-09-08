@@ -18,10 +18,9 @@ import {
 } from './auth.actions';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
+import { Observable, of } from 'rxjs';
 import { Action } from '@ngrx/store';
 import { catchError, map, mergeMap, switchMap, tap } from 'rxjs/operators';
-import { of } from 'rxjs/observable/of';
 import { InfoSnackBarService } from '../info-snack-bar.service';
 import { ClearProducts, LoadProductsRequest } from '../products/product.actions';
 import { User } from './user.model';

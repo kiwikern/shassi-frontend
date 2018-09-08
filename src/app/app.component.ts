@@ -6,7 +6,7 @@ import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { LoadProductsRequest } from './products/product.actions';
 import { selectJwt } from './auth/auth.reducer';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { SwUpdatesService } from './sw-updates.service';
 
 @Component({
