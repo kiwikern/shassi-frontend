@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, CanActivateChild, CanLoad, Route, Router, RouterStateSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
-import { Store } from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
 import { selectJwt } from './auth.reducer';
 import { IAppState } from '../reducers';
 
@@ -10,7 +10,7 @@ export class LoginGuard implements CanLoad, CanActivate, CanActivateChild {
   private jwt;
   constructor(private store: Store<IAppState>,
               private router: Router) {
-    store.select(selectJwt).subscribe(jwt => this.jwt = jwt);
+    store.pipe(select(selectJwt)).subscribe(jwt => this.jwt = jwt);
   }
 
   canLoad(route: Route): Observable<boolean> | Promise<boolean> | boolean {
