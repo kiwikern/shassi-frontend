@@ -1,0 +1,35 @@
+<div class="centered">
+  <button mat-icon-button (click)="isOpen = !isOpen" [ngClass]="(isActive$ | async) ? 'isActive' : ''">
+    <mat-icon>filter_list</mat-icon>
+  </button>
+</div>
+
+<div *ngIf="isOpen">
+  <div class="row">
+    <mat-form-field>
+      <mat-select placeholder="Stores" multiple
+                  [value]="selectedStores$ | async"
+                  (selectionChange)="updateSelectedStores($event.value)">
+        <mat-option *ngFor="let store of availableStores$ | async" [value]="store">{{store}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button mat-icon-button (click)="updateSelectedStores([])">
+      <mat-icon>delete</mat-icon>
+    </button>
+  </div>
+
+  <div class="row bottom-space">
+    <mat-form-field>
+      <input #nameInput matInput name="name"
+             placeholder="Product name"
+             type="search"
+             [value]="name$ | async"
+             (keyup)="updateSelectedName(nameInput.value)">
+    </mat-form-field>
+    <button mat-icon-button (click)="updateSelectedName('')">
+      <mat-icon>delete</mat-icon>
+    </button>
+  </div>
+
+  <mat-divider></mat-divider>
+</div>

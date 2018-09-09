@@ -1,5 +1,6 @@
 <mat-card [@list]="isLoading$ | async">
-  <div class="list-item" *ngFor="let p of products$ | async; let last = last">
+  <app-product-filter></app-product-filter>
+  <div class="list-item" *ngFor="let p of products$ | async | productFilter:(filter$ | async); let last = last">
     <app-product-list-item [product]="p"></app-product-list-item>
     <mat-divider *ngIf="!last"></mat-divider>
   </div>

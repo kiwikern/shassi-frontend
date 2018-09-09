@@ -9,6 +9,8 @@ export interface ProductState extends EntityState<Product> {
   isSaving: boolean;
   hasSavingError: boolean;
   isLoading: boolean;
+  filteredStores: string[];
+  filteredName: string;
 }
 
 export const adapter: EntityAdapter<Product> = createEntityAdapter<Product>({
@@ -19,7 +21,9 @@ export const initialState: ProductState = adapter.getInitialState({
   // additional entity state properties
   isSaving: false,
   hasSavingError: false,
-  isLoading: false
+  isLoading: false,
+  filteredStores: [],
+  filteredName: ''
 });
 
 export function reducer(state = initialState,
@@ -80,6 +84,16 @@ export function reducer(state = initialState,
       return adapter.removeAll(state);
     }
 
+    case ProductActionTypes.UpdateFilteredStores: {
+      state = Object.assign({}, state, {filteredStores: action.payload.stores});
+      return state;
+    }
+
+    case ProductActionTypes.UpdateFilteredName: {
+      state = Object.assign({}, state, {filteredName: action.payload.name});
+      return state;
+    }
+
     default: {
       return state;
     }
@@ -98,6 +112,15 @@ export const selectAllProducts = createSelector(selectProducts, selectAll);
 export const selectProductEntities = createSelector(selectProducts, selectEntities);
 export const selectProductById = id => createSelector(selectProductEntities, (store: Dictionary<Product>) => store[id]);
 export const selectProductByUrl = url => createSelector(selectAllProducts, (store: Product[]) => store.find(p => p.url === url));
+
+// Filter selectors
+export const selectAvailableStores = createSelector(selectAllProducts, (store: Product[]) => {
+  const stores = store.map(s => s.store);
+  const seen = new Set();
+  return stores.filter(s => seen.has(s) ? false : seen.add(s));
+});
+export const selectFilteredStores = createSelector(selectProducts, store => store.filteredStores);
+export const selectFilteredName = createSelector(selectProducts, store => store.filteredName);
 
 export const selectIsSaving = createSelector(selectProducts, state => state.isSaving);
 export const selectIsLoading = createSelector(selectProducts, state => state.isLoading);

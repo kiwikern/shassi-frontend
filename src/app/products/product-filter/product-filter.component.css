@@ -1,0 +1,18 @@
+.centered {
+  display: flex;
+  justify-content: center;
+}
+
+.isActive {
+  color: #ff4081;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.bottom-space {
+  margin-bottom: 20px;
+}

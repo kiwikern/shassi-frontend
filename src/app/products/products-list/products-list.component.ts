@@ -1,11 +1,12 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
 import { IAppState } from '../../reducers';
-import { selectAllProducts, selectIsLoading } from '../product.reducer';
+import { selectAllProducts, selectFilteredName, selectFilteredStores, selectIsLoading } from '../product.reducer';
 import { Product } from '../product.model';
 import { filter, map } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { combineLatest, Observable } from 'rxjs';
 import { animate, query, stagger, style, transition, trigger } from '@angular/animations';
+import { FilterSetting } from '../product-filter/product-filter.pipe';
 
 @Component({
   selector: 'app-products-list',
@@ -29,19 +30,28 @@ import { animate, query, stagger, style, transition, trigger } from '@angular/an
 export class ProductsListComponent implements OnInit {
 
   products$: Observable<Product[]>;
+  filter$: Observable<FilterSetting>;
   isLoading$: Observable<boolean>;
 
   constructor(private store: Store<IAppState>) {
   }
 
   ngOnInit() {
-    this.products$ = this.store.select(selectAllProducts)
-      .pipe(
-        filter(p => !!p),
-        map(products => products.sort((p1, p2) => p1.updatedAt > p2.updatedAt ? -1 : 1))
-      );
+    this.products$ = this.store.pipe(
+      select(selectAllProducts),
+      filter(p => !!p),
+      map(products => products.sort((p1, p2) => p1.updatedAt > p2.updatedAt ? -1 : 1))
+    );
 
-    this.isLoading$ = this.store.select(selectIsLoading);
+    this.isLoading$ = this.store.pipe(select(selectIsLoading));
+
+    const filteredName$ = this.store.pipe(select(selectFilteredName));
+    const filteredStores$ = this.store.pipe(select(selectFilteredStores));
+
+    this.filter$ = combineLatest(filteredName$, filteredStores$)
+      .pipe(
+        map(([filteredName, filteredStores, ...rest]) => ({filteredName, filteredStores}))
+      );
   }
 
 }
