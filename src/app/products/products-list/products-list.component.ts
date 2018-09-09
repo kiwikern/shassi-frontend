@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { IAppState } from '../../reducers';
 import { selectAllProducts, selectFilteredName, selectFilteredStores, selectIsLoading } from '../product.reducer';
@@ -7,6 +7,8 @@ import { filter, map } from 'rxjs/operators';
 import { combineLatest, Observable } from 'rxjs';
 import { animate, query, stagger, style, transition, trigger } from '@angular/animations';
 import { FilterSetting } from '../product-filter/product-filter.pipe';
+import { ActivatedRoute, Router, Scroll } from '@angular/router';
+import { ViewportScroller } from '@angular/common';
 
 @Component({
   selector: 'app-products-list',
@@ -27,13 +29,25 @@ import { FilterSetting } from '../product-filter/product-filter.pipe';
     ])
   ]
 })
-export class ProductsListComponent implements OnInit {
+export class ProductsListComponent implements OnInit, AfterViewInit {
 
+  scrollPosition: [number, number];
   products$: Observable<Product[]>;
   filter$: Observable<FilterSetting>;
   isLoading$: Observable<boolean>;
 
-  constructor(private store: Store<IAppState>) {
+  constructor(private store: Store<IAppState>,
+              route: ActivatedRoute, router: Router, private viewportScroller: ViewportScroller) {
+    // see https://github.com/angular/angular/issues/24547
+    router.events.pipe(
+      filter(e => e instanceof Scroll)
+    ).subscribe(e => {
+      if ((e as Scroll).position) {
+        this.scrollPosition = (e as Scroll).position;
+      } else {
+        this.scrollPosition = [0, 0];
+      }
+    });
   }
 
   ngOnInit() {
@@ -52,6 +66,10 @@ export class ProductsListComponent implements OnInit {
       .pipe(
         map(([filteredName, filteredStores, ...rest]) => ({filteredName, filteredStores}))
       );
+  }
+
+  ngAfterViewInit() {
+    this.viewportScroller.scrollToPosition(this.scrollPosition);
   }
 
 }

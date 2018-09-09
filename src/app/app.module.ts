@@ -36,7 +36,7 @@ const routes: Routes = [
     BrowserAnimationsModule,
     ServiceWorkerModule.register('/ngsw-worker.js', {enabled: environment.production}),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
-    RouterModule.forRoot(routes),
+    RouterModule.forRoot(routes, {scrollPositionRestoration: 'enabled', anchorScrolling: 'enabled'}),
     HttpClientModule,
     AuthModule,
     MatToolbarModule,

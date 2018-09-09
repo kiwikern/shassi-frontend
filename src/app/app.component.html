@@ -1,5 +1,5 @@
 <mat-toolbar color="primary">
-  <button *ngIf="showBackNavigation" mat-icon-button type="button" routerLink="/products">
+  <button *ngIf="showBackNavigation" mat-icon-button type="button" (click)="navigateBack()">
     <mat-icon>arrow_back</mat-icon>
   </button>
   <button *ngIf="!showBackNavigation" mat-icon-button type="button" disabled="true">

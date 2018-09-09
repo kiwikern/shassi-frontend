@@ -8,6 +8,7 @@ import { LoadProductsRequest } from './products/product.actions';
 import { selectJwt } from './auth/auth.reducer';
 import { Observable } from 'rxjs';
 import { SwUpdatesService } from './sw-updates.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-root',
@@ -22,6 +23,7 @@ export class AppComponent implements OnInit {
 
   constructor(private store: Store<IAppState>,
               private router: Router,
+              private location: Location,
               private swUpdatesService: SwUpdatesService) {
   }
 
@@ -39,6 +41,10 @@ export class AppComponent implements OnInit {
 
   reload() {
     this.store.dispatch(new LoadProductsRequest());
+  }
+
+  navigateBack() {
+    this.location.back();
   }
 
 }
