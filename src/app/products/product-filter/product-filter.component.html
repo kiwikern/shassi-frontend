@@ -13,7 +13,9 @@
         <mat-option *ngFor="let store of availableStores$ | async" [value]="store">{{store}}</mat-option>
       </mat-select>
     </mat-form-field>
-    <button mat-icon-button (click)="updateSelectedStores([])">
+    <button mat-icon-button
+            (click)="updateSelectedStores([])"
+            [disabled]="(selectedStores$ | async)?.length === 0">
       <mat-icon>delete</mat-icon>
     </button>
   </div>
@@ -26,7 +28,9 @@
              [value]="name$ | async"
              (keyup)="updateSelectedName(nameInput.value)">
     </mat-form-field>
-    <button mat-icon-button (click)="updateSelectedName('')">
+    <button mat-icon-button
+            (click)="updateSelectedName('')"
+            [disabled]="!nameInput.value">
       <mat-icon>delete</mat-icon>
     </button>
   </div>
