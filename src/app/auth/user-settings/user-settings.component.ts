@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { TelegramService } from '../telegram.service';
 import { IAppState } from '../../reducers';
-import { Store } from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
 import { selectUser } from '../auth.reducer';
 import { GetUserRequest, UpdateUserRequest } from '../auth.actions';
 import { share } from 'rxjs/operators';
@@ -26,7 +26,10 @@ export class UserEditComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.user$ = this.store.select(selectUser).pipe(share());
+    this.user$ = this.store.pipe(
+      select(selectUser),
+      share()
+    );
     this.botUrl = this.telegramService.getTelegramBotUrl();
     this.store.dispatch(new GetUserRequest());
   }
