@@ -1,8 +1,8 @@
 <mat-toolbar color="primary">
-  <button *ngIf="showBackNavigation" mat-icon-button type="button" (click)="navigateBack()">
+  <button *ngIf="showBackNavigation$ | async" mat-icon-button type="button" (click)="navigateBack()">
     <mat-icon>arrow_back</mat-icon>
   </button>
-  <button *ngIf="!showBackNavigation" mat-icon-button type="button" disabled="true">
+  <button *ngIf="!(showBackNavigation$ | async)" mat-icon-button type="button" disabled="true">
     <mat-icon style="color: white">store</mat-icon>
   </button>
   <span>Shassi</span>

@@ -1,14 +1,12 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
 import { IAppState } from './reducers';
 import { Logout } from './auth/auth.actions';
-import { NavigationEnd, Router } from '@angular/router';
-import { filter } from 'rxjs/operators';
 import { LoadProductsRequest } from './products/product.actions';
 import { selectJwt } from './auth/auth.reducer';
 import { Observable } from 'rxjs';
 import { SwUpdatesService } from './sw-updates.service';
-import { Location } from '@angular/common';
+import { NavigationService } from './navigation.service';
 
 @Component({
   selector: 'app-root',
@@ -18,21 +16,17 @@ import { Location } from '@angular/common';
 })
 export class AppComponent implements OnInit {
 
-  showBackNavigation = false;
+  showBackNavigation$: Observable<boolean>;
   jwt$: Observable<string>;
 
   constructor(private store: Store<IAppState>,
-              private router: Router,
-              private location: Location,
+              private navigationService: NavigationService,
               private swUpdatesService: SwUpdatesService) {
   }
 
   ngOnInit() {
-    this.jwt$ = this.store.select(selectJwt);
-
-    this.router.events.pipe(
-      filter(e => e instanceof NavigationEnd),
-    ).subscribe((event: NavigationEnd) => this.showBackNavigation = /(.*(products\/).+)|auth\/user/.test(event.url));
+    this.jwt$ = this.store.pipe(select(selectJwt));
+    this.showBackNavigation$ = this.navigationService.canNavigateBack$;
   }
 
   logout() {
@@ -44,7 +38,7 @@ export class AppComponent implements OnInit {
   }
 
   navigateBack() {
-    this.location.back();
+    this.navigationService.navigateBack();
   }
 
 }
