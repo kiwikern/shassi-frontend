@@ -1,5 +1,5 @@
 import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity';
-import { Product } from './product.model';
+import { Product, Size } from './product.model';
 import { ProductActions, ProductActionTypes } from './product.actions';
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { Dictionary } from '@ngrx/entity/src/models';
@@ -11,6 +11,7 @@ export interface ProductState extends EntityState<Product> {
   isLoading: boolean;
   filteredStores: string[];
   filteredName: string;
+  initProduct?: {url: string, sizes: Size[], name: string};
 }
 
 export const adapter: EntityAdapter<Product> = createEntityAdapter<Product>({
@@ -29,6 +30,21 @@ export const initialState: ProductState = adapter.getInitialState({
 export function reducer(state = initialState,
                         action: ProductActions): ProductState {
   switch (action.type) {
+    case ProductActionTypes.InitProduct: {
+      state = Object.assign({}, state, {hasSavingError: false, isSaving: false, initProduct: action.payload.product});
+      return state;
+    }
+
+    case ProductActionTypes.InitProductRequest: {
+      state = Object.assign({}, state, {hasSavingError: false, isSaving: true});
+      return state;
+    }
+
+    case ProductActionTypes.InitProductFail: {
+      state = Object.assign({}, state, {hasSavingError: true, isSaving: false});
+      return state;
+    }
+
     case ProductActionTypes.AddProduct: {
       state = Object.assign({}, state, {hasSavingError: false, isSaving: false});
       return adapter.addOne(action.payload.product, state);
@@ -44,19 +60,9 @@ export function reducer(state = initialState,
       return state;
     }
 
-    case ProductActionTypes.UpdateProduct: {
-      state = Object.assign({}, state, {hasSavingError: false, isSaving: false});
-      return adapter.updateOne(action.payload.product, state);
-    }
-
-    case ProductActionTypes.UpdateProductRequest: {
-      state = Object.assign({}, state, {hasSavingError: false, isSaving: true});
-      return state;
-    }
-
-    case ProductActionTypes.UpdateProductFail: {
+    case ProductActionTypes.MarkProductRead: {
       state = Object.assign({}, state, {hasSavingError: true, isSaving: false});
-      return state;
+      return adapter.updateOne({id: action.payload.id, changes: {hasUnreadUpdate: false}}, state);
     }
 
     case ProductActionTypes.DeleteProduct: {
@@ -111,7 +117,7 @@ export const selectProducts = createFeatureSelector<ProductState>('products');
 export const selectAllProducts = createSelector(selectProducts, selectAll);
 export const selectProductEntities = createSelector(selectProducts, selectEntities);
 export const selectProductById = id => createSelector(selectProductEntities, (store: Dictionary<Product>) => store[id]);
-export const selectProductByUrl = url => createSelector(selectAllProducts, (store: Product[]) => store.find(p => p.url === url));
+export const selectInitProduct = createSelector(selectProducts, (store: ProductState) => store.initProduct);
 
 // Filter selectors
 export const selectAvailableStores = createSelector(selectAllProducts, (store: Product[]) => {

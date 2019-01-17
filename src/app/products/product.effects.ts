@@ -2,22 +2,21 @@ import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Observable, of } from 'rxjs';
 import {
-  AddProduct,
   AddProductFail,
   AddProductRequest,
   DeleteProduct,
   DeleteProductFail,
   DeleteProductRequest,
+  InitProduct,
+  InitProductFail,
+  InitProductRequest,
   LoadProducts,
   LoadProductsFail,
   LoadProductsRequest,
   MarkProductRead,
   MarkProductReadFail,
   MarkProductReadRequest,
-  ProductActionTypes,
-  UpdateProduct,
-  UpdateProductFail,
-  UpdateProductRequest
+  ProductActionTypes
 } from './product.actions';
 import { Action } from '@ngrx/store';
 import { catchError, map, mergeMap, switchMap, tap } from 'rxjs/operators';
@@ -47,21 +46,20 @@ export class ProductEffects {
   );
 
   @Effect() add$: Observable<Action> = this.actions$.pipe(
-    ofType(ProductActionTypes.AddProductRequest),
-    mergeMap((action: AddProductRequest) =>
-      this.http.post<Product>('/api/products', action.payload).pipe(
-        map(product => new AddProduct({product})),
-        catchError(err => this.handleError(err, new AddProductFail()))
+    ofType(ProductActionTypes.InitProductRequest),
+    mergeMap((action: InitProductRequest) =>
+      this.http.post<Product>('/api/products/init', action.payload).pipe(
+        map(product => new InitProduct({product})),
+        catchError(err => this.handleError(err, new InitProductFail()))
       ))
   );
 
   @Effect() update$: Observable<Action> = this.actions$.pipe(
-    ofType(ProductActionTypes.UpdateProductRequest),
-    mergeMap((action: UpdateProductRequest) => {
-      const id: string = action.payload._id;
-      return this.http.post<Product>(`/api/products/${id}`, action.payload).pipe(
-        map(product => new UpdateProduct({product: {id, changes: product}})),
-        catchError(err => this.handleError(err, new UpdateProductFail()))
+    ofType(ProductActionTypes.AddProductRequest),
+    mergeMap((action: AddProductRequest) => {
+      return this.http.post<Product>(`/api/products`, action.payload).pipe(
+        map(product => new InitProduct({product})),
+        catchError(err => this.handleError(err, new AddProductFail()))
       );
     })
   );
@@ -84,8 +82,7 @@ export class ProductEffects {
       const id: string = action.payload.id;
       return this.http.post<string>(`/api/products/${id}/markread`, {}).pipe(
         mergeMap(() => [
-          new MarkProductRead({id}),
-          new UpdateProduct({product: {id, changes: {hasUnreadUpdate: false}}})
+          new MarkProductRead({id})
         ]),
         catchError(err => this.handleError(err, new MarkProductReadFail()))
       );

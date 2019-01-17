@@ -2,9 +2,9 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Size } from '../product.model';
 import { MatStepper } from '@angular/material';
 import { IAppState } from '../../reducers';
-import { Store } from '@ngrx/store';
-import { AddProductRequest, UpdateProductRequest } from '../product.actions';
-import { selectHasSavingError, selectIsSaving, selectProductByUrl } from '../product.reducer';
+import { select, Store } from '@ngrx/store';
+import { AddProductRequest, InitProductRequest } from '../product.actions';
+import { selectHasSavingError, selectInitProduct, selectIsSaving } from '../product.reducer';
 import { filter, map, switchMap, take } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
@@ -46,8 +46,8 @@ export class ProductFormComponent implements OnInit {
   }
 
   updateProduct() {
-    const update = new UpdateProductRequest({
-      _id: this._id,
+    const update = new AddProductRequest({
+      url: this.urlFormGroup.get('url').value,
       name: this.detailsFormGroup.get('name').value,
       size: this.detailsFormGroup.get('size').value
     });
@@ -58,19 +58,20 @@ export class ProductFormComponent implements OnInit {
 
   fetchProduct(stepper: MatStepper) {
     const url = this.urlFormGroup.get('url').value;
-    this.store.dispatch(new AddProductRequest({url}));
-    this.store.select(selectProductByUrl(url))
-      .pipe(filter(p => !!p))
-      .subscribe((product: any) => {
-        this._id = product._id;
-        this.sizes = product.sizes;
-        if (this.sizes && this.sizes.length === 1) {
-          this.detailsFormGroup.patchValue({size: this.sizes[0]});
-        }
-        this.detailsFormGroup.patchValue({
-          name: product.name
-        });
+    this.store.dispatch(new InitProductRequest({url}));
+    this.store.pipe(
+      select(selectInitProduct),
+      filter(p => !!p),
+    ).subscribe((product: any) => {
+      this._id = product._id;
+      this.sizes = product.sizes;
+      if (this.sizes && this.sizes.length === 1) {
+        this.detailsFormGroup.patchValue({size: this.sizes[0]});
+      }
+      this.detailsFormGroup.patchValue({
+        name: product.name
       });
+    });
     this.hasSavedSuccessfully()
       .subscribe(success => {
         if (success) {

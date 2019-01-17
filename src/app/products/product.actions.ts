@@ -6,12 +6,12 @@ export enum ProductActionTypes {
   LoadProducts = '[Product] Load Products',
   LoadProductsRequest = '[Product] Load Products Request',
   LoadProductsFail = '[Product] Load Products Fail',
-  AddProductRequest = '[Product] Add Product Request',
-  AddProductFail = '[Product] Add Product Failed',
+  InitProductRequest = '[Product] Init Product Request',
+  InitProductFail = '[Product] Init Product Failed',
+  InitProduct = '[Product] Init Product',
   AddProduct = '[Product] Add Product',
-  UpdateProduct = '[Product] Update Product',
-  UpdateProductRequest = '[Product] Update Product Request',
-  UpdateProductFail = '[Product] Update Product Fail',
+  AddProductRequest = '[Product] Add Product Request',
+  AddProductFail = '[Product] Add Product Fail',
   UpdateProducts = '[Product] Update Products',
   DeleteProduct = '[Product] Delete Product',
   DeleteProductRequest = '[Product] Delete Product Request',
@@ -46,10 +46,31 @@ export class LoadProductsFail implements Action {
   }
 }
 
+export class InitProductRequest implements Action {
+  readonly type = ProductActionTypes.InitProductRequest;
+
+  constructor(public payload: { url: string }) {
+  }
+}
+
+export class InitProductFail implements Action {
+  readonly type = ProductActionTypes.InitProductFail;
+
+  constructor() {
+  }
+}
+
+export class InitProduct implements Action {
+  readonly type = ProductActionTypes.InitProduct;
+
+  constructor(public payload: { product: Product }) {
+  }
+}
+
 export class AddProductRequest implements Action {
   readonly type = ProductActionTypes.AddProductRequest;
 
-  constructor(public payload: { url: string }) {
+  constructor(public payload: { url: string, size: Size, name: string }) {
   }
 }
 
@@ -64,27 +85,6 @@ export class AddProduct implements Action {
   readonly type = ProductActionTypes.AddProduct;
 
   constructor(public payload: { product: Product }) {
-  }
-}
-
-export class UpdateProductRequest implements Action {
-  readonly type = ProductActionTypes.UpdateProductRequest;
-
-  constructor(public payload: { _id: string, size: Size, name: string }) {
-  }
-}
-
-export class UpdateProductFail implements Action {
-  readonly type = ProductActionTypes.UpdateProductFail;
-
-  constructor() {
-  }
-}
-
-export class UpdateProduct implements Action {
-  readonly type = ProductActionTypes.UpdateProduct;
-
-  constructor(public payload: { product: Update<Product> }) {
   }
 }
 
@@ -167,8 +167,8 @@ export class UpdateFilteredStores implements Action {
 
 export type ProductActions =
   LoadProducts | LoadProductsRequest | LoadProductsFail
+  | InitProduct | InitProductRequest | InitProductFail
   | AddProduct | AddProductRequest | AddProductFail
-  | UpdateProduct | UpdateProductRequest | UpdateProductFail
   | UpdateProducts
   | DeleteProduct | DeleteProductRequest | DeleteProductFail
   | MarkProductRead | MarkProductReadRequest | MarkProductReadFail
