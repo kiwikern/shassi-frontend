@@ -1,8 +1,8 @@
 <app-user-settings-form
  [email]="(user$ | async)?.email"
  [isLinkedToTelegram]="!!(user$ | async)?.telegramId"
- [sendEmailNotifications]="(user$ | async)?.notificationTypes.email"
- [sendTelegramNotifications]="(user$ | async)?.notificationTypes.telegram"
+ [sendEmailNotifications]="(user$ | async)?.notificationTypes?.email"
+ [sendTelegramNotifications]="(user$ | async)?.notificationTypes?.telegram"
  [botUrl]="botUrl"
  (save)="updateUser($event)"
  (linkTelegram)="linkTelegram()"
