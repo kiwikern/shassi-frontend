@@ -24,6 +24,9 @@ export class RegisterComponent implements OnInit {
   }
 
   submit() {
+    if (this.email === '') {
+      this.email = null;
+    }
     this.store.dispatch(new RegisterRequest({
       username: this.username,
       email: this.email,
