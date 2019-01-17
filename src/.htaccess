@@ -5,7 +5,7 @@ RewriteCond %{ENV:HTTPS} !=on
 RewriteRule .* https://%{SERVER_NAME}%{REQUEST_URI} [R=301,L]
 
 # Redirect API requests to backend
-RewriteRule ^api/(.*) http://localhost:40000/$1 [P]
+RewriteRule ^api/(.*) http://localhost:54551/$1 [P]
 
 # redirect routes to index
 #RewriteRule ^index\.html$ - [L]
