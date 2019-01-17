@@ -37,7 +37,7 @@ export class AuthEffects {
   @Effect() login$: Observable<Action> = this.actions$.pipe(
     ofType(AuthActionTypes.LOGIN_REQUEST),
     mergeMap((action: LoginRequest) =>
-      this.http.post<{ jwt: string, user: User }>('/api/user/login', action.payload).pipe(
+      this.http.post<{ jwt: string, user: User }>('/api/auth/login', action.payload).pipe(
         mergeMap(data => this.login(data)),
         catchError(err => this.handleError(err, new LoginFail()))
       ))
@@ -46,7 +46,7 @@ export class AuthEffects {
   @Effect() register$: Observable<Action> = this.actions$.pipe(
     ofType(AuthActionTypes.REGISTER_REQUEST),
     mergeMap((action: RegisterRequest) =>
-      this.http.post<{ jwt: string }>('/api/user', action.payload).pipe(
+      this.http.post<{ jwt: string }>('/api/users', action.payload).pipe(
         mergeMap(data => [
           new RegisterSuccess(),
           new LoginRequest(action.payload)
@@ -67,7 +67,7 @@ export class AuthEffects {
   @Effect() getUser$: Observable<Action> = this.actions$.pipe(
     ofType(AuthActionTypes.GET_USER_REQUEST),
     mergeMap((action: GetUserRequest) =>
-      this.http.get<User>('/api/user').pipe(
+      this.http.get<User>('/api/users').pipe(
         map(user => new GetUserSuccess({user})),
         catchError(err => this.handleError(err, new GetUserFail()))
       ))
@@ -76,7 +76,7 @@ export class AuthEffects {
   @Effect() updateUser$: Observable<Action> = this.actions$.pipe(
     ofType(AuthActionTypes.UPDATE_USER_REQUEST),
     mergeMap((action: UpdateUserRequest) =>
-      this.http.put<User>('/api/user', action.payload.user).pipe(
+      this.http.put<User>('/api/users', action.payload.user).pipe(
         map(user => new UpdateUserSuccess({user})),
         catchError(err => this.handleError(err, new UpdateUserFail()))
       ))
@@ -109,6 +109,7 @@ export class AuthEffects {
 
   private login(data: { jwt: string, user: User }) {
     this.router.navigate(['/products']);
+    console.log(data);
     return [
       new LoginSuccess(data),
       new LoadProductsRequest()
