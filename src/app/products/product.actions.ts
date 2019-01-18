@@ -1,6 +1,7 @@
 import { Action } from '@ngrx/store';
 import { Update } from '@ngrx/entity';
 import { Product, Size } from './product.model';
+import { FilterOptions } from './filter-options.interface';
 
 export enum ProductActionTypes {
   LoadProducts = '[Product] Load Products',
@@ -22,7 +23,8 @@ export enum ProductActionTypes {
   MarkProductRead = '[Product] Mark Product Read',
   ClearProducts = '[Product] Clear Products',
   UpdateFilteredStores = '[Product] Update Filtered Stores',
-  UpdateFilteredName = '[Product] Update Filtered Name'
+  UpdateFilteredName = '[Product] Update Filtered Name',
+  UpdateFilterOptions = '[Product] Update Filter Options'
 }
 
 export class LoadProductsRequest implements Action {
@@ -165,6 +167,13 @@ export class UpdateFilteredStores implements Action {
   }
 }
 
+export class UpdateFilterOptions implements Action {
+  readonly type = ProductActionTypes.UpdateFilterOptions;
+
+  constructor(public payload: { options: Partial<FilterOptions> }) {
+  }
+}
+
 export type ProductActions =
   LoadProducts | LoadProductsRequest | LoadProductsFail
   | InitProduct | InitProductRequest | InitProductFail
@@ -174,4 +183,4 @@ export type ProductActions =
   | MarkProductRead | MarkProductReadRequest | MarkProductReadFail
   | DeleteProducts
   | ClearProducts
-  | UpdateFilteredName | UpdateFilteredStores;
+  | UpdateFilteredName | UpdateFilteredStores | UpdateFilterOptions;

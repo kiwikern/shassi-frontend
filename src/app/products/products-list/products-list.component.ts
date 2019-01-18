@@ -1,7 +1,7 @@
 import { AfterViewInit, ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { IAppState } from '../../reducers';
-import { selectAllProducts, selectFilteredName, selectFilteredStores, selectIsLoading } from '../product.reducer';
+import { selectAllProducts, selectFilteredName, selectFilteredStores, selectFilterOptions, selectIsLoading } from '../product.reducer';
 import { Product } from '../product.model';
 import { filter, map } from 'rxjs/operators';
 import { combineLatest, Observable } from 'rxjs';
@@ -61,10 +61,11 @@ export class ProductsListComponent implements OnInit, AfterViewInit {
 
     const filteredName$ = this.store.pipe(select(selectFilteredName));
     const filteredStores$ = this.store.pipe(select(selectFilteredStores));
+    const filterOptions$ = this.store.pipe(select(selectFilterOptions));
 
-    this.filter$ = combineLatest(filteredName$, filteredStores$)
+    this.filter$ = combineLatest(filteredName$, filteredStores$, filterOptions$)
       .pipe(
-        map(([filteredName, filteredStores, ...rest]) => ({filteredName, filteredStores}))
+        map(([filteredName, filteredStores, filterOptions]) => ({filteredName, filteredStores, filterOptions}))
       );
   }
 

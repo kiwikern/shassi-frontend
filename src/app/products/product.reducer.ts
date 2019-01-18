@@ -3,6 +3,7 @@ import { Product, Size } from './product.model';
 import { ProductActions, ProductActionTypes } from './product.actions';
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { Dictionary } from '@ngrx/entity/src/models';
+import { FilterOptions } from './filter-options.interface';
 
 export interface ProductState extends EntityState<Product> {
   // additional entities state properties
@@ -11,7 +12,8 @@ export interface ProductState extends EntityState<Product> {
   isLoading: boolean;
   filteredStores: string[];
   filteredName: string;
-  initProduct?: {url: string, sizes: Size[], name: string};
+  filterOptions: FilterOptions;
+  initProduct?: { url: string, sizes: Size[], name: string };
 }
 
 export const adapter: EntityAdapter<Product> = createEntityAdapter<Product>({
@@ -24,7 +26,8 @@ export const initialState: ProductState = adapter.getInitialState({
   hasSavingError: false,
   isLoading: false,
   filteredStores: [],
-  filteredName: ''
+  filteredName: '',
+  filterOptions: {showOnlyAvailable: false, showOnlyWithUnreadUpdate: false}
 });
 
 export function reducer(state = initialState,
@@ -100,6 +103,12 @@ export function reducer(state = initialState,
       return state;
     }
 
+    case ProductActionTypes.UpdateFilterOptions: {
+      const filterOptions = Object.assign({}, state.filterOptions, action.payload.options);
+      state = Object.assign({}, state, {filterOptions});
+      return state;
+    }
+
     default: {
       return state;
     }
@@ -127,6 +136,7 @@ export const selectAvailableStores = createSelector(selectAllProducts, (store: P
 });
 export const selectFilteredStores = createSelector(selectProducts, store => store.filteredStores);
 export const selectFilteredName = createSelector(selectProducts, store => store.filteredName);
+export const selectFilterOptions = createSelector(selectProducts, store => store.filterOptions);
 
 export const selectIsSaving = createSelector(selectProducts, state => state.isSaving);
 export const selectIsLoading = createSelector(selectProducts, state => state.isLoading);

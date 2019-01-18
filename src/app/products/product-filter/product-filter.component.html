@@ -6,6 +6,20 @@
 
 <div *ngIf="isOpen">
   <div class="row">
+    <mat-slide-toggle [checked]="(filterOptions$ | async)?.showOnlyAvailable"
+                      (change)="updateFilterOptions('showOnlyAvailable', $event.checked)">
+      Only Available
+    </mat-slide-toggle>
+  </div>
+
+  <div class="row">
+    <mat-slide-toggle [checked]="(filterOptions$ | async)?.showOnlyWithUnreadUpdate"
+                      (change)="updateFilterOptions('showOnlyWithUnreadUpdate', $event.checked)">
+      Only with unread Update
+    </mat-slide-toggle>
+  </div>
+
+  <div class="row">
     <mat-form-field>
       <mat-select placeholder="Stores" multiple
                   [value]="selectedStores$ | async"

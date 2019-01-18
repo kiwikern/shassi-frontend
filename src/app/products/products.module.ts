@@ -19,6 +19,7 @@ import {
   MatListModule,
   MatProgressSpinnerModule,
   MatSelectModule,
+  MatSlideToggleModule,
   MatSortModule,
   MatStepperModule,
   MatTableModule
@@ -58,7 +59,8 @@ const productsRoutes: Routes = [
     CdkTableModule,
     MatSortModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatSlideToggleModule,
   ],
   declarations: [
     ProductsListComponent,

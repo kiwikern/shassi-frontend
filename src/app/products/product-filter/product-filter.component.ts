@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { IAppState } from '../../reducers';
 import { select, Store } from '@ngrx/store';
 import { combineLatest, Observable } from 'rxjs';
-import { selectAvailableStores, selectFilteredName, selectFilteredStores } from '../product.reducer';
-import { UpdateFilteredName, UpdateFilteredStores } from '../product.actions';
+import { selectAvailableStores, selectFilteredName, selectFilteredStores, selectFilterOptions } from '../product.reducer';
+import { UpdateFilteredName, UpdateFilteredStores, UpdateFilterOptions } from '../product.actions';
 import { map } from 'rxjs/operators';
+import { FilterOptions } from '../filter-options.interface';
 
 @Component({
   selector: 'app-product-filter',
@@ -17,6 +18,7 @@ export class ProductFilterComponent implements OnInit {
   selectedStores$: Observable<string[]>;
   name$: Observable<string>;
   availableStores$: Observable<string[]>;
+  filterOptions$: Observable<FilterOptions>;
   isActive$: Observable<boolean>;
 
   constructor(private store: Store<IAppState>) {
@@ -25,6 +27,7 @@ export class ProductFilterComponent implements OnInit {
   ngOnInit() {
     this.availableStores$ = this.store.pipe(select(selectAvailableStores));
     this.selectedStores$ = this.store.pipe(select(selectFilteredStores));
+    this.filterOptions$ = this.store.pipe(select(selectFilterOptions));
     this.name$ = this.store.pipe(select(selectFilteredName));
     this.isActive$ = combineLatest(this.selectedStores$, this.name$).pipe(
       map(([stores, name]) => !!name || stores && stores.length > 0)
@@ -38,6 +41,13 @@ export class ProductFilterComponent implements OnInit {
 
   updateSelectedName(name: string) {
     const action = new UpdateFilteredName({name});
+    this.store.dispatch(action);
+  }
+
+  updateFilterOptions(optionName: 'showOnlyAvailable' | 'showOnlyWithUnreadUpdate', optionValue: boolean) {
+    const options = {};
+    options[optionName] = optionValue;
+    const action = new UpdateFilterOptions({options});
     this.store.dispatch(action);
   }
 
