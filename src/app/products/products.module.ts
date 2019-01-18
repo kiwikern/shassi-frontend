@@ -32,6 +32,7 @@ import { ProductUpdateTableComponent } from './product-update-table/product-upda
 import { CdkTableModule } from '@angular/cdk/table';
 import { ProductFilterComponent } from './product-filter/product-filter.component';
 import { ProductFilterPipe } from './product-filter/product-filter.pipe';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 
 const productsRoutes: Routes = [
   {path: '', component: ProductsListComponent},
@@ -61,6 +62,7 @@ const productsRoutes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     MatSlideToggleModule,
+    ScrollingModule,
   ],
   declarations: [
     ProductsListComponent,

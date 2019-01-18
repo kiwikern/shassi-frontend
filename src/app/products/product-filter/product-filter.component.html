@@ -4,7 +4,7 @@
   </button>
 </div>
 
-<div *ngIf="isOpen">
+<div *ngIf="isOpen" class="filter">
   <div class="row">
     <mat-slide-toggle [checked]="(filterOptions$ | async)?.showOnlyAvailable"
                       (change)="updateFilterOptions('showOnlyAvailable', $event.checked)">

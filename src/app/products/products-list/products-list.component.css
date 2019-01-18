@@ -7,10 +7,27 @@ mat-card {
   flex: 1;
   min-width: 0;
   max-width: 600px;
-  padding-top: 0;
-  padding-bottom: 0;
+  padding: 0;
 }
 
 .mat-card .mat-divider {
   position: unset;
+}
+
+.virtual-scroll-container {
+  height: calc(100vh - 115px);
+}
+
+.virtual-scroll-container::-webkit-scrollbar-track {
+  background-color: #e4e1e1;
+}
+
+.virtual-scroll-container::-webkit-scrollbar {
+  width: 5px;
+  background-color: #e4e1e1;
+}
+
+.virtual-scroll-container::-webkit-scrollbar-thumb {
+  background-color: #777474;
+  border-radius: 827px;
 }

@@ -16,3 +16,8 @@
 .bottom-space {
   margin-bottom: 20px;
 }
+
+.filter {
+  padding-left: 15px;
+  padding-right: 15px;
+}
