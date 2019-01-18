@@ -15,9 +15,10 @@ export class TelegramService {
     this.reactOnQueryParam();
   }
   openTelegramAuthUrl() {
-    return this.http.get<string>('/api/user/telegram', {responseType: 'text' as 'json'})
+    return this.http.post<{token: string}>('/api/telegram', null)
       .pipe(
         filter(token => !!token),
+        map(tokenResponse => tokenResponse.token),
         map(token => `${this.getTelegramBotUrl()}?start=${token}`)
       ).subscribe(
         url => window.open(url, '_blank'),
