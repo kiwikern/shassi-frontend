@@ -16,7 +16,7 @@ import {
   UpdateUserRequest,
   UpdateUserSuccess
 } from './auth.actions';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { Action } from '@ngrx/store';
@@ -27,11 +27,14 @@ import { User } from './user.model';
 
 @Injectable()
 export class AuthEffects {
+  private queryParams: Params;
 
   constructor(private actions$: Actions,
               private http: HttpClient,
               private router: Router,
+              private route: ActivatedRoute,
               private snackBar: InfoSnackBarService) {
+    this.route.queryParams.subscribe(params => this.queryParams = params);
   }
 
   @Effect() login$: Observable<Action> = this.actions$.pipe(
@@ -108,8 +111,11 @@ export class AuthEffects {
   }
 
   private login(data: { jwt: string, user: User }) {
-    this.router.navigate(['/products']);
-    console.log(data);
+    if (this.queryParams && this.queryParams.redirectTo) {
+      this.router.navigateByUrl(this.queryParams.redirectTo);
+    } else {
+      this.router.navigate(['/products'], {queryParamsHandling: 'merge'});
+    }
     return [
       new LoginSuccess(data),
       new LoadProductsRequest()

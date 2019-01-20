@@ -11,6 +11,8 @@ export class NavigationService {
 
   public canNavigateBack$ = new BehaviorSubject(false);
   private hasPreviousRoute = false;
+  private previousUrl = '';
+  private currentUrl: string;
 
   constructor(private router: Router,
               private location: Location) {
@@ -20,7 +22,7 @@ export class NavigationService {
   }
 
   public navigateBack(): void {
-    if (this.hasPreviousRoute) {
+    if (this.hasPreviousRoute && /.*products\/.*/.test(this.previousUrl)) {
       this.location.back();
     } else {
       this.router.navigate(['/products']);
@@ -29,6 +31,8 @@ export class NavigationService {
 
   private setNavigationProperties(event: NavigationEnd): void {
     this.hasPreviousRoute = event.id !== 1;
+    this.previousUrl = this.currentUrl;
+    this.currentUrl = event.url;
     this.canNavigateBack$.next(/(.*(products\/).+)|auth\/user/.test(event.url));
   }
 }
