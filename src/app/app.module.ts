@@ -18,6 +18,7 @@ import { LoginGuard } from './auth/login.guard';
 import { I18nService } from './i18n.service';
 import { InfoSnackBarService } from './info-snack-bar.service';
 import { SwUpdatesService } from './sw-updates.service';
+import { TelegramService } from './auth/telegram.service';
 
 const routes: Routes = [
   {path: '', pathMatch: 'full', redirectTo: 'products'},
@@ -53,4 +54,10 @@ const routes: Routes = [
   bootstrap: [AppComponent]
 })
 export class AppModule {
+
+  constructor(private telegramService: TelegramService) {
+    this.telegramService.reactOnQueryParam();
+  }
+
+
 }

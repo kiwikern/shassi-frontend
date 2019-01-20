@@ -13,7 +13,6 @@ import { MatchingPasswordDirective, RegisterComponent } from './register/registe
 import { LoginGuard } from './login.guard';
 import { UserEditComponent } from './user-settings/user-settings.component';
 import { UserSettingsFormComponent } from './user-settings/user-settings-form/user-settings-form.component';
-import { TelegramService } from './telegram.service';
 
 export const authRoutes: Routes = [
   {path: '', pathMatch: 'full', redirectTo: 'login'},
@@ -38,7 +37,6 @@ export const authRoutes: Routes = [
   ],
   providers: [
     LoginGuard,
-    TelegramService
   ],
   declarations: [
     LoginComponent,

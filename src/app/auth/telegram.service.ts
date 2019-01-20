@@ -4,18 +4,23 @@ import { filter, map } from 'rxjs/operators';
 import { InfoSnackBarService } from '../info-snack-bar.service';
 import { environment } from '../../environments/environment';
 import { ActivatedRoute, Router } from '@angular/router';
+import { select, Store } from '@ngrx/store';
+import { IAppState } from '../reducers';
+import { selectJwt } from './auth.reducer';
+import { combineLatest } from 'rxjs';
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class TelegramService {
 
   constructor(private http: HttpClient,
               private snackBar: InfoSnackBarService,
+              private store: Store<IAppState>,
               private route: ActivatedRoute,
               private router: Router) {
-    this.reactOnQueryParam();
   }
+
   openTelegramAuthUrl() {
-    return this.http.post<{token: string}>('/api/telegram', null)
+    return this.http.post<{ token: string }>('/api/telegram', null)
       .pipe(
         filter(token => !!token),
         map(tokenResponse => tokenResponse.token),
@@ -51,14 +56,20 @@ export class TelegramService {
   }
 
 
-  private reactOnQueryParam() {
-    this.route.queryParams.pipe(
+  reactOnQueryParam() {
+    const isLoggedIn$ = this.store.pipe(
+      select(selectJwt),
+      map(jwt => !!jwt)
+    );
+    const hasTokenActionParam$ = this.route.queryParams.pipe(
       map(p => p.action === 'createTelegramToken'),
-      filter(p => !!p)
-    ).subscribe(() => {
-      this.router.navigate([], {queryParams: {action: null}, queryParamsHandling: 'merge'});
-      return this.openTelegramAuthUrl();
-    });
+    );
+    combineLatest(isLoggedIn$, hasTokenActionParam$)
+      .pipe(filter(([isLoggedIn, shouldCreateToken]) => isLoggedIn && shouldCreateToken))
+      .subscribe(() => {
+        this.router.navigate([], {queryParams: {action: null}, queryParamsHandling: 'merge'});
+        return this.openTelegramAuthUrl();
+      });
   }
 
 }
