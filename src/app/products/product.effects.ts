@@ -100,7 +100,7 @@ export class ProductEffects {
         actions.push(new Logout());
         break;
       case 404:
-        this.snackBar.open('SnackBar.Message.Error.NoFileFoundForEdit');
+        this.snackBar.open('SnackBar.Message.Error.ProductNotFound');
         // actions.push(new LoadProductsRequest());
         break;
       case 409:
