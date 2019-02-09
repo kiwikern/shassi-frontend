@@ -1,6 +1,6 @@
 <mat-card [@list]="isLoading$ | async">
   <app-product-filter></app-product-filter>
-  <cdk-virtual-scroll-viewport itemSize="50" class="virtual-scroll-container">
+  <cdk-virtual-scroll-viewport itemSize="50" class="virtual-scroll-container" *ngIf="(products$ | async)?.length > 0">
     <div class="list-item"
          *cdkVirtualFor="let p of products$ | async | productFilter:(filter$ | async); let last = last">
       <app-product-list-item [product]="p"></app-product-list-item>
