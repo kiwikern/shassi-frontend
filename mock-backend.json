@@ -1,0 +1,59 @@
+{
+  "products": [
+    {
+      "url": "http://myshop.local",
+      "store": "myshop",
+      "_id": "2haa7u37893873",
+      "id": "2haa7u37893873",
+      "name": "Beautiful Jacket",
+      "price": 12.99,
+      "isAvailable": "boolean",
+      "sizeName": "L",
+      "updates": [],
+      "isActive": true,
+      "createdAt": "2019-08-01",
+      "updatedAt": "2019-08-01",
+      "hasUnreadUpdate": true
+    },
+    {
+      "_id": "2haa7u378ss93873",
+      "name": "Beautiful Trousers",
+      "price": 12.99,
+      "sizeName": "L",
+      "updates": [],
+      "isActive": true
+    },
+    {
+      "_id": "2haa7u3s78s93873",
+      "name": "Beautiful Socks",
+      "price": 12.99,
+      "sizeName": "L",
+      "updates": [],
+      "isActive": true
+    },
+    {
+      "_id": "2haa7u3a78s93873",
+      "name": "Beautiful Socks",
+      "price": 12.99,
+      "sizeName": "L",
+      "updates": [],
+      "isActive": true
+    },
+    {
+      "_id": "2haag7u378s93873",
+      "name": "Beautiful Socks",
+      "price": 12.99,
+      "sizeName": "L",
+      "updates": [],
+      "isActive": true
+    },
+    {
+      "_id": "2haa7u3s7893873",
+      "name": "Beautiful Hat",
+      "price": 12.99,
+      "sizeName": "L",
+      "updates": [],
+      "isActive": true
+    }
+  ]
+}
