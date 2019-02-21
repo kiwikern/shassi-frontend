@@ -31,3 +31,15 @@ mat-card {
   background-color: #777474;
   border-radius: 827px;
 }
+
+.user-message {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.illustration {
+  max-width: 400px;
+  width: 80%;
+}

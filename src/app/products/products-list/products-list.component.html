@@ -1,6 +1,7 @@
 <mat-card [@list]="isLoading$ | async">
   <app-product-filter></app-product-filter>
-  <cdk-virtual-scroll-viewport itemSize="50" class="virtual-scroll-container" *ngIf="(products$ | async)?.length > 0">
+  <cdk-virtual-scroll-viewport itemSize="50" class="virtual-scroll-container"
+                               *ngIf="(products$ | async | productFilter:(filter$ | async))?.length > 0">
     <div class="list-item"
          *cdkVirtualFor="let p of products$ | async | productFilter:(filter$ | async); let last = last">
       <app-product-list-item [product]="p"></app-product-list-item>
@@ -8,10 +9,15 @@
     </div>
   </cdk-virtual-scroll-viewport>
 
-  <div *ngIf="(products$ | async)?.length === 0">
+  <div class="user-message"
+    *ngIf="(products$ | async)?.length === 0">
+    <img class="illustration" src="assets/no_products.svg">
     <p>You don't have any products, yet.</p>
-    <p>Add one to your list, receive notifications when its price or availability changes and then, make a great
-      bargain.</p>
+  </div>
+  <div class="user-message"
+    *ngIf="(products$ | async)?.length > 0 && (products$ | async | productFilter:(filter$ | async))?.length === 0">
+    <img class="illustration" src="assets/empty_filter_result.svg">
+    <p>No results. Change your filters.</p>
   </div>
 </mat-card>
 
