@@ -11,7 +11,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AuthModule, authRoutes } from './auth/auth.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { EffectsModule } from '@ngrx/effects';
-import { MatButtonModule, MatIconModule, MatSnackBarModule, MatToolbarModule } from '@angular/material';
+import { MatButtonModule, MatIconModule, MatProgressSpinnerModule, MatSnackBarModule, MatToolbarModule } from '@angular/material';
 import { AuthInterceptor } from './auth/auth-interceptor';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { LoginGuard } from './auth/login.guard';
@@ -43,7 +43,8 @@ const routes: Routes = [
     MatToolbarModule,
     MatButtonModule,
     MatSnackBarModule,
-    MatIconModule
+    MatIconModule,
+    MatProgressSpinnerModule,
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},

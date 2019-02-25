@@ -63,6 +63,7 @@ const productsRoutes: Routes = [
     ReactiveFormsModule,
     MatSlideToggleModule,
     ScrollingModule,
+    MatProgressSpinnerModule,
   ],
   declarations: [
     ProductsListComponent,

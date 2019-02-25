@@ -9,8 +9,9 @@
     </div>
   </cdk-virtual-scroll-viewport>
 
+  <mat-spinner *ngIf="(isLoading$ | async) && !(products$ | async)?.length"></mat-spinner>
   <div class="user-message"
-    *ngIf="(products$ | async)?.length === 0">
+    *ngIf="!(isLoading$ | async) && (products$ | async)?.length === 0">
     <img class="illustration" src="assets/no_products.svg">
     <p>You don't have any products, yet.</p>
   </div>

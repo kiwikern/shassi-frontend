@@ -32,6 +32,10 @@
   border-radius: 827px;
 }
 
+mat-spinner {
+  margin: 100px auto;
+}
+
 .user-message {
   padding: 20px;
   display: flex;

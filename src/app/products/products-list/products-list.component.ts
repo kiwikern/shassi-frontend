@@ -3,7 +3,7 @@ import { select, Store } from '@ngrx/store';
 import { IAppState } from '../../reducers';
 import { selectAllProducts, selectFilteredName, selectFilteredStores, selectFilterOptions, selectIsLoading } from '../product.reducer';
 import { Product } from '../product.model';
-import { filter, map } from 'rxjs/operators';
+import { filter, map, startWith } from 'rxjs/operators';
 import { combineLatest, Observable } from 'rxjs';
 import { animate, query, stagger, style, transition, trigger } from '@angular/animations';
 import { FilterSetting } from '../product-filter/product-filter.pipe';
@@ -54,7 +54,8 @@ export class ProductsListComponent implements OnInit, AfterViewInit {
     this.products$ = this.store.pipe(
       select(selectAllProducts),
       filter(p => !!p),
-      map(products => products.sort((p1, p2) => p1.updatedAt > p2.updatedAt ? -1 : 1))
+      map(products => products.sort((p1, p2) => p1.updatedAt > p2.updatedAt ? -1 : 1)),
+      startWith(null)
     );
 
     this.isLoading$ = this.store.pipe(select(selectIsLoading));

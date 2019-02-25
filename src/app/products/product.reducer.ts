@@ -130,7 +130,8 @@ export const selectInitProduct = createSelector(selectProducts, (store: ProductS
 
 // Filter selectors
 export const selectAvailableStores = createSelector(selectAllProducts, (store: Product[]) => {
-  const stores = store.map(s => s.store);
+  const stores = store.map(product => product.store)
+    .filter(pStore => !!pStore);
   const seen = new Set();
   return stores.filter(s => seen.has(s) ? false : seen.add(s));
 });
@@ -139,5 +140,5 @@ export const selectFilteredName = createSelector(selectProducts, store => store.
 export const selectFilterOptions = createSelector(selectProducts, store => store.filterOptions);
 
 export const selectIsSaving = createSelector(selectProducts, state => state.isSaving);
-export const selectIsLoading = createSelector(selectProducts, state => state.isLoading);
+export const selectIsLoading = createSelector(selectProducts, state => state && state.isLoading);
 export const selectHasSavingError = createSelector(selectProducts, state => state.hasSavingError);
