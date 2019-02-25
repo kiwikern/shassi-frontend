@@ -13,11 +13,12 @@ import { MatchingPasswordDirective, RegisterComponent } from './register/registe
 import { LoginGuard } from './login.guard';
 import { UserEditComponent } from './user-settings/user-settings.component';
 import { UserSettingsFormComponent } from './user-settings/user-settings-form/user-settings-form.component';
+import { RedirectGuard } from './redirect.guard';
 
 export const authRoutes: Routes = [
   {path: '', pathMatch: 'full', redirectTo: 'login'},
-  {path: 'login', component: LoginComponent},
-  {path: 'register', component: RegisterComponent},
+  {path: 'login', component: LoginComponent, canActivate: [RedirectGuard]},
+  {path: 'register', component: RegisterComponent, canActivate: [RedirectGuard]},
   {path: 'user', component: UserEditComponent, canActivate: [LoginGuard]}
 ];
 
