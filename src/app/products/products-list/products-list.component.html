@@ -1,4 +1,4 @@
-<mat-card [@list]="isLoading$ | async">
+<div [@list]="isLoading$ | async" class="list">
   <app-product-filter></app-product-filter>
   <cdk-virtual-scroll-viewport itemSize="50" class="virtual-scroll-container"
                                *ngIf="(products$ | async | productFilter:(filter$ | async))?.length > 0">
@@ -19,7 +19,7 @@
     <img class="illustration" src="assets/empty_filter_result.svg">
     <p>No results. Change your filters.</p>
   </div>
-</mat-card>
+</div>
 
 <app-fab-button
   icon="add_to_cart"
