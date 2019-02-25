@@ -24,7 +24,8 @@ export enum ProductActionTypes {
   ClearProducts = '[Product] Clear Products',
   UpdateFilteredStores = '[Product] Update Filtered Stores',
   UpdateFilteredName = '[Product] Update Filtered Name',
-  UpdateFilterOptions = '[Product] Update Filter Options'
+  UpdateFilterOptions = '[Product] Update Filter Options',
+  SetLatestProductId = '[Product] Set Latest ProductId',
 }
 
 export class LoadProductsRequest implements Action {
@@ -174,6 +175,13 @@ export class UpdateFilterOptions implements Action {
   }
 }
 
+export class SetLatestProductId implements Action {
+  readonly type = ProductActionTypes.SetLatestProductId;
+
+  constructor(public payload: { latestProductId: string }) {
+  }
+}
+
 export type ProductActions =
   LoadProducts | LoadProductsRequest | LoadProductsFail
   | InitProduct | InitProductRequest | InitProductFail
@@ -183,4 +191,5 @@ export type ProductActions =
   | MarkProductRead | MarkProductReadRequest | MarkProductReadFail
   | DeleteProducts
   | ClearProducts
-  | UpdateFilteredName | UpdateFilteredStores | UpdateFilterOptions;
+  | UpdateFilteredName | UpdateFilteredStores | UpdateFilterOptions
+  | SetLatestProductId;

@@ -1,14 +1,20 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { IAppState } from '../../reducers';
-import { selectAllProducts, selectFilteredName, selectFilteredStores, selectFilterOptions, selectIsLoading } from '../product.reducer';
+import {
+  selectAllProducts,
+  selectFilteredName,
+  selectFilteredStores,
+  selectFilterOptions,
+  selectIsLoading,
+  selectLatestProductId
+} from '../product.reducer';
 import { Product } from '../product.model';
-import { filter, map, startWith } from 'rxjs/operators';
+import { filter, map, startWith, take } from 'rxjs/operators';
 import { combineLatest, Observable } from 'rxjs';
 import { animate, query, stagger, style, transition, trigger } from '@angular/animations';
-import { FilterSetting } from '../product-filter/product-filter.pipe';
-import { ActivatedRoute, Router, Scroll } from '@angular/router';
-import { ViewportScroller } from '@angular/common';
+import { FilterSetting, ProductFilterPipe } from '../product-filter/product-filter.pipe';
+import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 
 @Component({
   selector: 'app-products-list',
@@ -29,25 +35,14 @@ import { ViewportScroller } from '@angular/common';
     ])
   ]
 })
-export class ProductsListComponent implements OnInit, AfterViewInit {
+export class ProductsListComponent implements OnInit {
 
-  scrollPosition: [number, number];
   products$: Observable<Product[]>;
   filter$: Observable<FilterSetting>;
   isLoading$: Observable<boolean>;
+  @ViewChild('productsViewport') productsViewport: CdkVirtualScrollViewport;
 
-  constructor(private store: Store<IAppState>,
-              route: ActivatedRoute, router: Router, private viewportScroller: ViewportScroller) {
-    // see https://github.com/angular/angular/issues/24547
-    router.events.pipe(
-      filter(e => e instanceof Scroll)
-    ).subscribe(e => {
-      if ((e as Scroll).position) {
-        this.scrollPosition = (e as Scroll).position;
-      } else {
-        this.scrollPosition = [0, 0];
-      }
-    });
+  constructor(private store: Store<IAppState>) {
   }
 
   ngOnInit() {
@@ -57,7 +52,6 @@ export class ProductsListComponent implements OnInit, AfterViewInit {
       map(products => products.sort((p1, p2) => p1.updatedAt > p2.updatedAt ? -1 : 1)),
       startWith(null)
     );
-
     this.isLoading$ = this.store.pipe(select(selectIsLoading));
 
     const filteredName$ = this.store.pipe(select(selectFilteredName));
@@ -68,10 +62,23 @@ export class ProductsListComponent implements OnInit, AfterViewInit {
       .pipe(
         map(([filteredName, filteredStores, filterOptions]) => ({filteredName, filteredStores, filterOptions}))
       );
+
+    const latestProductId$ = this.store.pipe(select(selectLatestProductId));
+
+    combineLatest(latestProductId$, this.products$.pipe(filter(p => !!p)), this.filter$, this.isLoading$)
+      .pipe(
+        filter(([id, products, _, isLoading]) => !!products && !isLoading),
+        map(([id, products, filters]) => (new ProductFilterPipe).transform(products, filters)
+          .findIndex(p => p._id === id)),
+        take(1)
+      )
+      .subscribe(productIndex => setTimeout(() => this.scrollToItem(productIndex)));
+
   }
 
-  ngAfterViewInit() {
-    this.viewportScroller.scrollToPosition(this.scrollPosition);
+  private scrollToItem(productIndex: number) {
+    if (this.productsViewport && productIndex !== -1) {
+      this.productsViewport.scrollToIndex(productIndex);
+    }
   }
-
 }

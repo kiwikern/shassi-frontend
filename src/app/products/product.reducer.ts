@@ -14,6 +14,7 @@ export interface ProductState extends EntityState<Product> {
   filteredName: string;
   filterOptions: FilterOptions;
   initProduct?: { url: string, sizes: Size[], name: string };
+  latestProductId?: string;
 }
 
 export const adapter: EntityAdapter<Product> = createEntityAdapter<Product>({
@@ -109,6 +110,11 @@ export function reducer(state = initialState,
       return state;
     }
 
+    case ProductActionTypes.SetLatestProductId: {
+      state = Object.assign({}, state, {latestProductId: action.payload.latestProductId});
+      return state;
+    }
+
     default: {
       return state;
     }
@@ -142,3 +148,5 @@ export const selectFilterOptions = createSelector(selectProducts, store => store
 export const selectIsSaving = createSelector(selectProducts, state => state.isSaving);
 export const selectIsLoading = createSelector(selectProducts, state => state && state.isLoading);
 export const selectHasSavingError = createSelector(selectProducts, state => state.hasSavingError);
+
+export const selectLatestProductId = createSelector(selectProducts, state => state.latestProductId);

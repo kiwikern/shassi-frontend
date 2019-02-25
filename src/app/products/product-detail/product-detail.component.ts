@@ -6,7 +6,7 @@ import { filter, map, shareReplay, switchMap, tap } from 'rxjs/operators';
 import { selectIsLoading, selectProductById } from '../product.reducer';
 import { Observable } from 'rxjs';
 import { Product, Update } from '../product.model';
-import { DeleteProductRequest, MarkProductReadRequest } from '../product.actions';
+import { DeleteProductRequest, MarkProductReadRequest, SetLatestProductId } from '../product.actions';
 import { InfoSnackBarService } from '../../info-snack-bar.service';
 
 @Component({
@@ -34,7 +34,8 @@ export class ProductDetailComponent implements OnInit {
       map(params => params.id),
       switchMap(id => this.store.select(selectProductById(id))),
       tap(p => this.checkProduct(p)),
-      filter(p => !!p)
+      filter(p => !!p),
+      tap(p => this.store.dispatch(new SetLatestProductId({latestProductId: p._id}))),
     );
 
     this.product$ = loadingFinished$
