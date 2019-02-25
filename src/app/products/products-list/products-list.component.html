@@ -1,6 +1,7 @@
 <div [@list]="isLoading$ | async" class="list">
   <app-product-filter></app-product-filter>
-  <cdk-virtual-scroll-viewport itemSize="50" class="virtual-scroll-container"
+  <cdk-virtual-scroll-viewport itemSize="93" class="virtual-scroll-container"
+                               #productsViewport
                                *ngIf="(products$ | async | productFilter:(filter$ | async))?.length > 0">
     <div class="list-item"
          *cdkVirtualFor="let p of products$ | async | productFilter:(filter$ | async); let last = last">
