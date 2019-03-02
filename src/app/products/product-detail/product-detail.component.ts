@@ -1,10 +1,10 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { IAppState } from '../../reducers';
 import { Store } from '@ngrx/store';
 import { ActivatedRoute, Router } from '@angular/router';
-import { filter, map, shareReplay, switchMap, tap } from 'rxjs/operators';
+import { filter, map, shareReplay, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { selectIsLoading, selectProductById } from '../product.reducer';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { Product, Update } from '../product.model';
 import { DeleteProductRequest, MarkProductReadRequest, SetLatestProductId } from '../product.actions';
 import { InfoSnackBarService } from '../../info-snack-bar.service';
@@ -15,10 +15,11 @@ import { InfoSnackBarService } from '../../info-snack-bar.service';
   styleUrls: ['./product-detail.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ProductDetailComponent implements OnInit {
+export class ProductDetailComponent implements OnInit, OnDestroy {
 
   product$: Observable<Product>;
   updates$: Observable<Update[]>;
+  private onDestroy$: Subject<void> = new Subject<void>();
 
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -36,6 +37,7 @@ export class ProductDetailComponent implements OnInit {
       tap(p => this.checkProduct(p)),
       filter(p => !!p),
       tap(p => this.store.dispatch(new SetLatestProductId({latestProductId: p._id}))),
+      takeUntil(this.onDestroy$)
     );
 
     this.product$ = loadingFinished$
@@ -50,12 +52,18 @@ export class ProductDetailComponent implements OnInit {
     );
   }
 
+  ngOnDestroy() {
+    this.onDestroy$.next();
+    this.onDestroy$.complete();
+  }
+
   deleteProduct(id) {
     const confirmation = this.snackBar.open('SnackBar.Message.Confirmation.DeleteProduct', 'SnackBar.Action.DeleteProduct');
-    confirmation.onAction().subscribe(() => {
-      this.router.navigate(['products']);
-      this.store.dispatch(new DeleteProductRequest({id}));
-    });
+    confirmation.onAction().pipe(takeUntil(this.onDestroy$))
+      .subscribe(() => {
+        this.router.navigate(['products']);
+        this.store.dispatch(new DeleteProductRequest({id}));
+      });
   }
 
   private checkProduct(product: Product) {

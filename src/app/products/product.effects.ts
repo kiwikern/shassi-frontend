@@ -101,7 +101,6 @@ export class ProductEffects {
         break;
       case 404:
         this.snackBar.open('SnackBar.Message.Error.ProductNotFound');
-        // actions.push(new LoadProductsRequest());
         break;
       case 409:
         this.snackBar.open('SnackBar.Message.Error.ProductAlreadyExists');
