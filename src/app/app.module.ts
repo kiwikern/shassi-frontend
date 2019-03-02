@@ -23,7 +23,8 @@ import { TelegramService } from './auth/telegram.service';
 const routes: Routes = [
   {path: '', pathMatch: 'full', redirectTo: 'products'},
   {path: 'auth', children: authRoutes},
-  {path: 'products', loadChildren: './products/products.module#ProductsModule', canLoad: [LoginGuard]}
+  {path: 'products', loadChildren: './products/products.module#ProductsModule', canLoad: [LoginGuard]},
+  {path: '**', redirectTo: 'products' },
 ];
 
 @NgModule({
