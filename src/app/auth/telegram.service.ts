@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { filter, map } from 'rxjs/operators';
+import { filter, map, tap } from 'rxjs/operators';
 import { InfoSnackBarService } from '../info-snack-bar.service';
 import { environment } from '../../environments/environment';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -8,6 +8,7 @@ import { select, Store } from '@ngrx/store';
 import { IAppState } from '../reducers';
 import { selectJwt } from './auth.reducer';
 import { combineLatest } from 'rxjs';
+import { Observable } from 'rxjs/internal/Observable';
 
 @Injectable({providedIn: 'root'})
 export class TelegramService {
@@ -28,6 +29,14 @@ export class TelegramService {
       ).subscribe(
         url => window.open(url, '_blank'),
         err => this.handleError(err)
+      );
+  }
+
+  getTelegramConnectionStatus(): Observable<boolean> {
+    return this.http.get<{ isConnectedToTelegram: boolean }>('/api/telegram')
+      .pipe(
+        map(tokenResponse => tokenResponse.isConnectedToTelegram),
+        tap(console.log)
       );
   }
 

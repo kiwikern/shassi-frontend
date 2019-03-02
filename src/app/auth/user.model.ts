@@ -5,5 +5,5 @@ export interface User {
     email: boolean;
   };
   email?: string;
-  telegramId?: string;
+  isConnectedToTelegram?: boolean;
 }

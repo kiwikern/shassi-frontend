@@ -18,12 +18,13 @@ import {
 } from './auth.actions';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import { combineLatest, Observable, of } from 'rxjs';
 import { Action } from '@ngrx/store';
 import { catchError, map, mergeMap, switchMap, tap } from 'rxjs/operators';
 import { InfoSnackBarService } from '../info-snack-bar.service';
 import { ClearProducts, LoadProductsRequest } from '../products/product.actions';
 import { User } from './user.model';
+import { TelegramService } from './telegram.service';
 
 @Injectable()
 export class AuthEffects {
@@ -33,7 +34,8 @@ export class AuthEffects {
               private http: HttpClient,
               private router: Router,
               private route: ActivatedRoute,
-              private snackBar: InfoSnackBarService) {
+              private snackBar: InfoSnackBarService,
+              private telegramService: TelegramService) {
     this.route.queryParams.subscribe(params => this.queryParams = params);
   }
 
@@ -69,11 +71,13 @@ export class AuthEffects {
 
   @Effect() getUser$: Observable<Action> = this.actions$.pipe(
     ofType(AuthActionTypes.GET_USER_REQUEST),
-    mergeMap((action: GetUserRequest) =>
-      this.http.get<User>('/api/users').pipe(
-        map(user => new GetUserSuccess({user})),
+    mergeMap((action: GetUserRequest) => {
+      const getUsers$ = this.http.get<User>('/api/users');
+      return combineLatest([getUsers$, this.telegramService.getTelegramConnectionStatus()]).pipe(
+        map(([user, isConnected]) => new GetUserSuccess({user: {...user, isConnectedToTelegram: isConnected}})),
         catchError(err => this.handleError(err, new GetUserFail()))
-      ))
+      );
+    })
   );
 
   @Effect() updateUser$: Observable<Action> = this.actions$.pipe(
