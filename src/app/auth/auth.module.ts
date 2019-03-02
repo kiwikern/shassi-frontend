@@ -14,6 +14,8 @@ import { LoginGuard } from './login.guard';
 import { UserEditComponent } from './user-settings/user-settings.component';
 import { UserSettingsFormComponent } from './user-settings/user-settings-form/user-settings-form.component';
 import { RedirectGuard } from './redirect.guard';
+import * as jwtDecode from 'jwt-decode';
+import { JWT_DECODE } from './jwt.service';
 
 export const authRoutes: Routes = [
   {path: '', pathMatch: 'full', redirectTo: 'login'},
@@ -38,6 +40,7 @@ export const authRoutes: Routes = [
   ],
   providers: [
     LoginGuard,
+    {provide: JWT_DECODE, useValue: jwtDecode}
   ],
   declarations: [
     LoginComponent,

@@ -1,19 +1,14 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, CanActivateChild, CanLoad, Route, Router, RouterStateSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
-import { select, Store } from '@ngrx/store';
-import { selectJwt } from './auth.reducer';
-import { IAppState } from '../reducers';
 import { Location } from '@angular/common';
+import { JwtService } from './jwt.service';
 
 @Injectable()
 export class LoginGuard implements CanLoad, CanActivate, CanActivateChild {
-  private jwt;
-
-  constructor(private store: Store<IAppState>,
+  constructor(private jwtService: JwtService,
               private location: Location,
               private router: Router) {
-    store.pipe(select(selectJwt)).subscribe(jwt => this.jwt = jwt);
   }
 
   canLoad(route: Route): Observable<boolean> | Promise<boolean> | boolean {
@@ -30,7 +25,8 @@ export class LoginGuard implements CanLoad, CanActivate, CanActivateChild {
 
   private allowsRouteChange() {
     let allowsRouteChange: boolean;
-    if (this.jwt) {
+
+    if (this.jwtService.isJwtValid()) {
       allowsRouteChange = true;
     } else {
       const hasAccount = localStorage.getItem('shassi.hasAccount');
@@ -45,4 +41,11 @@ export class LoginGuard implements CanLoad, CanActivate, CanActivateChild {
     }
     return allowsRouteChange;
   }
+
+  parseJwt (token: string) {
+    const base64Url = token.split('.')[1];
+    const base64 = base64Url.replace(/-/g, '+')
+      .replace(/_/g, '/');
+    return JSON.parse(window.atob(base64));
+  };
 }
