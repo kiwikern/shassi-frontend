@@ -36,7 +36,7 @@ export const authRoutes: Routes = [
     MatButtonModule,
     MatCardModule,
     FormsModule,
-    MatCheckboxModule
+    MatCheckboxModule,
   ],
   providers: [
     LoginGuard,

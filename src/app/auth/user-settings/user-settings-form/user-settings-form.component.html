@@ -15,15 +15,17 @@
         <mat-error *ngIf="!mail.valid">Email is invalid.</mat-error>
       </mat-form-field>
 
-      <div *ngIf="isLinkedToTelegram">
+      <div *ngIf="isLinkedToTelegram" class="connect-telegram">
+        <a mat-raised-button type="button" [attr.href]="botUrl" target="_blank">Open Telegram Bot</a>
+        <br>
         <span>Your account is linked to Telegram.</span>
-        <a mat-button type="button" [attr.href]="botUrl" target="_blank">Open Shassi Bot</a>
       </div>
-      <div *ngIf="!isLinkedToTelegram">
+      <div *ngIf="!isLinkedToTelegram" class="connect-telegram">
+        <button mat-raised-button type="button" (click)="linkTelegram.emit()">Connect to Telegram</button>
+        <br>
         <span>Your account is not linked to Telegram.
           Connect now to get Telegram notification on product updates and to
           add products by sending product URLs to the Shassi Bot.</span>
-        <button mat-button type="button" (click)="linkTelegram.emit()">Connect</button>
       </div>
 
       <div class="notifications">

@@ -26,7 +26,13 @@
     max-width: 600px;
   }
 
+  .connect-telegram {
+    color: gray;
+    font-size: small;
+  }
+
   .notifications {
+    margin-top: 25px;
     display: flex;
     flex-direction: column;
     border-left: solid 4px mat-color($primary);

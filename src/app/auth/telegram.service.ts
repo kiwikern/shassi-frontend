@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { filter, map, tap } from 'rxjs/operators';
+import { filter, map } from 'rxjs/operators';
 import { InfoSnackBarService } from '../info-snack-bar.service';
 import { environment } from '../../environments/environment';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -35,8 +35,7 @@ export class TelegramService {
   getTelegramConnectionStatus(): Observable<boolean> {
     return this.http.get<{ isConnectedToTelegram: boolean }>('/api/telegram')
       .pipe(
-        map(tokenResponse => tokenResponse.isConnectedToTelegram),
-        tap(console.log)
+        map(tokenResponse => tokenResponse.isConnectedToTelegram)
       );
   }
 
