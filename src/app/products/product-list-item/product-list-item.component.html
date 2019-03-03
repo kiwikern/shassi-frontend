@@ -3,7 +3,7 @@
     {{product?.isAvailable ? 'shopping_cart' : 'remove_shopping_cart'}}
   </mat-icon>
   <mat-icon class="low-in-stock" [ngClass]="{isUnread: product.hasUnreadUpdate}" *ngIf="product.isLowInStock">
-    trending_down
+    alarm
   </mat-icon>
   <span class="price">{{product?.price | currency:'EUR'}}</span>
 </div>
