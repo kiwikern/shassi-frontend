@@ -45,6 +45,8 @@ export class ProductFilterPipe implements PipeTransform {
       return false;
     } else if (filter.filterOptions.showOnlyAvailable && !product.isAvailable || !product.isActive) {
       return false;
+    } else if (filter.filterOptions.showOnlyLowInStock && !product.isLowInStock) {
+      return false;
     } else {
       return true;
     }

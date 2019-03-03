@@ -19,10 +19,10 @@
       Open
     </a>
     <ng-container *ngIf="(product$ | async)?._id; let id">
-    <button mat-button (click)="deleteProduct(id)">
-      <mat-icon>delete</mat-icon>
-      Delete
-    </button>
+      <button mat-button (click)="deleteProduct(id)">
+        <mat-icon>delete</mat-icon>
+        Delete
+      </button>
     </ng-container>
   </mat-card-actions>
 </mat-card>

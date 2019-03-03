@@ -2,6 +2,9 @@
   <mat-icon class="icon" [ngClass]="{isUnread: product.hasUnreadUpdate}">
     {{product?.isAvailable ? 'shopping_cart' : 'remove_shopping_cart'}}
   </mat-icon>
+  <mat-icon class="low-in-stock" [ngClass]="{isUnread: product.hasUnreadUpdate}" *ngIf="product.isLowInStock">
+    trending_down
+  </mat-icon>
   <span class="price">{{product?.price | currency:'EUR'}}</span>
 </div>
 <span class="name" [ngClass]="{crossed: !product.isActive}">{{product?.name}}</span>

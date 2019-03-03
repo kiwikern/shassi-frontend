@@ -34,6 +34,7 @@ export class ProductFilterComponent implements OnInit {
         !!name
         || stores && stores.length > 0
         || filterOptions.showOnlyWithUnreadUpdate
+        || filterOptions.showOnlyLowInStock
         || filterOptions.showOnlyAvailable)
     );
   }
@@ -48,7 +49,8 @@ export class ProductFilterComponent implements OnInit {
     this.store.dispatch(action);
   }
 
-  updateFilterOptions(optionName: 'showOnlyAvailable' | 'showOnlyWithUnreadUpdate', optionValue: boolean) {
+  updateFilterOptions(optionName: 'showOnlyAvailable' | 'showOnlyWithUnreadUpdate' | 'showOnlyLowInStock',
+                      optionValue: boolean) {
     const options = {};
     options[optionName] = optionValue;
     const action = new UpdateFilterOptions({options});

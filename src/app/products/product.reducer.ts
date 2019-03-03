@@ -28,7 +28,7 @@ export const initialState: ProductState = adapter.getInitialState({
   isLoading: false,
   filteredStores: [],
   filteredName: '',
-  filterOptions: {showOnlyAvailable: false, showOnlyWithUnreadUpdate: false}
+  filterOptions: {showOnlyAvailable: false, showOnlyWithUnreadUpdate: false, showOnlyLowInStock: false}
 });
 
 export function reducer(state = initialState,

@@ -8,6 +8,7 @@ export interface Size {
 export interface Update {
   price: number;
   isAvailable: boolean;
+  isLowInStock: boolean;
   createdAt?: Date;
 }
 
@@ -24,4 +25,5 @@ export interface Product {
   createdAt: Date;
   updatedAt: Date;
   hasUnreadUpdate: boolean;
+  isLowInStock: boolean;
 }

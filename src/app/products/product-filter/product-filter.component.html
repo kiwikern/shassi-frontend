@@ -20,6 +20,13 @@
   </div>
 
   <div class="row">
+    <mat-slide-toggle [checked]="(filterOptions$ | async)?.showOnlyLowInStock"
+                      (change)="updateFilterOptions('showOnlyLowInStock', $event.checked)">
+      Only low in stock
+    </mat-slide-toggle>
+  </div>
+
+  <div class="row">
     <mat-form-field>
       <mat-select placeholder="Stores" multiple
                   [value]="selectedStores$ | async"
