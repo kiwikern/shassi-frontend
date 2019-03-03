@@ -7,7 +7,14 @@ import { AuthEffects } from './auth.effects';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './login/login.component';
-import { MatButtonModule, MatCardModule, MatCheckboxModule, MatFormFieldModule, MatInputModule } from '@angular/material';
+import {
+  MatButtonModule,
+  MatCardModule,
+  MatCheckboxModule,
+  MatFormFieldModule,
+  MatInputModule,
+  MatProgressSpinnerModule
+} from '@angular/material';
 import { FormsModule } from '@angular/forms';
 import { MatchingPasswordDirective, RegisterComponent } from './register/register.component';
 import { LoginGuard } from './login.guard';
@@ -37,6 +44,7 @@ export const authRoutes: Routes = [
     MatCardModule,
     FormsModule,
     MatCheckboxModule,
+    MatProgressSpinnerModule,
   ],
   providers: [
     LoginGuard,

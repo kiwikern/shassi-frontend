@@ -1,4 +1,5 @@
 <app-user-settings-form
+  *ngIf="hasLoaded$ | async"
  [email]="(user$ | async)?.email"
  [isLinkedToTelegram]="(user$ | async)?.isConnectedToTelegram"
  [sendEmailNotifications]="(user$ | async)?.notificationTypes?.email"
@@ -7,3 +8,6 @@
  (save)="updateUser($event)"
  (linkTelegram)="linkTelegram()"
 ></app-user-settings-form>
+
+
+<mat-spinner *ngIf="!(hasLoaded$ | async)"></mat-spinner>

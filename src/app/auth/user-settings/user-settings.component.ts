@@ -5,9 +5,9 @@ import { Router } from '@angular/router';
 import { TelegramService } from '../telegram.service';
 import { IAppState } from '../../reducers';
 import { select, Store } from '@ngrx/store';
-import { selectUser } from '../auth.reducer';
+import { selectIsLoading, selectUser } from '../auth.reducer';
 import { GetUserRequest, UpdateUserRequest } from '../auth.actions';
-import { share } from 'rxjs/operators';
+import { map, shareReplay } from 'rxjs/operators';
 
 @Component({
   selector: 'app-user-edit',
@@ -18,6 +18,7 @@ import { share } from 'rxjs/operators';
 export class UserEditComponent implements OnInit {
 
   user$: Observable<User>;
+  hasLoaded$: Observable<boolean>;
   botUrl: string;
 
   constructor(private store: Store<IAppState>,
@@ -26,12 +27,16 @@ export class UserEditComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.store.dispatch(new GetUserRequest());
     this.user$ = this.store.pipe(
       select(selectUser),
-      share()
+      shareReplay(),
+    );
+    this.hasLoaded$ = this.store.pipe(
+      select(selectIsLoading),
+      map(isLoading => !isLoading),
     );
     this.botUrl = this.telegramService.getTelegramBotUrl();
-    this.store.dispatch(new GetUserRequest());
   }
 
   updateUser(user: Partial<User>) {

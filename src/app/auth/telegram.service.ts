@@ -32,7 +32,7 @@ export class TelegramService {
       );
   }
 
-  getTelegramConnectionStatus(): Observable<boolean> {
+  isConnectedToTelegram(): Observable<boolean> {
     return this.http.get<{ isConnectedToTelegram: boolean }>('/api/telegram')
       .pipe(
         map(tokenResponse => tokenResponse.isConnectedToTelegram)

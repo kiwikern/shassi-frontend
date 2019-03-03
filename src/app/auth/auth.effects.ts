@@ -73,8 +73,8 @@ export class AuthEffects {
     ofType(AuthActionTypes.GET_USER_REQUEST),
     mergeMap((action: GetUserRequest) => {
       const getUsers$ = this.http.get<User>('/api/users');
-      return combineLatest([getUsers$, this.telegramService.getTelegramConnectionStatus()]).pipe(
-        map(([user, isConnected]) => new GetUserSuccess({user: {...user, isConnectedToTelegram: isConnected}})),
+      return combineLatest([getUsers$, this.telegramService.isConnectedToTelegram()]).pipe(
+        map(([user, isConnectedToTelegram]) => new GetUserSuccess({user: {...user, isConnectedToTelegram}})),
         catchError(err => this.handleError(err, new GetUserFail()))
       );
     })
