@@ -110,7 +110,13 @@ export class ProductEffects {
         }
         break;
       case 400:
-        this.snackBar.open(error.error);
+        let message;
+        if (error && error.error && error.error.message) {
+          message = error.error.message;
+        } else {
+          message = 'Bad request. Invalid data?';
+        }
+        this.snackBar.open(message);
         break;
       case 504:
         this.snackBar.open('SnackBar.Message.Error.ServerNotReachable');
