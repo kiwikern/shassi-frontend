@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Observable, of } from 'rxjs';
 import {
+  AddProduct,
   AddProductFail,
   AddProductRequest,
   DeleteProduct,
@@ -58,7 +59,7 @@ export class ProductEffects {
     ofType(ProductActionTypes.AddProductRequest),
     mergeMap((action: AddProductRequest) => {
       return this.http.post<Product>(`/api/products`, action.payload).pipe(
-        map(product => new InitProduct({product})),
+        map(product => new AddProduct({product})),
         catchError(err => this.handleError(err, new AddProductFail()))
       );
     })
