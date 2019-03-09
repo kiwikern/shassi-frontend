@@ -25,7 +25,7 @@
     </mat-card-content>
 
     <mat-card-actions align="end">
-      <a mat-raised-button routerLink="../register">Register</a>
+      <a mat-raised-button routerLink="../register" queryParamsHandling="merge">Register</a>
       <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">Login</button>
     </mat-card-actions>
   </mat-card>

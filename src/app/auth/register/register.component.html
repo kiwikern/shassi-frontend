@@ -52,7 +52,7 @@
     </mat-card-content>
 
     <mat-card-actions align="end">
-      <a mat-raised-button routerLink="../login">Login</a>
+      <a mat-raised-button routerLink="../login" queryParamsHandling="merge">Login</a>
       <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">Register</button>
     </mat-card-actions>
   </mat-card>
