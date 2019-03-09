@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { User } from '../../user.model';
+import { version } from '../../../../../package.json';
 
 @Component({
   selector: 'app-user-settings-form',
@@ -15,6 +16,7 @@ export class UserSettingsFormComponent implements OnInit {
   @Input() botUrl: string;
   @Output() save: EventEmitter<Partial<User>> = new EventEmitter<Partial<User>>();
   @Output() linkTelegram: EventEmitter<any> = new EventEmitter<any>();
+  version = version;
 
   constructor() {
   }
