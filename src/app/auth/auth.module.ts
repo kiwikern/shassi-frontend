@@ -11,6 +11,7 @@ import {
   MatButtonModule,
   MatCardModule,
   MatCheckboxModule,
+  MatDialogModule,
   MatFormFieldModule,
   MatInputModule,
   MatProgressSpinnerModule
@@ -23,6 +24,7 @@ import { UserSettingsFormComponent } from './user-settings/user-settings-form/us
 import { RedirectGuard } from './redirect.guard';
 import * as jwtDecode from 'jwt-decode';
 import { JWT_DECODE } from './jwt.service';
+import { TelegramLinkDialogComponent } from './telegram-link-dialog/telegram-link-dialog.component';
 
 export const authRoutes: Routes = [
   {path: '', pathMatch: 'full', redirectTo: 'login'},
@@ -45,6 +47,7 @@ export const authRoutes: Routes = [
     FormsModule,
     MatCheckboxModule,
     MatProgressSpinnerModule,
+    MatDialogModule,
   ],
   providers: [
     LoginGuard,
@@ -55,7 +58,11 @@ export const authRoutes: Routes = [
     RegisterComponent,
     MatchingPasswordDirective,
     UserEditComponent,
-    UserSettingsFormComponent
+    UserSettingsFormComponent,
+    TelegramLinkDialogComponent,
+  ],
+  entryComponents: [
+    TelegramLinkDialogComponent,
   ]
 })
 export class AuthModule {

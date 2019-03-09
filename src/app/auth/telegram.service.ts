@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { filter, map } from 'rxjs/operators';
+import { catchError, filter, map } from 'rxjs/operators';
 import { InfoSnackBarService } from '../info-snack-bar.service';
 import { environment } from '../../environments/environment';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -9,12 +9,15 @@ import { IAppState } from '../reducers';
 import { selectJwt } from './auth.reducer';
 import { combineLatest } from 'rxjs';
 import { Observable } from 'rxjs/internal/Observable';
+import { MatDialog } from '@angular/material';
+import { TelegramLinkDialogComponent } from './telegram-link-dialog/telegram-link-dialog.component';
 
 @Injectable({providedIn: 'root'})
 export class TelegramService {
 
   constructor(private http: HttpClient,
               private snackBar: InfoSnackBarService,
+              private matDialog: MatDialog,
               private store: Store<IAppState>,
               private route: ActivatedRoute,
               private router: Router) {
@@ -25,11 +28,15 @@ export class TelegramService {
       .pipe(
         filter(token => !!token),
         map(tokenResponse => tokenResponse.token),
-        map(token => `${this.getTelegramBotUrl()}?start=${token}`)
-      ).subscribe(
-        url => window.open(url, '_blank'),
-        err => this.handleError(err)
-      );
+        map(token => `${this.getTelegramBotUrl()}?start=${token}`),
+        map(url => {
+          const popup = window.open(url, '_blank');
+          if (!popup) {
+            this.matDialog.open(TelegramLinkDialogComponent, {data: {telegramLink: url}});
+          }
+        }),
+        catchError(err => this.handleError(err)),
+      ).subscribe();
   }
 
   isConnectedToTelegram(): Observable<boolean> {
@@ -61,6 +68,7 @@ export class TelegramService {
         this.snackBar.open('SnackBar.Message.Error.ClientError');
         console.error(err);
     }
+    return null;
   }
 
 
