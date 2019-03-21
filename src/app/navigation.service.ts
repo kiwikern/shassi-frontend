@@ -33,6 +33,6 @@ export class NavigationService {
     this.hasPreviousRoute = event.id !== 1;
     this.previousUrl = this.currentUrl;
     this.currentUrl = event.url;
-    this.canNavigateBack$.next(/(.*(products\/).+)|auth\/user/.test(event.url));
+    this.canNavigateBack$.next(/(.*(products\/).+)|auth\/user|admin/.test(event.url));
   }
 }

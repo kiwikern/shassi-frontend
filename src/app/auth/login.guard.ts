@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, CanActivateChild, CanLoad, Route, Router, RouterStateSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Location } from '@angular/common';
-import { JwtService } from './jwt.service';
+import { JwtService, Role } from './jwt.service';
 
 @Injectable()
 export class LoginGuard implements CanLoad, CanActivate, CanActivateChild {
@@ -12,22 +12,30 @@ export class LoginGuard implements CanLoad, CanActivate, CanActivateChild {
   }
 
   canLoad(route: Route): Observable<boolean> | Promise<boolean> | boolean {
-    return this.allowsRouteChange();
+    const requiredRoles = this.getRequiredRoles(route);
+    return this.allowsRouteChange(requiredRoles);
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-    return this.allowsRouteChange();
+    const requiredRoles = this.getRequiredRoles(route);
+    return this.allowsRouteChange(requiredRoles);
   }
 
   canActivateChild(childRoute: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-    return this.allowsRouteChange();
+    const requiredRoles = this.getRequiredRoles(childRoute);
+    return this.allowsRouteChange(requiredRoles);
   }
 
-  private allowsRouteChange() {
+  private allowsRouteChange(requiredRoles?: Role[]) {
     let allowsRouteChange: boolean;
 
     if (this.jwtService.isJwtValid()) {
-      allowsRouteChange = true;
+      if (this.jwtService.hasOneRole(requiredRoles)) {
+        allowsRouteChange = true;
+      } else {
+        allowsRouteChange = false;
+        this.router.navigate(['products']);
+      }
     } else {
       const hasAccount = localStorage.getItem('shassi.hasAccount');
       if (hasAccount) {
@@ -42,10 +50,11 @@ export class LoginGuard implements CanLoad, CanActivate, CanActivateChild {
     return allowsRouteChange;
   }
 
-  parseJwt (token: string) {
-    const base64Url = token.split('.')[1];
-    const base64 = base64Url.replace(/-/g, '+')
-      .replace(/_/g, '/');
-    return JSON.parse(window.atob(base64));
-  };
+  private getRequiredRoles(route: Route | ActivatedRouteSnapshot) {
+    if (route.data) {
+      return route.data.roles;
+    } else {
+      return [];
+    }
+  }
 }

@@ -19,12 +19,14 @@ import { I18nService } from './i18n.service';
 import { InfoSnackBarService } from './info-snack-bar.service';
 import { SwUpdatesService } from './sw-updates.service';
 import { TelegramService } from './auth/telegram.service';
+import { Role } from './auth/jwt.service';
 
 const routes: Routes = [
   {path: '', pathMatch: 'full', redirectTo: 'products'},
   {path: 'auth', children: authRoutes},
   {path: 'products', loadChildren: './products/products.module#ProductsModule', canLoad: [LoginGuard]},
-  {path: '**', redirectTo: 'products' },
+  {path: 'admin', loadChildren: './admin/admin.module#AdminModule', canLoad: [LoginGuard], data: {roles: [Role.ADMIN]}},
+  {path: '**', redirectTo: 'products'},
 ];
 
 @NgModule({

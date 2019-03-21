@@ -9,6 +9,7 @@ import { SwUpdatesService } from './sw-updates.service';
 import { NavigationService } from './navigation.service';
 import { selectIsLoading } from './products/product.reducer';
 import { share } from 'rxjs/operators';
+import { JwtService } from './auth/jwt.service';
 
 @Component({
   selector: 'app-root',
@@ -21,14 +22,17 @@ export class AppComponent implements OnInit {
   showBackNavigation$: Observable<boolean>;
   jwt$: Observable<string>;
   isLoading$: Observable<boolean>;
+  isAdmin$: Observable<boolean>;
 
   constructor(private store: Store<IAppState>,
               private navigationService: NavigationService,
+              private jwtService: JwtService,
               private swUpdatesService: SwUpdatesService) {
   }
 
   ngOnInit() {
     this.jwt$ = this.store.pipe(select(selectJwt));
+    this.isAdmin$ = this.jwtService.isAdmin$;
     this.isLoading$ = this.store.pipe(select(selectIsLoading), share());
     this.showBackNavigation$ = this.navigationService.canNavigateBack$;
   }

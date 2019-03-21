@@ -1,3 +1,5 @@
+import { Role } from './jwt.service';
+
 export interface User {
   username: string;
   notificationTypes: {
@@ -6,4 +8,5 @@ export interface User {
   };
   email?: string;
   isConnectedToTelegram?: boolean;
+  roles?: Role[];
 }
