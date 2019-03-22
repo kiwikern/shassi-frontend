@@ -1,5 +1,7 @@
 .container {
   overflow: auto;
+  display: flex;
+  justify-content: center;
 }
 
 td.mat-cell:last-of-type {
