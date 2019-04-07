@@ -7,7 +7,10 @@
   </mat-icon>
   <span class="price">{{product?.price | currency:'EUR'}}</span>
 </div>
-<span class="name" [ngClass]="{crossed: !product.isActive}">{{product?.name}}</span>
+<span class="name" [ngClass]="{crossed: !product.isActive}">
+  <mat-icon *ngIf="product.isFavorite">star</mat-icon>
+  <span class="ellipsis">{{product?.name}}</span>
+</span>
 <div class="additional">
   <span class="store">{{product?.store}}</span>
   |

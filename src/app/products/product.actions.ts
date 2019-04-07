@@ -26,6 +26,9 @@ export enum ProductActionTypes {
   UpdateFilteredName = '[Product] Update Filtered Name',
   UpdateFilterOptions = '[Product] Update Filter Options',
   SetLatestProductId = '[Product] Set Latest ProductId',
+  SetProductFavorite = '[Product] Set Product Favorite',
+  SetProductFavoriteRequest = '[Product] Set Product Favorite Request',
+  SetProductFavoriteFail = '[Product] Set Product Favorite Fail',
 }
 
 export class LoadProductsRequest implements Action {
@@ -140,6 +143,27 @@ export class MarkProductReadFail implements Action {
   }
 }
 
+export class SetProductFavorite implements Action {
+  readonly type = ProductActionTypes.SetProductFavorite;
+
+  constructor() {
+  }
+}
+
+export class SetProductFavoriteRequest implements Action {
+  readonly type = ProductActionTypes.SetProductFavoriteRequest;
+
+  constructor(public payload: { id: string, isFavorite: boolean }) {
+  }
+}
+
+export class SetProductFavoriteFail implements Action {
+  readonly type = ProductActionTypes.SetProductFavoriteFail;
+
+  constructor(public payload: { id: string, isFavorite: boolean }) {
+  }
+}
+
 export class DeleteProducts implements Action {
   readonly type = ProductActionTypes.DeleteProducts;
 
@@ -189,6 +213,7 @@ export type ProductActions =
   | UpdateProducts
   | DeleteProduct | DeleteProductRequest | DeleteProductFail
   | MarkProductRead | MarkProductReadRequest | MarkProductReadFail
+  | SetProductFavorite | SetProductFavoriteRequest | SetProductFavoriteFail
   | DeleteProducts
   | ClearProducts
   | UpdateFilteredName | UpdateFilteredStores | UpdateFilterOptions

@@ -46,6 +46,13 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    display: flex;
+  }
+
+  .ellipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   .action {
@@ -63,6 +70,7 @@
   .crossed {
     text-decoration: line-through;
   }
+
   .isUnread {
     color: mat-color($accent);
     //animation: shake 1.5s cubic-bezier(.36, .07, .19, .97) both infinite;

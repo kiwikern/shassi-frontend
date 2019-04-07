@@ -11,6 +11,7 @@ export const translations = {
   'SnackBar.Message.Error.ProductDeleted': 'Product was successfully deleted.',
   'SnackBar.Message.Error.ProductEdited': 'Product was successfully edited.',
   'SnackBar.Message.Error.ProductNotFound': 'Product not found.',
+  'SnackBar.Message.Error.FavoritesLimitExceeded': 'Limit exceeded. You can have a maximum of three favorites.',
   'SnackBar.Message.Error.InvalidURL': 'The given URL was invalid.',
   'SnackBar.Message.Error.NonStoreURL': 'Given URL does not belong to selected store.',
   'SnackBar.Message.Info.URLCopied': 'The URL was copied to your clipboard. Thanks for sharing.',

@@ -1,11 +1,14 @@
-<mat-card>
-  <mat-card-title [ngClass]="{'not-active': !(product$ | async)?.isActive}">
-    {{(product$ | async)?.name}} ({{(product$ | async)?.price | currency:'EUR'}})
+<mat-card *ngIf="product$ | async; let product">
+  <mat-card-title [ngClass]="{'not-active': !product?.isActive}">
+    {{product?.name}} ({{product?.price | currency:'EUR'}})
+    <button mat-icon-button (click)="toggleFavorite(product._id, !product.isFavorite)"><mat-icon color="primary">
+      {{ product?.isFavorite ? 'star' : 'star_border' }}
+    </mat-icon></button>
   </mat-card-title>
   <mat-card-subtitle>
-    <span *ngIf="(product$ | async)?.sizeName">Size: {{(product$ | async)?.sizeName}} |</span>
-    {{(product$ | async)?.store}} |
-    {{(product$ | async)?.createdAt | date}}
+    <span *ngIf="product?.sizeName">Size: {{product?.sizeName}} |</span>
+    {{product?.store}} |
+    {{product?.createdAt | date}}
   </mat-card-subtitle>
 
   <mat-card-content>
@@ -14,11 +17,11 @@
   </mat-card-content>
 
   <mat-card-actions align="end">
-    <a mat-button [attr.href]="(product$ | async)?.url" target="_blank">
+    <a mat-button [attr.href]="product?.url" target="_blank">
       <mat-icon>open_in_browser</mat-icon>
       Open
     </a>
-    <ng-container *ngIf="(product$ | async)?._id; let id">
+    <ng-container *ngIf="product?._id; let id">
       <button mat-button (click)="deleteProduct(id)">
         <mat-icon>delete</mat-icon>
         Delete

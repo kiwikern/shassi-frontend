@@ -6,7 +6,7 @@ import { filter, map, shareReplay, switchMap, takeUntil, tap } from 'rxjs/operat
 import { selectIsLoading, selectProductById } from '../product.reducer';
 import { Observable, Subject } from 'rxjs';
 import { Product, Update } from '../product.model';
-import { DeleteProductRequest, MarkProductReadRequest, SetLatestProductId } from '../product.actions';
+import { DeleteProductRequest, MarkProductReadRequest, SetLatestProductId, SetProductFavoriteRequest } from '../product.actions';
 import { InfoSnackBarService } from '../../info-snack-bar.service';
 
 @Component({
@@ -64,6 +64,10 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
         this.router.navigate(['products']);
         this.store.dispatch(new DeleteProductRequest({id}));
       });
+  }
+
+  toggleFavorite(id: string, isFavorite: boolean) {
+    this.store.dispatch(new SetProductFavoriteRequest({id, isFavorite}));
   }
 
   private checkProduct(product: Product) {

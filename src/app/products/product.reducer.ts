@@ -65,8 +65,17 @@ export function reducer(state = initialState,
     }
 
     case ProductActionTypes.MarkProductRead: {
-      state = Object.assign({}, state, {hasSavingError: true, isSaving: false});
       return adapter.updateOne({id: action.payload.id, changes: {hasUnreadUpdate: false}}, state);
+    }
+
+    case ProductActionTypes.SetProductFavoriteRequest: {
+      const isFavorite = action.payload.isFavorite;
+      return adapter.updateOne({id: action.payload.id, changes: {isFavorite}}, state);
+    }
+
+    case ProductActionTypes.SetProductFavoriteFail: {
+      const isFavorite = !action.payload.isFavorite;
+      return adapter.updateOne({id: action.payload.id, changes: {isFavorite}}, state);
     }
 
     case ProductActionTypes.DeleteProduct: {

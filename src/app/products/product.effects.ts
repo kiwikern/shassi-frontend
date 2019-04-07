@@ -17,7 +17,10 @@ import {
   MarkProductRead,
   MarkProductReadFail,
   MarkProductReadRequest,
-  ProductActionTypes
+  ProductActionTypes,
+  SetProductFavorite,
+  SetProductFavoriteFail,
+  SetProductFavoriteRequest
 } from './product.actions';
 import { Action } from '@ngrx/store';
 import { catchError, map, mergeMap, switchMap, tap } from 'rxjs/operators';
@@ -90,6 +93,18 @@ export class ProductEffects {
     })
   );
 
+  @Effect() setFavorite$: Observable<Action> = this.actions$.pipe(
+    ofType(ProductActionTypes.SetProductFavoriteRequest),
+    mergeMap((action: SetProductFavoriteRequest) => {
+      const id: string = action.payload.id;
+      const isFavorite = action.payload.isFavorite;
+      return this.http.post<string>(`/api/products/${id}/favorite`, {isFavorite}).pipe(
+        mergeMap(() => [new SetProductFavorite()]),
+        catchError(err => this.handleError(err, new SetProductFavoriteFail({id, isFavorite})))
+      );
+    })
+  );
+
   private handleError(error: HttpErrorResponse, action): Observable<any> {
     const actions = [action];
     switch (error.status) {
@@ -99,6 +114,9 @@ export class ProductEffects {
       case 401:
         this.snackBar.open('SnackBar.Message.Error.LoginNeeded');
         actions.push(new Logout());
+        break;
+      case 403:
+        this.snackBar.open('SnackBar.Message.Error.FavoritesLimitExceeded');
         break;
       case 404:
         this.snackBar.open('SnackBar.Message.Error.ProductNotFound');

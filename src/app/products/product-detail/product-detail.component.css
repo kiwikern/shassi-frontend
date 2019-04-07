@@ -12,3 +12,8 @@ mat-card {
 .not-active {
   text-decoration: line-through;
 }
+
+.mat-card-title {
+  display: flex;
+  align-items: center;
+}

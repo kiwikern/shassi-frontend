@@ -26,4 +26,5 @@ export interface Product {
   updatedAt: Date;
   hasUnreadUpdate: boolean;
   isLowInStock: boolean;
+  isFavorite: boolean;
 }
