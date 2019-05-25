@@ -16,7 +16,7 @@ jobs:
             - google-chrome
           packages:
             - google-chrome-stable
-      name: lint
-      script: npm run lint
-    - script: npm run e2e
+      script: npm run e2e
       name: e2e
+    - script: npm run lint
+      name: lint
