@@ -38,12 +38,16 @@ export class LoginGuard implements CanLoad, CanActivate, CanActivateChild {
       }
     } else {
       const hasAccount = localStorage.getItem('shassi.hasAccount');
-      if (hasAccount) {
-        this.router.navigate(['/auth'],
-          {queryParams: {redirectTo: this.location.path()}});
+      let queryParams;
+      if (this.location.path()) {
+        queryParams = {redirectTo: this.location.path()};
       } else {
-        this.router.navigate(['/auth/register'],
-          {queryParams: {redirectTo: this.location.path()}});
+        queryParams = {};
+      }
+      if (hasAccount) {
+        this.router.navigate(['/auth'], {queryParams});
+      } else {
+        this.router.navigate(['/auth/register'], {queryParams});
       }
       allowsRouteChange = false;
     }
