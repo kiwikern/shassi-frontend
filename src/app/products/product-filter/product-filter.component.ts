@@ -29,7 +29,7 @@ export class ProductFilterComponent implements OnInit {
     this.selectedStores$ = this.store.pipe(select(selectFilteredStores));
     this.filterOptions$ = this.store.pipe(select(selectFilterOptions));
     this.name$ = this.store.pipe(select(selectFilteredName));
-    this.isActive$ = combineLatest(this.selectedStores$, this.name$, this.filterOptions$).pipe(
+    this.isActive$ = combineLatest([this.selectedStores$, this.name$, this.filterOptions$]).pipe(
       map(([stores, name, filterOptions]) =>
         !!name
         || stores && stores.length > 0

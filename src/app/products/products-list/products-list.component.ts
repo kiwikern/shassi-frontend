@@ -50,7 +50,7 @@ export class ProductsListComponent implements OnInit {
       select(selectAllProducts),
       filter(p => !!p),
       map(products => products.sort((p1, p2) => p1.updatedAt > p2.updatedAt ? -1 : 1)),
-      startWith(null)
+      startWith(null as Product[])
     );
     this.isLoading$ = this.store.pipe(select(selectIsLoading));
 
@@ -58,14 +58,14 @@ export class ProductsListComponent implements OnInit {
     const filteredStores$ = this.store.pipe(select(selectFilteredStores));
     const filterOptions$ = this.store.pipe(select(selectFilterOptions));
 
-    this.filter$ = combineLatest(filteredName$, filteredStores$, filterOptions$)
+    this.filter$ = combineLatest([filteredName$, filteredStores$, filterOptions$])
       .pipe(
         map(([filteredName, filteredStores, filterOptions]) => ({filteredName, filteredStores, filterOptions}))
       );
 
     const latestProductId$ = this.store.pipe(select(selectLatestProductId));
 
-    combineLatest(latestProductId$, this.products$.pipe(filter(p => !!p)), this.filter$, this.isLoading$)
+    combineLatest([latestProductId$, this.products$.pipe(filter(p => !!p)), this.filter$, this.isLoading$])
       .pipe(
         filter(([id, products, _, isLoading]) => !!products && !isLoading),
         map(([id, products, filters]) => (new ProductFilterPipe).transform(products, filters)

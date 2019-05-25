@@ -1,18 +1,16 @@
 import { TestBed } from '@angular/core/testing';
-import { provideMockActions } from '@ngrx/effects/testing';
-import { Observable } from 'rxjs';
 
 import { AuthEffects } from './auth.effects';
 
 describe('AuthService', () => {
-  let actions$: Observable<any>;
+  // let actions$: Observable<any>;
   let effects: AuthEffects;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
         AuthEffects,
-        provideMockActions(() => actions$)
+        // provideMockActions(() => actions$)
       ]
     });
 

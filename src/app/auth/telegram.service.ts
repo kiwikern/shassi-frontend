@@ -80,7 +80,7 @@ export class TelegramService {
     const hasTokenActionParam$ = this.route.queryParams.pipe(
       map(p => p.action === 'createTelegramToken'),
     );
-    combineLatest(isLoggedIn$, hasTokenActionParam$)
+    combineLatest([isLoggedIn$, hasTokenActionParam$])
       .pipe(filter(([isLoggedIn, shouldCreateToken]) => isLoggedIn && shouldCreateToken))
       .subscribe(() => {
         this.router.navigate([], {queryParams: {action: null}, queryParamsHandling: 'merge'});

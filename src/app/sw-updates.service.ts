@@ -49,7 +49,7 @@ export class SwUpdatesService {
 
   private reloadPage() {
     const location = window.location;
-    if (location && location.reload) {
+    if (location && 'reload' in location) {
       location.reload();
     }
   }

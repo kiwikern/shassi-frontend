@@ -1,18 +1,16 @@
 import { TestBed } from '@angular/core/testing';
-import { provideMockActions } from '@ngrx/effects/testing';
-import { Observable } from 'rxjs';
 
 import { ProductEffects } from './product.effects';
 
 describe('ProductService', () => {
-  let actions$: Observable<any>;
+  // let actions$: Observable<any>;
   let effects: ProductEffects;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
         ProductEffects,
-        provideMockActions(() => actions$)
+        // provideMockActions(() => actions$)
       ]
     });
 

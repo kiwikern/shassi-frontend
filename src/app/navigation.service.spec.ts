@@ -6,6 +6,10 @@ import { Router } from '@angular/router';
 import { Component } from '@angular/core';
 import { Location } from '@angular/common';
 
+@Component({template: '<router-outlet></router-outlet>'})
+class MockComponent {
+}
+
 describe('NavigationService', () => {
   let router: Router;
   let location: Location;
@@ -71,7 +75,3 @@ describe('NavigationService', () => {
   });
 
 });
-
-@Component({template: '<router-outlet></router-outlet>'})
-class MockComponent {
-}
