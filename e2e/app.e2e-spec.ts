@@ -1,11 +1,24 @@
 import { AppPage } from './app.po';
+import * as jsonServer from 'json-server';
+import * as middleware from '../mock-backend.middleware.js';
 
 describe('Authentication', () => {
   let page: AppPage;
+  let server;
 
   beforeAll(async () => {
+    const app = jsonServer.create();
+    app.use(jsonServer.defaults());
+    app.use(jsonServer.bodyParser);
+    app.use(middleware);
+    app.use(jsonServer.router('mock-backend.json'));
+    server = app.listen(3000);
     page = new AppPage();
     await page.secondScreen();
+  });
+
+  afterAll(() => {
+    server.close();
   });
 
   it('should reject wrong password', async () => {

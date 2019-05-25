@@ -57,6 +57,9 @@
           "configurations": {
             "production": {
               "browserTarget": "shassi-frontend:build:production"
+            },
+            "e2e": {
+              "proxyConfig": "proxy.conf.json"
             }
           }
         },
@@ -109,7 +112,7 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "./protractor.conf.js",
-            "devServerTarget": "shassi-frontend:serve"
+            "devServerTarget": "shassi-frontend:serve:e2e"
           }
         },
         "lint": {
