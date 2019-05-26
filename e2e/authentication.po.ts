@@ -1,6 +1,6 @@
 import { browser, by, element, ExpectedConditions } from 'protractor';
 
-export class AppPage {
+export class AuthenticationPage {
   secondScreen() {
     browser.manage().window().setPosition(-1000, 0);
     return browser.manage().window().maximize();
@@ -64,6 +64,10 @@ export class AppPage {
 
   async getPageTitle() {
     return element(by.css('.mat-card-title')).getText();
+  }
+
+  async isLoggedIn() {
+    return element(by.xpath('//button//mat-icon[contains(text(), "exit_to_app")]')).isPresent();
   }
 
 }

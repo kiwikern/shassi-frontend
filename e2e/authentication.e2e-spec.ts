@@ -1,9 +1,9 @@
-import { AppPage } from './app.po';
+import { AuthenticationPage } from './authentication.po';
 import * as jsonServer from 'json-server';
 import * as middleware from '../mock-backend.middleware.js';
 
 describe('Authentication', () => {
-  let page: AppPage;
+  let page: AuthenticationPage;
   let server;
 
   beforeAll(async () => {
@@ -13,7 +13,7 @@ describe('Authentication', () => {
     app.use(middleware);
     app.use(jsonServer.router(__dirname + '/../mock-backend.json'));
     server = app.listen(3000);
-    page = new AppPage();
+    page = new AuthenticationPage();
     await page.secondScreen();
   });
 
