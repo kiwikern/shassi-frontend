@@ -11,7 +11,7 @@ describe('Authentication', () => {
     app.use(jsonServer.defaults());
     app.use(jsonServer.bodyParser);
     app.use(middleware);
-    app.use(jsonServer.router('mock-backend.json'));
+    app.use(jsonServer.router(__dirname + '/../mock-backend.json'));
     server = app.listen(3000);
     page = new AppPage();
     await page.secondScreen();
