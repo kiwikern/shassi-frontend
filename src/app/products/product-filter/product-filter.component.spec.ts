@@ -2,14 +2,12 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ProductFilterComponent } from './product-filter.component';
 import { Store } from '@ngrx/store';
-import {
-  MatButtonModule,
-  MatDividerModule,
-  MatFormFieldModule,
-  MatIconModule,
-  MatSelectModule,
-  MatSlideToggleModule
-} from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { IAppState } from '../../reducers';
 

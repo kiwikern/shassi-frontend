@@ -9,7 +9,7 @@ import { IAppState } from '../reducers';
 import { selectJwt } from './auth.reducer';
 import { combineLatest } from 'rxjs';
 import { Observable } from 'rxjs/internal/Observable';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { TelegramLinkDialogComponent } from './telegram-link-dialog/telegram-link-dialog.component';
 
 @Injectable({providedIn: 'root'})

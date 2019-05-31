@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Size } from '../product.model';
-import { MatStepper } from '@angular/material';
+import { MatStepper } from '@angular/material/stepper';
 import { IAppState } from '../../reducers';
 import { select, Store } from '@ngrx/store';
 import { AddProductRequest, InitProductRequest } from '../product.actions';

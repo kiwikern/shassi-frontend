@@ -3,7 +3,11 @@ import { CommonModule } from '@angular/common';
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 import { RouterModule } from '@angular/router';
 import { Role } from '../auth/jwt.service';
-import { MatButtonModule, MatIconModule, MatMenuModule, MatSortModule, MatTableModule } from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatSortModule } from '@angular/material/sort';
+import { MatTableModule } from '@angular/material/table';
 
 @NgModule({
   declarations: [AdminPanelComponent],
