@@ -1,14 +1,6 @@
-import { browser, by, element, Key } from 'protractor';
+import { by, element, Key } from 'protractor';
 
 export class ProductsPage {
-  navigateToProducts() {
-    return browser.get('/products');
-  }
-
-  async getPageTitle() {
-    return element(by.css('.mat-card-title')).getText();
-  }
-
   async getNumberOfProducts() {
     return element.all(by.css('app-product-list-item')).count();
   }
@@ -37,5 +29,17 @@ export class ProductsPage {
 
   async addProductNameFilter(name: string) {
     await element(by.css('input[placeholder="Product name"]')).sendKeys(name);
+  }
+
+  async openFirstProduct() {
+    await element.all(by.css('app-product-list-item')).get(0).click();
+  }
+
+  async navigateBack() {
+    await element(by.xpath('//button//mat-icon[contains(text(), "arrow_back")]')).click();
+  }
+
+  async getNumberOfUnreadProducts() {
+    return element.all(by.css('.isUnread')).count();
   }
 }

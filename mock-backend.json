@@ -9,9 +9,22 @@
       "price": 12.99,
       "isAvailable": "boolean",
       "sizeName": "L",
-      "updates": [],
+      "updates": [
+        {
+          "price": 100,
+          "isAvailable": false,
+          "isLowInStock": true,
+          "createdAt": "2019-05-01"
+        },
+        {
+          "price": 12.99,
+          "isAvailable": true,
+          "isLowInStock": false,
+          "createdAt": "2019-08-01"
+        }
+      ],
       "isActive": true,
-      "createdAt": "2019-08-01",
+      "createdAt": "2019-05-01",
       "updatedAt": "2019-08-01",
       "hasUnreadUpdate": true
     },

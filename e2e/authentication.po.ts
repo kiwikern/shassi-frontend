@@ -15,7 +15,7 @@ export class AuthenticationPage {
   }
 
   navigateToLoginViaButton() {
-    return element(by.css('a[href="/auth/login"]')).click();
+    return element(by.css('a[ng-reflect-router-link="../login"]')).click();
   }
 
   navigateToRegister() {

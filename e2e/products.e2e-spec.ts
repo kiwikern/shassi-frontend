@@ -56,4 +56,11 @@ describe('Products', () => {
     await expect(productsPage.getNumberOfProducts()).toBeGreaterThan(6);
   });
 
+  it('should mark product as read', async () => {
+    await expect(productsPage.getNumberOfUnreadProducts()).toBe(1);
+    await productsPage.openFirstProduct();
+    await productsPage.navigateBack();
+    await expect(productsPage.getNumberOfUnreadProducts()).toBe(0);
+  });
+
 });

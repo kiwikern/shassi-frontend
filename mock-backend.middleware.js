@@ -7,6 +7,8 @@ module.exports = (req, res, next) => {
     }
   } else if (req.path === '/users') {
     res.status(200).json({})
+  } else if (req.path.includes('markread')) {
+    res.status(200).json({})
   } else {
     next()
   }
