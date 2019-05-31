@@ -40,7 +40,7 @@ export class ProductsListComponent implements OnInit {
   products$: Observable<Product[]>;
   filter$: Observable<FilterSetting>;
   isLoading$: Observable<boolean>;
-  @ViewChild('productsViewport') productsViewport: CdkVirtualScrollViewport;
+  @ViewChild('productsViewport', { static: false }) productsViewport: CdkVirtualScrollViewport;
 
   constructor(private store: Store<IAppState>) {
   }

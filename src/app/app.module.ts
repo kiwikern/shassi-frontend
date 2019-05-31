@@ -24,8 +24,8 @@ import { Role } from './auth/jwt.service';
 const routes: Routes = [
   {path: '', pathMatch: 'full', redirectTo: 'products'},
   {path: 'auth', children: authRoutes},
-  {path: 'products', loadChildren: './products/products.module#ProductsModule', canLoad: [LoginGuard]},
-  {path: 'admin', loadChildren: './admin/admin.module#AdminModule', canLoad: [LoginGuard], data: {roles: [Role.ADMIN]}},
+  {path: 'products', loadChildren: () => import('./products/products.module').then(m => m.ProductsModule), canLoad: [LoginGuard]},
+  {path: 'admin', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule), canLoad: [LoginGuard], data: {roles: [Role.ADMIN]}},
   {path: '**', redirectTo: 'products'},
 ];
 

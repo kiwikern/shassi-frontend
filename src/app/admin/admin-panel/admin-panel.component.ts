@@ -12,7 +12,7 @@ export class AdminPanelComponent implements OnInit {
 
   adminDataDatasource$: MatTableDataSource<AdminData>;
   columnsToDisplay = ['username', 'productCount', 'isConnectedToTelegram', 'latestProductUpdatedDate', 'menu'];
-@ViewChild(MatSort) sort: MatSort;
+@ViewChild(MatSort, { static: true }) sort: MatSort;
 
   constructor(private adminService: AdminService) {
   }

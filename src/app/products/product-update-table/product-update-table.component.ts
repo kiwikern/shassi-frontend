@@ -15,7 +15,7 @@ export class ProductUpdateTableComponent implements OnInit, OnDestroy, AfterView
   @Input() updates$: Observable<Update[]>;
   dataSource: MatTableDataSource<Update> = new MatTableDataSource();
   columnsToDisplay = ['createdAt', 'price', 'isAvailable', 'isLowInStock'];
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
   onDestroy = new Subject<boolean>();
 
 
