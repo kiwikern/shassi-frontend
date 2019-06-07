@@ -1,12 +1,14 @@
 import { Action } from '@ngrx/store';
 import { User } from './user.model';
+import { TelegramLoginData } from './telegram-login-data.interface';
 
 export enum AuthActionTypes {
   LOGIN_REQUEST = '[Auth] LOGIN REQUEST',
+  TELEGRAM_LOGIN_REQUEST = '[Auth] TELEGRAM LOGIN REQUEST',
   LOGIN_SUCCESS = '[Auth] LOGIN SUCCESS',
   LOGIN_FAIL = '[Auth] LOGIN FAIL',
   REGISTER_REQUEST = '[Auth] REGISTER REQUEST',
-  REGISTER_SUCCESS = '[Auth] REGISTER SUCESS',
+  REGISTER_SUCCESS = '[Auth] REGISTER SUCCESS',
   REGISTER_FAIL = '[Auth] REGISTER FAIL',
   LOGOUT = '[Auth] LOGOUT',
   LOGOUT_SUCCESS = '[Auth] LOGOUT SUCCESS',
@@ -22,6 +24,13 @@ export class LoginRequest implements Action {
   readonly type = AuthActionTypes.LOGIN_REQUEST;
 
   constructor(public payload: { username: string, password: string }) {
+  }
+}
+
+export class TelegramLoginRequest implements Action {
+  readonly type = AuthActionTypes.TELEGRAM_LOGIN_REQUEST;
+
+  constructor(public payload: TelegramLoginData) {
   }
 }
 

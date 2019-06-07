@@ -12,6 +12,7 @@ import {
   RegisterFail,
   RegisterRequest,
   RegisterSuccess,
+  TelegramLoginRequest,
   UpdateUserFail,
   UpdateUserRequest,
   UpdateUserSuccess
@@ -43,6 +44,15 @@ export class AuthEffects {
     ofType(AuthActionTypes.LOGIN_REQUEST),
     mergeMap((action: LoginRequest) =>
       this.http.post<{ jwt: string, user: User }>('/api/auth/login', action.payload).pipe(
+        mergeMap(data => this.login(data)),
+        catchError(err => this.handleError(err, new LoginFail()))
+      ))
+  );
+
+  @Effect() telegramLogin$: Observable<Action> = this.actions$.pipe(
+    ofType(AuthActionTypes.TELEGRAM_LOGIN_REQUEST),
+    mergeMap((action: TelegramLoginRequest) =>
+      this.http.post<{ jwt: string, user: User }>('/api/telegram/login', action.payload).pipe(
         mergeMap(data => this.login(data)),
         catchError(err => this.handleError(err, new LoginFail()))
       ))
@@ -106,6 +116,19 @@ export class AuthEffects {
         break;
       case 504:
         this.snackBar.open('SnackBar.Message.Error.ServerNotReachable');
+        break;
+      case 400:
+        switch (error.error.error) {
+          case 'username_already_exists':
+            this.snackBar.open('SnackBar.Message.Error.UsernameAlreadyExists');
+            break;
+          case 'login-via-telegram-only':
+            this.snackBar.open('SnackBar.Message.Error.OnlyTelegramLoginPossible');
+            break;
+          default:
+            this.snackBar.open('SnackBar.Message.Error.ClientError');
+            console.error(error);
+        }
         break;
       default:
         this.snackBar.open('SnackBar.Message.Error.ClientError');

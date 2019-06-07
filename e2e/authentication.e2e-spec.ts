@@ -31,15 +31,15 @@ describe('Authentication', () => {
     await page.navigateToLogin();
     await page.login(true);
     await page.logout();
-    await expect(page.getPageTitle()).toEqual('Login');
+    await expect(page.getUrl()).toContain('login');
   });
 
   it('should navigate via buttons between login/register', async () => {
     await page.navigateToLogin();
     await page.navigateToRegisterViaButton();
-    await expect(page.getPageTitle()).toEqual('Register');
+    await expect(page.getUrl()).toContain('register');
     await page.navigateToLoginViaButton();
-    await expect(page.getPageTitle()).toEqual('Login');
+    await expect(page.getUrl()).toContain('login');
   });
 
   it('should reject too short password on registration', async () => {

@@ -23,6 +23,8 @@ import { RedirectGuard } from './redirect.guard';
 import * as jwtDecode from 'jwt-decode';
 import { JWT_DECODE } from './jwt.service';
 import { TelegramLinkDialogComponent } from './telegram-link-dialog/telegram-link-dialog.component';
+import { TelegramLoginWidgetComponent } from './telegram-login-widget/telegram-login-widget.component';
+import { TelegramLoginService } from './telegram-login.service';
 
 export const authRoutes: Routes = [
   {path: '', pathMatch: 'full', redirectTo: 'login'},
@@ -58,10 +60,15 @@ export const authRoutes: Routes = [
     UserEditComponent,
     UserSettingsFormComponent,
     TelegramLinkDialogComponent,
+    TelegramLoginWidgetComponent,
   ],
   entryComponents: [
     TelegramLinkDialogComponent,
   ]
 })
 export class AuthModule {
+  constructor(telegramLoginService: TelegramLoginService) {
+    telegramLoginService.init();
+  }
+
 }

@@ -17,6 +17,8 @@ export const translations = {
   'SnackBar.Message.Info.URLCopied': 'The URL was copied to your clipboard. Thanks for sharing.',
   'SnackBar.Message.Error.WrongPassword': 'Wrong password.',
   'SnackBar.Message.Error.UnknownUser': 'Unknown user.',
+  'SnackBar.Message.Error.UsernameAlreadyExists': 'Username already exists.',
+  'SnackBar.Message.Error.OnlyTelegramLoginPossible': 'No password is set. You have to log in via Telegram.',
   'SnackBar.Message.Confirmation.DeleteProduct': 'Are you sure you want to delete this product?',
   'SnackBar.Action.DeleteProduct': 'Delete product',
 };

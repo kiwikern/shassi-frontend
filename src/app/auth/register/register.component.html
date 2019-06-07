@@ -1,8 +1,8 @@
 <form #form="ngForm" (ngSubmit)="submit()">
   <mat-card>
-    <mat-card-title>Register</mat-card-title>
-
     <mat-card-content class="column">
+      <app-telegram-login-widget></app-telegram-login-widget>
+
       <mat-form-field>
         <input placeholder="Username"
                matInput
@@ -52,8 +52,8 @@
     </mat-card-content>
 
     <mat-card-actions align="end">
-      <a mat-raised-button routerLink="../login" queryParamsHandling="merge">Login</a>
-      <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">Register</button>
+      <a mat-raised-button routerLink="../login" queryParamsHandling="merge">Sign in</a>
+      <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">Sign up</button>
     </mat-card-actions>
   </mat-card>
 </form>

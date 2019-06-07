@@ -62,10 +62,6 @@ export class AuthenticationPage {
     return snackbar.getText();
   }
 
-  async getPageTitle() {
-    return element(by.css('.mat-card-title')).getText();
-  }
-
   async isLoggedIn() {
     return element(by.xpath('//button//mat-icon[contains(text(), "exit_to_app")]')).isPresent();
   }
