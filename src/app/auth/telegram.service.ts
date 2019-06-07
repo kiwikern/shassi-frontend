@@ -84,7 +84,8 @@ export class TelegramService {
       .pipe(filter(([isLoggedIn, shouldCreateToken]) => isLoggedIn && shouldCreateToken))
       .subscribe(() => {
         this.router.navigate([], {queryParams: {action: null}, queryParamsHandling: 'merge'});
-        return this.openTelegramAuthUrl();
+        // wait until jwt is in interceptor
+        return setTimeout(() => this.openTelegramAuthUrl());
       });
   }
 
