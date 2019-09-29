@@ -18,3 +18,6 @@ AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css application
 
 # security header
 Header always set Referrer-Policy "origin-when-cross-origin"
+Header always set Report-To: {"group":"default","max_age":31536000,"endpoints":[{"url":"https://kimkern.report-uri.com/a/d/g"}],"include_subdomains":true}
+Header always set Content-Security-Policy-Report-Only "default-src *.kimkern.de kimkern.de; style-src *.kimkern.de kimkern.de fonts.googleapis.com 'unsafe-inline'; font-src *.kimkern.de kimkern.de fonts.gstatic.com; frame-src *.kimkern.de kimkern.de oauth.telegram.org; script-src *.kimkern.de kimkern.de telegram.org; report-uri https://kimkern.report-uri.com/r/d/csp/reportOnly"
+Header always set NEL: {"report_to":"default","max_age":31536000,"include_subdomains":true}
