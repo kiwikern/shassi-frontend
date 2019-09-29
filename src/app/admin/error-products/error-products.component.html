@@ -1,0 +1,52 @@
+<div class="container">
+  <table mat-table [dataSource]="errorProductsDataSource$" matSort>
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>name</th>
+      <td mat-cell *matCellDef="let product">{{product.name}}</td>
+    </ng-container>
+    <ng-container matColumnDef="errors">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>errors</th>
+      <td mat-cell *matCellDef="let product">
+        <ul>
+          <li *ngFor="let error of product.errors">{{error}}</li>
+        </ul>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="url">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>url</th>
+      <td mat-cell *matCellDef="let product">
+        <a [href]="product.url" target="_blank">{{product.url}}</a>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="isActive">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>active</th>
+      <td mat-cell *matCellDef="let product">{{product.isActive ? 'yes' : 'no'}}</td>
+    </ng-container>
+    <ng-container matColumnDef="menu" stickyEnd>
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let product">
+        <button mat-icon-button
+                [matMenuTriggerFor]="tableRowMenu"
+                [matMenuTriggerData]="{product: product}">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+    <tr mat-row *matRowDef="let myRowData; columns: columnsToDisplay"></tr>
+  </table>
+</div>
+
+<mat-menu #tableRowMenu="matMenu">
+  <ng-template matMenuContent let-product="product">
+    <button mat-menu-item (click)="reactivate(product._id)">
+      <mat-icon>refresh</mat-icon>
+      Retry
+    </button>
+    <button mat-menu-item (click)="delete(product._id)">
+      <mat-icon>delete</mat-icon>
+      Delete
+    </button>
+  </ng-template>
+</mat-menu>

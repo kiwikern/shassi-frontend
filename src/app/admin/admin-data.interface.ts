@@ -1,4 +1,4 @@
-export interface AdminData {
+export interface AdminOverview {
   userId: string;
   username: string;
   productCount: number;

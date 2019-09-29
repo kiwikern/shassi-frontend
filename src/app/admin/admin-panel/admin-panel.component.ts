@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AdminService } from '../admin.service';
-import { AdminData } from '../admin-data.interface';
+import { AdminOverview } from '../admin-data.interface';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 
@@ -11,7 +11,7 @@ import { MatTableDataSource } from '@angular/material/table';
 })
 export class AdminPanelComponent implements OnInit {
 
-  adminDataDatasource$: MatTableDataSource<AdminData>;
+  adminDataDatasource$: MatTableDataSource<AdminOverview>;
   columnsToDisplay = ['username', 'productCount', 'isConnectedToTelegram', 'latestProductUpdatedDate', 'menu'];
 @ViewChild(MatSort, { static: true }) sort: MatSort;
 
@@ -21,7 +21,7 @@ export class AdminPanelComponent implements OnInit {
   ngOnInit() {
     this.adminDataDatasource$ = new MatTableDataSource();
     this.adminDataDatasource$.sort = this.sort;
-    this.adminService.getAdminData()
+    this.adminService.getAdminOverview()
       .subscribe(data => this.adminDataDatasource$.data = data);
   }
 

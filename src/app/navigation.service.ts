@@ -10,6 +10,7 @@ import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 export class NavigationService {
 
   public canNavigateBack$ = new BehaviorSubject(false);
+  public currentUrl$ = new BehaviorSubject('');
   private hasPreviousRoute = false;
   private previousUrl = '';
   private currentUrl: string;
@@ -33,6 +34,7 @@ export class NavigationService {
     this.hasPreviousRoute = event.id !== 1;
     this.previousUrl = this.currentUrl;
     this.currentUrl = event.url;
+    this.currentUrl$.next(this.currentUrl);
     this.canNavigateBack$.next(/(.*(products\/).+)|auth\/user|admin/.test(event.url));
   }
 }

@@ -8,19 +8,27 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
+import { AdminRouterComponent } from './admin-router/admin-router.component';
+import { MatToolbarModule } from '@angular/material';
+import { ErrorProductsComponent } from './error-products/error-products.component';
 
 @NgModule({
-  declarations: [AdminPanelComponent],
+  declarations: [AdminPanelComponent, AdminRouterComponent, ErrorProductsComponent],
   imports: [
     CommonModule,
     RouterModule.forChild([
-      {path: '', component: AdminPanelComponent, data: {roles: [Role.ADMIN]}}
+      {path: '', data: {roles: [Role.ADMIN]}, component: AdminRouterComponent, children: [
+          {path: '', redirectTo: 'overview'},
+          {path: 'overview', component: AdminPanelComponent},
+          {path: 'error-products', component: ErrorProductsComponent},
+        ]}
     ]),
     MatTableModule,
     MatSortModule,
     MatIconModule,
     MatButtonModule,
     MatMenuModule,
+    MatToolbarModule,
   ]
 })
 export class AdminModule { }

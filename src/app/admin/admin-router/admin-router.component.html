@@ -1,0 +1,8 @@
+<mat-toolbar class="centered">
+  <button mat-button routerLink="overview" *ngIf="!(currentUrl$ | async).includes('overview')">Overview</button>
+  <button mat-stroked-button routerLink="overview" *ngIf="(currentUrl$ | async).includes('overview')">Overview</button>
+  <button mat-button routerLink="error-products"*ngIf="!(currentUrl$ | async).includes('error-products')">Products with Errors</button>
+  <button mat-stroked-button routerLink="error-products" *ngIf="(currentUrl$ | async).includes('error-products')">Products with Errors</button>
+</mat-toolbar>
+
+<router-outlet></router-outlet>

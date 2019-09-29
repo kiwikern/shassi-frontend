@@ -1,0 +1,11 @@
+.centered {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin: -8px -8px 0 -8px;
+}
+
+.centered > button {
+  margin-left: 6px;
+}
