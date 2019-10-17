@@ -25,10 +25,12 @@ import { JWT_DECODE } from './jwt.service';
 import { TelegramLinkDialogComponent } from './telegram-link-dialog/telegram-link-dialog.component';
 import { TelegramLoginWidgetComponent } from './telegram-login-widget/telegram-login-widget.component';
 import { TelegramLoginService } from './telegram-login.service';
+import { TelegramAuthUrlComponent } from './telegram-auth-url/telegram-auth-url.component';
 
 export const authRoutes: Routes = [
   {path: '', pathMatch: 'full', redirectTo: 'login'},
   {path: 'login', component: LoginComponent, canActivate: [RedirectGuard]},
+  {path: 'telegram-login', component: TelegramAuthUrlComponent},
   {path: 'register', component: RegisterComponent, canActivate: [RedirectGuard]},
   {path: 'user', component: UserEditComponent, canActivate: [LoginGuard]}
 ];
@@ -61,6 +63,7 @@ export const authRoutes: Routes = [
     UserSettingsFormComponent,
     TelegramLinkDialogComponent,
     TelegramLoginWidgetComponent,
+    TelegramAuthUrlComponent,
   ],
   entryComponents: [
     TelegramLinkDialogComponent,

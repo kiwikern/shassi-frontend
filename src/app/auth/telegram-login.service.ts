@@ -15,7 +15,7 @@ export class TelegramLoginService {
     window['loginViaTelegram'] = loginData => this.loginViaTelegram(loginData);
   }
 
-  private loginViaTelegram(loginData: TelegramLoginData) {
+  public loginViaTelegram(loginData: TelegramLoginData) {
     const loginRequest = new TelegramLoginRequest(loginData);
     this.ngZone.run(() => this.store.dispatch(loginRequest));
   }

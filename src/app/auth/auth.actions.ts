@@ -126,7 +126,7 @@ export class UpdateUserFail implements Action {
 }
 
 export type AuthActions =
-  LoginFail | LoginRequest | LoginSuccess |
+  LoginFail | LoginRequest | LoginSuccess | TelegramLoginRequest |
   RegisterRequest | RegisterFail | RegisterSuccess |
   UpdateUserRequest | UpdateUserFail | UpdateUserSuccess |
   GetUserRequest | GetUserFail | GetUserSuccess |

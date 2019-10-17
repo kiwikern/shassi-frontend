@@ -101,9 +101,16 @@ export class AuthEffects {
 
   private handleError(error, action) {
     const actions = [action];
+    console.log(error);
     switch (error.status) {
       case 401:
-        this.snackBar.open('SnackBar.Message.Error.WrongPassword');
+        if (error.error && error.error.key && error.error.key.startsWith('telegram')) {
+          this.snackBar.open('SnackBar.Message.Error.' + error.error.key,
+            'SnackBar.Action.OK', 15000);
+          this.router.navigate(['/']);
+        } else {
+          this.snackBar.open('SnackBar.Message.Error.WrongPassword');
+        }
         break;
       case 404:
         this.snackBar.open('SnackBar.Message.Error.UnknownUser');

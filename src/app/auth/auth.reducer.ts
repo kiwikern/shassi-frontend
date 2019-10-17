@@ -24,6 +24,7 @@ export function reducer(state = initialState, action: AuthActions): IAuthState {
       return {jwt, user, isLoading: false};
     case AuthActionTypes.GET_USER_REQUEST:
     case AuthActionTypes.UPDATE_USER_REQUEST:
+    case AuthActionTypes.TELEGRAM_LOGIN_REQUEST:
       state = Object.assign({}, state, {isLoading: true});
       return state;
     case AuthActionTypes.GET_USER_SUCCESS:
@@ -34,6 +35,7 @@ export function reducer(state = initialState, action: AuthActions): IAuthState {
       return state;
     case AuthActionTypes.GET_USER_FAIL:
     case AuthActionTypes.UPDATE_USER_FAIL:
+    case AuthActionTypes.LOGIN_FAIL:
       state = Object.assign({}, state, {isLoading: false});
       return state;
     case AuthActionTypes.LOGOUT:

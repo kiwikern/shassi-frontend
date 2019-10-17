@@ -16,6 +16,8 @@ export const translations = {
   'SnackBar.Message.Error.NonStoreURL': 'Given URL does not belong to selected store.',
   'SnackBar.Message.Info.URLCopied': 'The URL was copied to your clipboard. Thanks for sharing.',
   'SnackBar.Message.Error.WrongPassword': 'Wrong password.',
+  'SnackBar.Message.Error.telegram-auth-expired': 'Your Telegram authentication has expired. Please go back to Telegram and retry or use the "Log in with Telegram" button.',
+  'SnackBar.Message.Error.telegram-invalid-hash': 'Your Telegram authentication was invalid. Please go back to Telegram and retry or use the "Log in with Telegram" button.',
   'SnackBar.Message.Error.UnknownUser': 'Unknown user.',
   'SnackBar.Message.Error.UsernameAlreadyExists': 'Username already exists.',
   'SnackBar.Message.Error.OnlyTelegramLoginPossible': 'No password is set. You have to log in via Telegram.',
